@@ -1,0 +1,2876 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: Cyan Embedded API
+servers:
+  - url: https://api.cyan-embedded-dev.net/
+tags:
+  - name: auth
+    description: 認証
+  - name: product
+    description: 商品定義
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: /v1/tokenエンドポイントで認証トークンを発行する際に必要なBasic認証
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT形式の認証トークン
+  schemas:
+    Exposure:
+      type: object
+      description: 被保険者回答
+      properties:
+        key:
+          type: string
+          example: main
+          description: AbstractExposureとの対応を示すkey
+        isPolicyHolder:
+          type: boolean
+          example: false
+          description: この被保険者が契約者(Policy.UserID)と同一人物であるかを示すフラグ
+        answers:
+          type: array
+          description: ExposureAnswerの配列
+          items:
+            example:
+              - key: location
+                name: 所在地
+                options:
+                  - key: tokyo
+                    name: 東京
+                    value: true
+                    type: RADIO
+                type: RADIO
+              - key: buildingYearOld
+                name: 建築年月
+                options:
+                  - key: buildingYearOld
+                    name: 建築年月
+                    value: 20
+                    type: INTEGER
+                type: INTEGER
+              - key: pillar
+                name: 柱
+                options:
+                  - key: steelFrame
+                    name: 鉄骨
+                    value: true
+                    type: RADIO
+                type: RADIO
+              - key: fireproofStandard
+                name: 耐火基準
+                options:
+                  - key: severalThings
+                    name: 諸々
+                    value: true
+                    type: RADIO
+                type: RADIO
+              - key: constructionType
+                name: 構造級別
+                options:
+                  - key: m
+                    name: M構造
+                    value: true
+                    type: RADIO
+                type: RADIO
+              - key: discountAgainstEarthquakeInsurance
+                name: 地震保険の割引
+                options:
+                  - key: baseIsolationStructure
+                    name: 免震建物
+                    value: true
+                    type: RADIO
+                type: RADIO
+    ExternalUser:
+      type: object
+      description: 外部ユーザー
+      properties:
+        id:
+          type: string
+          example: XXXXXXXXXX
+          description: 貴社にて発行したユーザー一意のID
+        userId:
+          type: string
+          example: 01GR2ZAPETXV3F2FGA8M00Y0NM
+          description: Inspire上にて発行したユーザー一意のID
+    Policy:
+      allOf:
+        - description: 作成/更新時刻
+          properties:
+            createdAt:
+              type: integer
+              example: 1542290000
+            updatedAt:
+              type: integer
+              example: 1542290000
+        - properties:
+            status:
+              type: string
+              enum:
+                - DRAFT
+                - REQUESTED
+                - CONTRACTED
+                - CANCELED
+                - REJECTED
+                - INVALID
+                - SURRENDERED
+                - EXPIRED
+      type: object
+      description: 契約
+      required:
+        - id
+        - productId
+        - product
+        - status
+        - policyHolder
+        - specialRiders
+        - exposures
+      properties:
+        id:
+          type: string
+          example: ijkghflw348o
+        productId:
+          type: string
+          example: 23efhuptuqp
+          description: 契約する商品のID
+        product:
+          type: object
+          description: 保険商品
+          required:
+            - id
+            - brandId
+            - companyId
+            - category
+            - name
+            - billingTimes
+            - billingDateType
+            - billingFixedDate
+            - exposureDefinitions
+            - presets
+            - startAt
+            - endAt
+            - createdAt
+            - updatedAt
+          allOf:
+            - properties:
+                id:
+                  type: string
+                  example: fsandlifu3n4
+                  description: 難読化したID
+            - description: 作成/更新時刻
+              properties:
+                createdAt:
+                  type: integer
+                  example: 1542290000
+                updatedAt:
+                  type: integer
+                  example: 1542290000
+            - type: object
+              description: 共通した売上管理を行う商品群.同じブランドに属する商品は売上などの統計情報を一部共有できる。
+              properties:
+                name:
+                  type: string
+                  example: サイバー保険
+                  description: ブランド名
+                companyId:
+                  type: string
+                  example: 1234567890xyz
+            - type: object
+              description: 商品
+              required:
+                - name
+                - companyId
+                - billingTimes
+                - billingDateType
+                - startAt
+              properties:
+                brandId:
+                  type: string
+                  example: jkgh3u8234ddf
+                parentId:
+                  type: string
+                  example: lkjflkewjklj
+                  description: 更新前の(たとえば前年度に販売していた)商品を指すID. parentIdで参照できる範囲を同一の商品とみなす
+                agencyCompanyId:
+                  type: string
+                  example: kfljekwl3kj1
+                  description: 担当代理店の会社ID
+                agencyCompany:
+                  type: object
+                  description: 会社概要
+                  required:
+                    - id
+                    - name
+                    - type
+                    - category
+                  properties:
+                    id:
+                      type: string
+                      example: fsandlifu3n4
+                    partnerCode:
+                      type: string
+                      example: FFFFF
+                      description: 自社が付与した識別子
+                    name:
+                      type: string
+                      example: SmartPlus Small-amount Short-term Insurance
+                    nameKana:
+                      type: string
+                      example: スマートプラスショウガクタンキホケン
+                    type:
+                      type: string
+                      enum:
+                        - INSURER
+                        - AGENCY
+                        - SALES
+                      description: 会社の種類. INSURER:保険会社,AGENCY:保険代理店,SALES:販売パートナー(包括契約者),
+                    category:
+                      type: string
+                      description: 会社の区分.生保・損保・少額短期などの分類を想定
+                      example: SMALL
+                salesCompanyId:
+                  type: string
+                  example: kfljekwl3kj1
+                  description: 販売パートナー(包括契約者)の会社ID
+                department:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      example: ABC01
+                    order:
+                      type: integer
+                      example: 0
+                      description: 部署表示の並び順
+                    name:
+                      type: string
+                      example: 東京支社
+                      description: 部署名
+                    nameKana:
+                      type: string
+                      example: トウキョウシシャ
+                      description: 部署名(カナ)
+                    attributes:
+                      type: object
+                      description: 拡張領域.任意の情報をjsonとして保持する
+                type:
+                  type: string
+                  example: INDIVIDUAL
+                  enum:
+                    - INDIVIDUAL
+                    - GROUP
+                  description: 加入の形態.個人の契約か団体/包括契約への加入か
+                inusrancePeriod:
+                  type: object
+                  description: 保険期間の算出方法
+                  properties:
+                    beggining:
+                      type: object
+                      description: 始期算定方法
+                      properties:
+                        reservable:
+                          type: boolean
+                          description: 保障開始を(未来日で)顧客が指定することができるか
+                        underwrittenDateType:
+                          type: string
+                          enum:
+                            - DAY
+                            - MONTH
+                          description: 保障開始日の算出を日単位で行うか月単位で行うか
+                        min:
+                          type: integer
+                          example: 0
+                          description: >-
+                            承認後何日(月)目から引受を開始するかの最小値。0は承認当日(当月).
+                            reservableでない場合、min=maxとする
+                        max:
+                          type: integer
+                          example: 0
+                          description: 承認後何日(月)目から引受を開始するかの最大値
+                    length:
+                      type: object
+                      description: 期間長さの算定方法
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                            - FLEXIBLE
+                            - FIXED
+                            - NONE
+                          description: 保険期間の種類.FLEXIBLE:契約毎に定める,FIXED:固定長,NONE:期間の定め無し(終身)
+                        unit:
+                          type: string
+                          enum:
+                            - DAY
+                            - MONTH
+                            - YEAR
+                          description: 保険期間の単位
+                        min:
+                          type: integer
+                          example: 1
+                          description: 期間の最小値
+                        max:
+                          type: integer
+                          example: 31
+                          description: 期間の最大値
+                billingConfig:
+                  type: object
+                  properties:
+                    calculationUnit:
+                      type: string
+                      enum:
+                        - ONCE
+                        - TOTAL
+                      description: >-
+                        計算する保険料が一回あたりの支払額であるか総額であるか.ONCE:1回あたりの支払額,TOTAL:保険期間における総額
+                    method:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                          - CARD
+                      description: 利用可能な保険料収納方法.CARD:クレジットカード
+                    frequency:
+                      type: integer
+                      example: 1
+                      description: >-
+                        保険料請求の頻度(nヶ月毎)の設定値.0の場合は一時払い.1で毎月,6で半年払い,12で年払い.その他の値も設定可
+                    day:
+                      type: string
+                      example: 3
+                      description: 保険料請求期日の算出方法においての数値部分<br>32で明示的に月末,-1で申込日付と同日
+                    count:
+                      type: integer
+                      example: 12
+                      description: 請求回数.0の場合は無料,マイナスの場合は終身(回数未定)
+                presets:
+                  type: array
+                  items:
+                    allOf:
+                      - properties:
+                          order:
+                            type: integer
+                            example: 1
+                            description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                    type: object
+                    description: 特約をまとめたモノ
+                    required:
+                      - order
+                      - name
+                      - key
+                      - riderKeys
+                    properties:
+                      name:
+                        type: string
+                        example: しっかりサポートプラン
+                      key:
+                        type: string
+                        example: プランを示す一意なkey
+                      riderKeys:
+                        type: array
+                        items:
+                          type: string
+                perils:
+                  type: array
+                  items:
+                    allOf:
+                      - properties:
+                          order:
+                            type: integer
+                            example: 1
+                            description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                    type: object
+                    description: 危険の定義
+                    required:
+                      - key
+                      - order
+                      - name
+                      - exposureKey
+                      - formKeys
+                    properties:
+                      name:
+                        type: string
+                        example: 入院
+                      key:
+                        type: string
+                        example: peril1
+                      exposureKey:
+                        type: string
+                        example: 1
+                      formKeys:
+                        description: >-
+                          この危険に合致することを示すformのkey(該当するすべてのformがvalidにpostされていれば、この危険の発生を認定する)
+                        type: array
+                        items:
+                          type: string
+                perilForms:
+                  type: array
+                  items:
+                    allOf:
+                      - properties:
+                          order:
+                            type: integer
+                            example: 1
+                            description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                    type: object
+                    description: 給付に当たって聴取する必要のある危険の情報のフォーム
+                    required:
+                      - order
+                      - name
+                      - key
+                      - exposureKey
+                      - parentKey
+                      - parentOptionKey
+                    properties:
+                      key:
+                        type: string
+                        example: perilForm1
+                      name:
+                        type: string
+                        example: 入院日
+                      exposureKey:
+                        type: string
+                        example: mother
+                      label:
+                        type: string
+                        description: 入院開始日を入力してください
+                      description:
+                        type: string
+                        example: 補足説明がここにHTMLで入ります
+                      required:
+                        type: boolean
+                        example: true
+                      isAccidentDate:
+                        type: boolean
+                        example: true
+                        description: 事故日を表す設問であるか
+                      parentKey:
+                        type: string
+                        example: perilForm1
+                        default: ''
+                        description: 本項目聴取のために前段で必要な親のkeyを示す。空はルートレベル。
+                      parentOptionKey:
+                        type: string
+                        example: perilFormOption1
+                        description: parentKeyで示す項目における選択肢のkey
+                      parentOptionKeys:
+                        type: array
+                        items:
+                          type: string
+                        example:
+                          - perilFormOption1
+                          - perilFormOption2
+                        description: parentKeyで示す項目における選択肢のKey.複数指定した場合はOR条件
+                      options:
+                        type: array
+                        items:
+                          allOf:
+                            - properties:
+                                order:
+                                  type: integer
+                                  example: 1
+                                  description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                          type: object
+                          description: PerilFormの回答方法(入力式の場合は型情報,選択式の場合は選択肢)
+                          required:
+                            - order
+                            - name
+                            - key
+                            - type
+                          properties:
+                            name:
+                              type: string
+                              example: 手術
+                              description: ラベルとしての表示名
+                            key:
+                              type: string
+                              example: birthday
+                              description: ''
+                            type:
+                              type: string
+                              enum:
+                                - TEXT
+                                - NUMBER
+                                - RADIO
+                                - CHECKBOX
+                                - FILE
+                              description: >-
+                                TEXT: テキスト、NUMBER: 数値、RADIO:
+                                ブール値（同列オプションとtrue重複なし）、CHECKBOX: ブール値、FILE:
+                                バイナリ・文字列
+                benefits:
+                  type: array
+                  items:
+                    type: object
+                    description: 給付内容マスタ
+                    required:
+                      - key
+                      - order
+                      - name
+                      - perilKey
+                      - paymentCountLimit
+                    allOf:
+                      - properties:
+                          order:
+                            type: integer
+                            example: 1
+                            description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                    properties:
+                      key:
+                        type: string
+                        example: generalBenefit
+                      name:
+                        type: string
+                        example: 火災修繕費用保険金
+                        description: 給付名称
+                      perilKey:
+                        type: string
+                        example: firePrimary
+                        description: 当該給付内容がカバーする危険≒保険事故の名称。「入院・手術・産後うつ」など
+                      insuranceType:
+                        type: object
+                        description: 保険の種別、死亡保険、低発生率保険等
+                        required:
+                          - id
+                          - name
+                          - key
+                          - insuranceMoneyLimit
+                          - createdAt
+                          - updatedAt
+                        properties:
+                          name:
+                            type: string
+                            example: FIRE
+                          insuranceMoneyLimit:
+                            type: integer
+                            example: 10000000
+                            description: 保険金の上限金額
+                        allOf:
+                          - properties:
+                              id:
+                                type: string
+                                example: fsandlifu3n4
+                                description: 難読化したID
+                          - description: 作成/更新時刻
+                            properties:
+                              createdAt:
+                                type: integer
+                                example: 1542290000
+                              updatedAt:
+                                type: integer
+                                example: 1542290000
+                      claimAssessment:
+                        type: object
+                        properties:
+                          targets:
+                            type: array
+                            items:
+                              type: string
+                              enum:
+                                - SELF
+                                - THIRD_PARTY
+                              example: THIRD_PARTY
+                              description: 評価の対象.請求者自身を相手方とするか、第三者を相手方とするか
+                          type:
+                            type: string
+                            enum:
+                              - FIXED
+                              - TIMES
+                              - COMPENSATION
+                            example: FIXED
+                            description: >-
+                              金額評価の方法.FIXED:予め決められた金額,TIMES:予め決められた金額x指定された事故の属性の値,COMPENSATION:被害額の補填
+                          perilFormKey:
+                            type: string
+                            example: firedDate
+                            description: 金額評価に利用する事故の属性
+                      paymentCountLimit:
+                        type: integer
+                        example: 2
+                        description: 保険金支払い回数の上限
+                abstractExposures:
+                  type: array
+                  items:
+                    allOf:
+                      - properties:
+                          order:
+                            type: integer
+                            example: 1
+                            description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                    type: object
+                    description: 被保険者の定義
+                    required:
+                      - order
+                      - name
+                      - forms
+                    properties:
+                      name:
+                        type: string
+                        example: 被保険者①
+                      key:
+                        type: string
+                        example: mother
+                      isNamed:
+                        type: boolean
+                        example: true
+                        description: 記名被保険者
+                      claimBySelf:
+                        type: boolean
+                        example: true
+                        description: 当事者が保険給付請求権者であるか
+                      abstractClaimerNumbers:
+                        type: array
+                        items:
+                          type: integer
+                      forms:
+                        type: array
+                        items:
+                          allOf:
+                            - properties:
+                                order:
+                                  type: integer
+                                  example: 1
+                                  description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                          type: object
+                          description: 被保険者に関して聴取する必要のある情報のフォーム
+                          required:
+                            - id
+                            - number
+                          properties:
+                            name:
+                              type: string
+                              example: 生年月日
+                              description: 項目名
+                            key:
+                              type: string
+                              example: birthday
+                              description: POSTされるAnswerのキー。Form(view)の構築を自動化する場合に利用する
+                            required:
+                              type: boolean
+                              example: true
+                              description: 契約時必須項目かどうか
+                            parentKey:
+                              type: string
+                              example: form1
+                              description: 本項目聴取のために前段で必要な親のkeyを示す。空文字はルートレベル。
+                            parentOptionKeys:
+                              type: array
+                              items:
+                                type: string
+                              example:
+                                - formOption1
+                                - formOption2
+                              description: parentKeyで示す項目における選択肢のKey.複数指定した場合はOR条件
+                            type:
+                              type: string
+                              enum:
+                                - NAME
+                                - NAME_KANA
+                                - BIRTHDAY
+                                - DUE_DATE
+                                - ADDRESS
+                                - PLACE
+                                - DATE
+                                - DATETIME
+                                - RADIO
+                                - CHECKBOX
+                                - FLEXIBLE
+                                - NONE
+                              example: BIRTHDAY
+                              description: >-
+                                属性。この質問自体が、システム的に特別な意味を持つ場合はNONE以外。例えば生年月日などは、計算に用いるなど特別に取り扱いたいため、明確に他の質問と識別できる必要がある。このEnum値自体はMasterとして定義するので増える可能性がある。
+                            options:
+                              type: array
+                              items:
+                                type: object
+                                description: ExposureFormの回答選択肢
+                                allOf:
+                                  - properties:
+                                      order:
+                                        type: integer
+                                        example: 1
+                                        description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                                required:
+                                  - key
+                                  - type
+                                properties:
+                                  name:
+                                    type: string
+                                    example: 生年月日
+                                    description: ラベルとしての表示名。なくても良い。
+                                  key:
+                                    type: string
+                                    example: birthday
+                                    description: >-
+                                      POSTされるAnswerOptionのキー。Form(view)の構築を自動化する場合に利用する。
+                                  type:
+                                    type: string
+                                    enum:
+                                      - TEXT
+                                      - NUMBER
+                                      - RADIO
+                                      - CHECKBOX
+                                      - FILE
+                                    description: >-
+                                      TEXT: テキスト、NUMBER: 数値、RADIO:
+                                      ブール値（同列オプションとtrue重複なし）、CHECKBOX:
+                                      ブール値、FILE: バイナリ・文字列
+                                  validator:
+                                    type: object
+                                    description: 被保険者に対するチェックロジック
+                                    allOf:
+                                      - properties:
+                                          min:
+                                            type: integer
+                                            example: 1
+                                            description: 数値の最小値または文字列の最短字数
+                                          max:
+                                            type: integer
+                                            example: 99999
+                                            description: 数値の最大値または文字列の最長字数
+                                          regexp:
+                                            type: string
+                                            example: ^\d{4}$
+                                            description: 文字列の正規表現
+                                    properties:
+                                      conditions:
+                                        type: array
+                                        items:
+                                          type: object
+                                          description: 被保険者Validationの出し分け条件
+                                          properties:
+                                            coverageKeys:
+                                              type: array
+                                              items:
+                                                type: string
+                                              description: いずれかの保障に合致するときにチェックを行う。空の場合は常にチェックする
+                                            exposureKey:
+                                              type: string
+                                              example: mother
+                                              description: 被保険者の識別子
+                                            exposureFormKey:
+                                              type: string
+                                              example: form1
+                                              description: Formの識別子
+                                            exposureFormOptionKeys:
+                                              type: string
+                                              example:
+                                                - formOption1
+                                                - formOption2
+                                              description: FormOptionの識別子一覧
+                                        description: いずれかの保障に合致するときにチェックを行う。空の場合は常にチェックする
+                                      logic:
+                                        type: object
+                                        properties:
+                                          args:
+                                            type: array
+                                            items:
+                                              type: object
+                                              description: Validatorで変数として利用可能な被保険者の識別子
+                                              properties:
+                                                exposureKey:
+                                                  type: string
+                                                  example: mother
+                                                  description: 被保険者の場合のみ設定.被保険者の識別子
+                                                formKey:
+                                                  type: string
+                                                  example: birthday
+                                                  description: フォームの識別子
+                                                formOptionKey:
+                                                  type: string
+                                                  example: birthday
+                                                  description: フォームの要素の識別子
+                                          formulas:
+                                            type: array
+                                            items:
+                                              type: string
+                                              example: E0<E1+E2*100
+                                              description: >-
+                                                四則演算と不等号または等号1つからなる計算式.E0は属性自身、E1~EnはExposureFormOptionPointerが指す、その他一般的な値($now等)をサポート
+                startAt:
+                  type: integer
+                  example: 1575530512408
+                  description: 販売開始日
+                endAt:
+                  type: integer
+                  example: 1575530512408
+                  description: 販売終了日
+                examRequired:
+                  type: boolean
+                  example: true
+                  description: 引受時に審査が必須であるか
+                examRequiredConfidency:
+                  type: string
+                  example: WARN
+                  description: 引受時に審査を必須とする信用度
+                autoRenewal:
+                  type: boolean
+                  example: true
+                  description: 自動更改フラグ
+        number:
+          type: string
+          example: AG000-00000
+          description: 証券番号.契約承認後に自動で設定差される
+        nextPolicyId:
+          type: string
+          description: 更改先となる契約ID
+        renewedPolicyId:
+          type: string
+          description: 更改元となった契約ID
+        originalPolicyId:
+          type: string
+          description: 当初の契約ID(最も古い更改元)
+        status:
+          description: >-
+            DRAFT:作成中,REQUESTED:申込、CONTRACTED:契約中、CANCELED:キャンセル、REJECTED:契約拒否,INVALID:無効、SURRENDERED:解約、EXPIRED:満了
+        label:
+          type: string
+          example: サイバー保険Aプラン
+          description: 表示用名称
+        policyHolder:
+          allOf:
+            - properties:
+                firstName:
+                  type: string
+                  example: 太郎
+                lastName:
+                  type: string
+                  example: 山田
+            - properties:
+                firstNameKana:
+                  type: string
+                  example: タロウ
+                lastNameKana:
+                  type: string
+                  example: ヤマダ
+          type: object
+          description: 契約者情報
+          required:
+            - birthday
+            - firstName
+            - lastName
+            - firstNameKana
+            - lastNameKana
+            - address
+            - telNumber
+          properties:
+            userId:
+              type: string
+              example: lfkjelq23
+            birthday:
+              type: integer
+              example: 1575530512408
+            address:
+              type: object
+              properties:
+                zipcode:
+                  type: string
+                  example: 321-4321
+                prefecture:
+                  type: string
+                  example: 東京都
+                city:
+                  type: string
+                  example: 千代田区麹町
+                street:
+                  type: string
+                  example: 1-1-1セント・ルイス大聖堂1101
+            telNumber:
+              type: string
+              example: '09012345678'
+        exposures:
+          type: array
+          items:
+            type: object
+            description: 被保険者回答
+            properties:
+              key:
+                type: string
+                example: main
+                description: AbstractExposureとの対応を示すkey
+              isPolicyHolder:
+                type: boolean
+                example: false
+                description: この被保険者が契約者(Policy.UserID)と同一人物であるかを示すフラグ
+              answers:
+                type: array
+                description: ExposureAnswerの配列
+                items:
+                  example:
+                    - key: location
+                      name: 所在地
+                      options:
+                        - key: tokyo
+                          name: 東京
+                          value: true
+                          type: RADIO
+                      type: RADIO
+                    - key: buildingYearOld
+                      name: 建築年月
+                      options:
+                        - key: buildingYearOld
+                          name: 建築年月
+                          value: 20
+                          type: INTEGER
+                      type: INTEGER
+                    - key: pillar
+                      name: 柱
+                      options:
+                        - key: steelFrame
+                          name: 鉄骨
+                          value: true
+                          type: RADIO
+                      type: RADIO
+                    - key: fireproofStandard
+                      name: 耐火基準
+                      options:
+                        - key: severalThings
+                          name: 諸々
+                          value: true
+                          type: RADIO
+                      type: RADIO
+                    - key: constructionType
+                      name: 構造級別
+                      options:
+                        - key: m
+                          name: M構造
+                          value: true
+                          type: RADIO
+                      type: RADIO
+                    - key: discountAgainstEarthquakeInsurance
+                      name: 地震保険の割引
+                      options:
+                        - key: baseIsolationStructure
+                          name: 免震建物
+                          value: true
+                          type: RADIO
+                      type: RADIO
+          description: 被保険者情報
+        riderKeys:
+          type: array
+          items:
+            type: string
+          description: 契約する特約のkey
+          example:
+            - rider1
+        specialRiders:
+          type: array
+          items:
+            allOf:
+              - properties:
+                  order:
+                    type: integer
+                    example: 1
+                    description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+            type: object
+            description: Riderから生成される、契約単位で最適化された特約
+            required:
+              - order
+              - key
+            properties:
+              key:
+                type: string
+                example: generalPolicyCondition
+              name:
+                type: string
+                example: 普通約款
+              isDefault:
+                type: boolean
+                example: true
+              premium:
+                type: object
+                description: 保険料
+                properties:
+                  min:
+                    type: integer
+                    example: 50000
+                    description: 保険料の取りうる最小値
+                  max:
+                    type: integer
+                    example: 50000
+                    description: 保険料の取りうる最大値
+                  currentValue:
+                    type: integer
+                    example: 50000
+                    description: 現在有効な保険料
+              specialCoverages:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - benefit
+                  allOf:
+                    - description: Coverageから生成される契約ごとの保障内容
+                      required:
+                        - key
+                      properties:
+                        key:
+                          type: string
+                          example: generalCoverage
+                        insuranceMoney:
+                          type: object
+                          description: 保険金
+                          required:
+                            - min
+                            - max
+                          properties:
+                            min:
+                              type: integer
+                              example: 1
+                              description: 最低金額
+                            max:
+                              type: integer
+                              example: 10000000
+                              description: 最高金額
+                            default:
+                              type: integer
+                              example: 1000000
+                              description: 基本金額
+                    - allOf:
+                        - properties:
+                            order:
+                              type: integer
+                              example: 1
+                              description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                      type: object
+                      description: 保障内容
+                      required:
+                        - key
+                        - benefitKey
+                      properties:
+                        key:
+                          type: string
+                          example: generalCoverage
+                          description: product内の特約を一意に識別するキー
+                        deductibleAmount:
+                          type: integer
+                          example: 10000
+                          description: 免責金額
+                        benefitKey:
+                          type: string
+                          example: GeneralBenefit
+                  properties:
+                    benefit:
+                      type: object
+                      description: 給付内容マスタ
+                      required:
+                        - key
+                        - order
+                        - name
+                        - perilKey
+                        - paymentCountLimit
+                      allOf:
+                        - properties:
+                            order:
+                              type: integer
+                              example: 1
+                              description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                      properties:
+                        key:
+                          type: string
+                          example: generalBenefit
+                        name:
+                          type: string
+                          example: 火災修繕費用保険金
+                          description: 給付名称
+                        perilKey:
+                          type: string
+                          example: firePrimary
+                          description: 当該給付内容がカバーする危険≒保険事故の名称。「入院・手術・産後うつ」など
+                        insuranceType:
+                          type: object
+                          description: 保険の種別、死亡保険、低発生率保険等
+                          required:
+                            - id
+                            - name
+                            - key
+                            - insuranceMoneyLimit
+                            - createdAt
+                            - updatedAt
+                          properties:
+                            name:
+                              type: string
+                              example: FIRE
+                            insuranceMoneyLimit:
+                              type: integer
+                              example: 10000000
+                              description: 保険金の上限金額
+                          allOf:
+                            - properties:
+                                id:
+                                  type: string
+                                  example: fsandlifu3n4
+                                  description: 難読化したID
+                            - description: 作成/更新時刻
+                              properties:
+                                createdAt:
+                                  type: integer
+                                  example: 1542290000
+                                updatedAt:
+                                  type: integer
+                                  example: 1542290000
+                        claimAssessment:
+                          type: object
+                          properties:
+                            targets:
+                              type: array
+                              items:
+                                type: string
+                                enum:
+                                  - SELF
+                                  - THIRD_PARTY
+                                example: THIRD_PARTY
+                                description: 評価の対象.請求者自身を相手方とするか、第三者を相手方とするか
+                            type:
+                              type: string
+                              enum:
+                                - FIXED
+                                - TIMES
+                                - COMPENSATION
+                              example: FIXED
+                              description: >-
+                                金額評価の方法.FIXED:予め決められた金額,TIMES:予め決められた金額x指定された事故の属性の値,COMPENSATION:被害額の補填
+                            perilFormKey:
+                              type: string
+                              example: firedDate
+                              description: 金額評価に利用する事故の属性
+                        paymentCountLimit:
+                          type: integer
+                          example: 2
+                          description: 保険金支払い回数の上限
+                    premium:
+                      type: object
+                      description: 保険料
+                      properties:
+                        min:
+                          type: integer
+                          example: 50000
+                          description: 保険料の取りうる最小値
+                        max:
+                          type: integer
+                          example: 50000
+                          description: 保険料の取りうる最大値
+                        currentValue:
+                          type: integer
+                          example: 50000
+                          description: 現在有効な保険料
+          description: riderKeysとexposuresの組み合わせで最適化したこの契約の条件(保障内容)
+        extras:
+          type: object
+          example: {}
+          description: POSTされた任意のobjectを記録する
+        billingSchedule:
+          type: object
+          required:
+            - frequency
+            - method
+            - count
+          properties:
+            method:
+              type: string
+              enum:
+                - CARD
+              example: CARD
+              description: 当該契約で利用する決済手段
+            methodDetailId:
+              type: string
+              example: dlkfjkl32
+              description: 決済手段内でユーザーが複数の選択肢を持っている場合の識別子(たとえば複数のクレジットカードを登録している場合にどれを利用するか)
+            frequency:
+              type: integer
+              example: 1
+              description: 支払い頻度.Nヶ月ごと請求のN
+            count:
+              type: integer
+              example: 1
+              description: 支払い分割数.回払いの回
+        billings:
+          type: array
+          items:
+            allOf:
+              - properties:
+                  id:
+                    type: string
+                    example: fsandlifu3n4
+                    description: 難読化したID
+              - description: 作成/更新時刻
+                properties:
+                  createdAt:
+                    type: integer
+                    example: 1542290000
+                  updatedAt:
+                    type: integer
+                    example: 1542290000
+            type: object
+            description: 保険料徴収
+            properties:
+              policyID:
+                type: string
+                example: 01EFEA6XX2B3MW6CYBJY4RZNKD
+                description: 対象の契約ID
+              order:
+                type: integer
+                example: 1
+                description: 何回目の請求であるか
+              memo:
+                type: string
+                example: 1回目の保険料
+                description: 請求明細
+              amount:
+                type: integer
+                example: 950
+              status:
+                type: string
+                enum:
+                  - FIXED
+                  - DELAYED
+                  - PAID
+                  - EXPIRED
+                description: >-
+                  請求ステータス.DRAFT:請求内容未確定,FIXED:請求内容確定,DELAYED:請求遅延中,PAID:受領済み,EXPIRED:期限内の請求失敗(解除事由)
+              dueDate:
+                type: integer
+                example: 1500000000
+                description: 正規の請求日
+              backoffDate:
+                type: integer
+                example: 1500000000
+                description: 引き落とし失敗後の引き落とし再実行予定日
+              expiresDate:
+                type: integer
+                example: 1550000000
+                description: 支払猶予期限
+              expiresAt:
+                type: integer
+                example: 1550000000
+                description: 回収断念時刻
+              paidAt:
+                type: integer
+                example: 1500000000
+                description: 決済完了日
+              extras:
+                type: object
+                description: 任意のjson object. 管理情報などクライアントで指定した値をそのまま保存する
+          description: 保険料徴収予定.独立したリソースだが利便性のためにembbedする.
+        closedReasonKey:
+          type: string
+          description: 契約の終了理由
+        billingDelayed:
+          type: boolean
+          description: 保険料徴収遅延フラグ
+        needsExam:
+          type: boolean
+          description: 要審査(審査待ち)フラグ
+        hasClaim:
+          type: boolean
+          example: false
+          description: 未対応の保険金請求が存在するかどうか
+        applicatedAt:
+          type: integer
+          example: 1575530512408
+          description: 申込時刻
+        underwrittenAt:
+          type: integer
+          example: 1575530512408
+          description: 引受（受諾）日
+        expiresAt:
+          type: integer
+          example: 1575530512408
+          description: 満了日
+        surrenderedAt:
+          type: integer
+          example: 1500000000
+          description: 解約時刻
+        isRequestIncomplete:
+          type: boolean
+          example: false
+          description: 不備が存在するかどうか
+        policyPaymentTotalCount:
+          type: object
+          description: 契約に紐づく支払いの合計回数情報
+          properties:
+            policyId:
+              type: string
+              description: 契約ID
+            benefits:
+              type: array
+              items:
+                type: object
+                description: 給付金の支払い合計回数情報
+                properties:
+                  benefitKey:
+                    type: string
+                  countLimit:
+                    type: integer
+                    description: 支払い回数の上限
+                  savedCount:
+                    type: integer
+                    description: 支払い回数合算 (DBに保存されているPaymentの足し合わせ)
+                  paidCount:
+                    type: integer
+                    description: 支払い済み回数合算 (支払い済みのステータスになっているPaymentの足し合わせ)
+                  timesLimit:
+                    type: integer
+                    description: 支払い指定回数(日数)の上限
+                  savedTime:
+                    type: integer
+                    description: 支払い指定回数(日数)合算 (DBに保存されているPaymentの足し合わせ)
+                  paidTime:
+                    type: integer
+                    description: 支払い済み指定回数(日数)合算 (支払い済みのステータスになっているPaymentの足し合わせ)
+    Premium:
+      type: object
+      description: 保険料
+      properties:
+        min:
+          type: integer
+          example: 50000
+          description: 保険料の取りうる最小値
+        max:
+          type: integer
+          example: 50000
+          description: 保険料の取りうる最大値
+        currentValue:
+          type: integer
+          example: 50000
+          description: 現在有効な保険料
+    Product:
+      type: object
+      description: 保険商品
+      required:
+        - id
+        - brandId
+        - companyId
+        - category
+        - name
+        - billingTimes
+        - billingDateType
+        - billingFixedDate
+        - exposureDefinitions
+        - presets
+        - startAt
+        - endAt
+        - createdAt
+        - updatedAt
+      allOf:
+        - properties:
+            id:
+              type: string
+              example: fsandlifu3n4
+              description: 難読化したID
+        - description: 作成/更新時刻
+          properties:
+            createdAt:
+              type: integer
+              example: 1542290000
+            updatedAt:
+              type: integer
+              example: 1542290000
+        - type: object
+          description: 共通した売上管理を行う商品群.同じブランドに属する商品は売上などの統計情報を一部共有できる。
+          properties:
+            name:
+              type: string
+              example: サイバー保険
+              description: ブランド名
+            companyId:
+              type: string
+              example: 1234567890xyz
+        - type: object
+          description: 商品
+          required:
+            - name
+            - companyId
+            - billingTimes
+            - billingDateType
+            - startAt
+          properties:
+            brandId:
+              type: string
+              example: jkgh3u8234ddf
+            parentId:
+              type: string
+              example: lkjflkewjklj
+              description: 更新前の(たとえば前年度に販売していた)商品を指すID. parentIdで参照できる範囲を同一の商品とみなす
+            agencyCompanyId:
+              type: string
+              example: kfljekwl3kj1
+              description: 担当代理店の会社ID
+            agencyCompany:
+              type: object
+              description: 会社概要
+              required:
+                - id
+                - name
+                - type
+                - category
+              properties:
+                id:
+                  type: string
+                  example: fsandlifu3n4
+                partnerCode:
+                  type: string
+                  example: FFFFF
+                  description: 自社が付与した識別子
+                name:
+                  type: string
+                  example: SmartPlus Small-amount Short-term Insurance
+                nameKana:
+                  type: string
+                  example: スマートプラスショウガクタンキホケン
+                type:
+                  type: string
+                  enum:
+                    - INSURER
+                    - AGENCY
+                    - SALES
+                  description: 会社の種類. INSURER:保険会社,AGENCY:保険代理店,SALES:販売パートナー(包括契約者),
+                category:
+                  type: string
+                  description: 会社の区分.生保・損保・少額短期などの分類を想定
+                  example: SMALL
+            salesCompanyId:
+              type: string
+              example: kfljekwl3kj1
+              description: 販売パートナー(包括契約者)の会社ID
+            department:
+              type: object
+              properties:
+                code:
+                  type: string
+                  example: ABC01
+                order:
+                  type: integer
+                  example: 0
+                  description: 部署表示の並び順
+                name:
+                  type: string
+                  example: 東京支社
+                  description: 部署名
+                nameKana:
+                  type: string
+                  example: トウキョウシシャ
+                  description: 部署名(カナ)
+                attributes:
+                  type: object
+                  description: 拡張領域.任意の情報をjsonとして保持する
+            type:
+              type: string
+              example: INDIVIDUAL
+              enum:
+                - INDIVIDUAL
+                - GROUP
+              description: 加入の形態.個人の契約か団体/包括契約への加入か
+            inusrancePeriod:
+              type: object
+              description: 保険期間の算出方法
+              properties:
+                beggining:
+                  type: object
+                  description: 始期算定方法
+                  properties:
+                    reservable:
+                      type: boolean
+                      description: 保障開始を(未来日で)顧客が指定することができるか
+                    underwrittenDateType:
+                      type: string
+                      enum:
+                        - DAY
+                        - MONTH
+                      description: 保障開始日の算出を日単位で行うか月単位で行うか
+                    min:
+                      type: integer
+                      example: 0
+                      description: >-
+                        承認後何日(月)目から引受を開始するかの最小値。0は承認当日(当月).
+                        reservableでない場合、min=maxとする
+                    max:
+                      type: integer
+                      example: 0
+                      description: 承認後何日(月)目から引受を開始するかの最大値
+                length:
+                  type: object
+                  description: 期間長さの算定方法
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                        - FLEXIBLE
+                        - FIXED
+                        - NONE
+                      description: 保険期間の種類.FLEXIBLE:契約毎に定める,FIXED:固定長,NONE:期間の定め無し(終身)
+                    unit:
+                      type: string
+                      enum:
+                        - DAY
+                        - MONTH
+                        - YEAR
+                      description: 保険期間の単位
+                    min:
+                      type: integer
+                      example: 1
+                      description: 期間の最小値
+                    max:
+                      type: integer
+                      example: 31
+                      description: 期間の最大値
+            billingConfig:
+              type: object
+              properties:
+                calculationUnit:
+                  type: string
+                  enum:
+                    - ONCE
+                    - TOTAL
+                  description: 計算する保険料が一回あたりの支払額であるか総額であるか.ONCE:1回あたりの支払額,TOTAL:保険期間における総額
+                method:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                      - CARD
+                  description: 利用可能な保険料収納方法.CARD:クレジットカード
+                frequency:
+                  type: integer
+                  example: 1
+                  description: 保険料請求の頻度(nヶ月毎)の設定値.0の場合は一時払い.1で毎月,6で半年払い,12で年払い.その他の値も設定可
+                day:
+                  type: string
+                  example: 3
+                  description: 保険料請求期日の算出方法においての数値部分<br>32で明示的に月末,-1で申込日付と同日
+                count:
+                  type: integer
+                  example: 12
+                  description: 請求回数.0の場合は無料,マイナスの場合は終身(回数未定)
+            presets:
+              type: array
+              items:
+                allOf:
+                  - properties:
+                      order:
+                        type: integer
+                        example: 1
+                        description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                type: object
+                description: 特約をまとめたモノ
+                required:
+                  - order
+                  - name
+                  - key
+                  - riderKeys
+                properties:
+                  name:
+                    type: string
+                    example: しっかりサポートプラン
+                  key:
+                    type: string
+                    example: プランを示す一意なkey
+                  riderKeys:
+                    type: array
+                    items:
+                      type: string
+            perils:
+              type: array
+              items:
+                allOf:
+                  - properties:
+                      order:
+                        type: integer
+                        example: 1
+                        description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                type: object
+                description: 危険の定義
+                required:
+                  - key
+                  - order
+                  - name
+                  - exposureKey
+                  - formKeys
+                properties:
+                  name:
+                    type: string
+                    example: 入院
+                  key:
+                    type: string
+                    example: peril1
+                  exposureKey:
+                    type: string
+                    example: 1
+                  formKeys:
+                    description: >-
+                      この危険に合致することを示すformのkey(該当するすべてのformがvalidにpostされていれば、この危険の発生を認定する)
+                    type: array
+                    items:
+                      type: string
+            perilForms:
+              type: array
+              items:
+                allOf:
+                  - properties:
+                      order:
+                        type: integer
+                        example: 1
+                        description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                type: object
+                description: 給付に当たって聴取する必要のある危険の情報のフォーム
+                required:
+                  - order
+                  - name
+                  - key
+                  - exposureKey
+                  - parentKey
+                  - parentOptionKey
+                properties:
+                  key:
+                    type: string
+                    example: perilForm1
+                  name:
+                    type: string
+                    example: 入院日
+                  exposureKey:
+                    type: string
+                    example: mother
+                  label:
+                    type: string
+                    description: 入院開始日を入力してください
+                  description:
+                    type: string
+                    example: 補足説明がここにHTMLで入ります
+                  required:
+                    type: boolean
+                    example: true
+                  isAccidentDate:
+                    type: boolean
+                    example: true
+                    description: 事故日を表す設問であるか
+                  parentKey:
+                    type: string
+                    example: perilForm1
+                    default: ''
+                    description: 本項目聴取のために前段で必要な親のkeyを示す。空はルートレベル。
+                  parentOptionKey:
+                    type: string
+                    example: perilFormOption1
+                    description: parentKeyで示す項目における選択肢のkey
+                  parentOptionKeys:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - perilFormOption1
+                      - perilFormOption2
+                    description: parentKeyで示す項目における選択肢のKey.複数指定した場合はOR条件
+                  options:
+                    type: array
+                    items:
+                      allOf:
+                        - properties:
+                            order:
+                              type: integer
+                              example: 1
+                              description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                      type: object
+                      description: PerilFormの回答方法(入力式の場合は型情報,選択式の場合は選択肢)
+                      required:
+                        - order
+                        - name
+                        - key
+                        - type
+                      properties:
+                        name:
+                          type: string
+                          example: 手術
+                          description: ラベルとしての表示名
+                        key:
+                          type: string
+                          example: birthday
+                          description: ''
+                        type:
+                          type: string
+                          enum:
+                            - TEXT
+                            - NUMBER
+                            - RADIO
+                            - CHECKBOX
+                            - FILE
+                          description: >-
+                            TEXT: テキスト、NUMBER: 数値、RADIO:
+                            ブール値（同列オプションとtrue重複なし）、CHECKBOX: ブール値、FILE: バイナリ・文字列
+            benefits:
+              type: array
+              items:
+                type: object
+                description: 給付内容マスタ
+                required:
+                  - key
+                  - order
+                  - name
+                  - perilKey
+                  - paymentCountLimit
+                allOf:
+                  - properties:
+                      order:
+                        type: integer
+                        example: 1
+                        description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                properties:
+                  key:
+                    type: string
+                    example: generalBenefit
+                  name:
+                    type: string
+                    example: 火災修繕費用保険金
+                    description: 給付名称
+                  perilKey:
+                    type: string
+                    example: firePrimary
+                    description: 当該給付内容がカバーする危険≒保険事故の名称。「入院・手術・産後うつ」など
+                  insuranceType:
+                    type: object
+                    description: 保険の種別、死亡保険、低発生率保険等
+                    required:
+                      - id
+                      - name
+                      - key
+                      - insuranceMoneyLimit
+                      - createdAt
+                      - updatedAt
+                    properties:
+                      name:
+                        type: string
+                        example: FIRE
+                      insuranceMoneyLimit:
+                        type: integer
+                        example: 10000000
+                        description: 保険金の上限金額
+                    allOf:
+                      - properties:
+                          id:
+                            type: string
+                            example: fsandlifu3n4
+                            description: 難読化したID
+                      - description: 作成/更新時刻
+                        properties:
+                          createdAt:
+                            type: integer
+                            example: 1542290000
+                          updatedAt:
+                            type: integer
+                            example: 1542290000
+                  claimAssessment:
+                    type: object
+                    properties:
+                      targets:
+                        type: array
+                        items:
+                          type: string
+                          enum:
+                            - SELF
+                            - THIRD_PARTY
+                          example: THIRD_PARTY
+                          description: 評価の対象.請求者自身を相手方とするか、第三者を相手方とするか
+                      type:
+                        type: string
+                        enum:
+                          - FIXED
+                          - TIMES
+                          - COMPENSATION
+                        example: FIXED
+                        description: >-
+                          金額評価の方法.FIXED:予め決められた金額,TIMES:予め決められた金額x指定された事故の属性の値,COMPENSATION:被害額の補填
+                      perilFormKey:
+                        type: string
+                        example: firedDate
+                        description: 金額評価に利用する事故の属性
+                  paymentCountLimit:
+                    type: integer
+                    example: 2
+                    description: 保険金支払い回数の上限
+            abstractExposures:
+              type: array
+              items:
+                allOf:
+                  - properties:
+                      order:
+                        type: integer
+                        example: 1
+                        description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                type: object
+                description: 被保険者の定義
+                required:
+                  - order
+                  - name
+                  - forms
+                properties:
+                  name:
+                    type: string
+                    example: 被保険者①
+                  key:
+                    type: string
+                    example: mother
+                  isNamed:
+                    type: boolean
+                    example: true
+                    description: 記名被保険者
+                  claimBySelf:
+                    type: boolean
+                    example: true
+                    description: 当事者が保険給付請求権者であるか
+                  abstractClaimerNumbers:
+                    type: array
+                    items:
+                      type: integer
+                  forms:
+                    type: array
+                    items:
+                      allOf:
+                        - properties:
+                            order:
+                              type: integer
+                              example: 1
+                              description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                      type: object
+                      description: 被保険者に関して聴取する必要のある情報のフォーム
+                      required:
+                        - id
+                        - number
+                      properties:
+                        name:
+                          type: string
+                          example: 生年月日
+                          description: 項目名
+                        key:
+                          type: string
+                          example: birthday
+                          description: POSTされるAnswerのキー。Form(view)の構築を自動化する場合に利用する
+                        required:
+                          type: boolean
+                          example: true
+                          description: 契約時必須項目かどうか
+                        parentKey:
+                          type: string
+                          example: form1
+                          description: 本項目聴取のために前段で必要な親のkeyを示す。空文字はルートレベル。
+                        parentOptionKeys:
+                          type: array
+                          items:
+                            type: string
+                          example:
+                            - formOption1
+                            - formOption2
+                          description: parentKeyで示す項目における選択肢のKey.複数指定した場合はOR条件
+                        type:
+                          type: string
+                          enum:
+                            - NAME
+                            - NAME_KANA
+                            - BIRTHDAY
+                            - DUE_DATE
+                            - ADDRESS
+                            - PLACE
+                            - DATE
+                            - DATETIME
+                            - RADIO
+                            - CHECKBOX
+                            - FLEXIBLE
+                            - NONE
+                          example: BIRTHDAY
+                          description: >-
+                            属性。この質問自体が、システム的に特別な意味を持つ場合はNONE以外。例えば生年月日などは、計算に用いるなど特別に取り扱いたいため、明確に他の質問と識別できる必要がある。このEnum値自体はMasterとして定義するので増える可能性がある。
+                        options:
+                          type: array
+                          items:
+                            type: object
+                            description: ExposureFormの回答選択肢
+                            allOf:
+                              - properties:
+                                  order:
+                                    type: integer
+                                    example: 1
+                                    description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                            required:
+                              - key
+                              - type
+                            properties:
+                              name:
+                                type: string
+                                example: 生年月日
+                                description: ラベルとしての表示名。なくても良い。
+                              key:
+                                type: string
+                                example: birthday
+                                description: >-
+                                  POSTされるAnswerOptionのキー。Form(view)の構築を自動化する場合に利用する。
+                              type:
+                                type: string
+                                enum:
+                                  - TEXT
+                                  - NUMBER
+                                  - RADIO
+                                  - CHECKBOX
+                                  - FILE
+                                description: >-
+                                  TEXT: テキスト、NUMBER: 数値、RADIO:
+                                  ブール値（同列オプションとtrue重複なし）、CHECKBOX: ブール値、FILE:
+                                  バイナリ・文字列
+                              validator:
+                                type: object
+                                description: 被保険者に対するチェックロジック
+                                allOf:
+                                  - properties:
+                                      min:
+                                        type: integer
+                                        example: 1
+                                        description: 数値の最小値または文字列の最短字数
+                                      max:
+                                        type: integer
+                                        example: 99999
+                                        description: 数値の最大値または文字列の最長字数
+                                      regexp:
+                                        type: string
+                                        example: ^\d{4}$
+                                        description: 文字列の正規表現
+                                properties:
+                                  conditions:
+                                    type: array
+                                    items:
+                                      type: object
+                                      description: 被保険者Validationの出し分け条件
+                                      properties:
+                                        coverageKeys:
+                                          type: array
+                                          items:
+                                            type: string
+                                          description: いずれかの保障に合致するときにチェックを行う。空の場合は常にチェックする
+                                        exposureKey:
+                                          type: string
+                                          example: mother
+                                          description: 被保険者の識別子
+                                        exposureFormKey:
+                                          type: string
+                                          example: form1
+                                          description: Formの識別子
+                                        exposureFormOptionKeys:
+                                          type: string
+                                          example:
+                                            - formOption1
+                                            - formOption2
+                                          description: FormOptionの識別子一覧
+                                    description: いずれかの保障に合致するときにチェックを行う。空の場合は常にチェックする
+                                  logic:
+                                    type: object
+                                    properties:
+                                      args:
+                                        type: array
+                                        items:
+                                          type: object
+                                          description: Validatorで変数として利用可能な被保険者の識別子
+                                          properties:
+                                            exposureKey:
+                                              type: string
+                                              example: mother
+                                              description: 被保険者の場合のみ設定.被保険者の識別子
+                                            formKey:
+                                              type: string
+                                              example: birthday
+                                              description: フォームの識別子
+                                            formOptionKey:
+                                              type: string
+                                              example: birthday
+                                              description: フォームの要素の識別子
+                                      formulas:
+                                        type: array
+                                        items:
+                                          type: string
+                                          example: E0<E1+E2*100
+                                          description: >-
+                                            四則演算と不等号または等号1つからなる計算式.E0は属性自身、E1~EnはExposureFormOptionPointerが指す、その他一般的な値($now等)をサポート
+            startAt:
+              type: integer
+              example: 1575530512408
+              description: 販売開始日
+            endAt:
+              type: integer
+              example: 1575530512408
+              description: 販売終了日
+            examRequired:
+              type: boolean
+              example: true
+              description: 引受時に審査が必須であるか
+            examRequiredConfidency:
+              type: string
+              example: WARN
+              description: 引受時に審査を必須とする信用度
+            autoRenewal:
+              type: boolean
+              example: true
+              description: 自動更改フラグ
+    Props_Items:
+      properties:
+        count:
+          type: integer
+          example: 10
+        perPage:
+          type: integer
+          example: 50
+        nextCursor:
+          type: string
+          example: null
+    SpecialRider:
+      allOf:
+        - properties:
+            order:
+              type: integer
+              example: 1
+              description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+      type: object
+      description: Riderから生成される、契約単位で最適化された特約
+      required:
+        - order
+        - key
+      properties:
+        key:
+          type: string
+          example: generalPolicyCondition
+        name:
+          type: string
+          example: 普通約款
+        isDefault:
+          type: boolean
+          example: true
+        premium:
+          type: object
+          description: 保険料
+          properties:
+            min:
+              type: integer
+              example: 50000
+              description: 保険料の取りうる最小値
+            max:
+              type: integer
+              example: 50000
+              description: 保険料の取りうる最大値
+            currentValue:
+              type: integer
+              example: 50000
+              description: 現在有効な保険料
+        specialCoverages:
+          type: array
+          items:
+            type: object
+            required:
+              - benefit
+            allOf:
+              - description: Coverageから生成される契約ごとの保障内容
+                required:
+                  - key
+                properties:
+                  key:
+                    type: string
+                    example: generalCoverage
+                  insuranceMoney:
+                    type: object
+                    description: 保険金
+                    required:
+                      - min
+                      - max
+                    properties:
+                      min:
+                        type: integer
+                        example: 1
+                        description: 最低金額
+                      max:
+                        type: integer
+                        example: 10000000
+                        description: 最高金額
+                      default:
+                        type: integer
+                        example: 1000000
+                        description: 基本金額
+              - allOf:
+                  - properties:
+                      order:
+                        type: integer
+                        example: 1
+                        description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                type: object
+                description: 保障内容
+                required:
+                  - key
+                  - benefitKey
+                properties:
+                  key:
+                    type: string
+                    example: generalCoverage
+                    description: product内の特約を一意に識別するキー
+                  deductibleAmount:
+                    type: integer
+                    example: 10000
+                    description: 免責金額
+                  benefitKey:
+                    type: string
+                    example: GeneralBenefit
+            properties:
+              benefit:
+                type: object
+                description: 給付内容マスタ
+                required:
+                  - key
+                  - order
+                  - name
+                  - perilKey
+                  - paymentCountLimit
+                allOf:
+                  - properties:
+                      order:
+                        type: integer
+                        example: 1
+                        description: ナンバリングの他、他のKeyと複合でPKとして取り扱える値。基本的に1スタート。
+                properties:
+                  key:
+                    type: string
+                    example: generalBenefit
+                  name:
+                    type: string
+                    example: 火災修繕費用保険金
+                    description: 給付名称
+                  perilKey:
+                    type: string
+                    example: firePrimary
+                    description: 当該給付内容がカバーする危険≒保険事故の名称。「入院・手術・産後うつ」など
+                  insuranceType:
+                    type: object
+                    description: 保険の種別、死亡保険、低発生率保険等
+                    required:
+                      - id
+                      - name
+                      - key
+                      - insuranceMoneyLimit
+                      - createdAt
+                      - updatedAt
+                    properties:
+                      name:
+                        type: string
+                        example: FIRE
+                      insuranceMoneyLimit:
+                        type: integer
+                        example: 10000000
+                        description: 保険金の上限金額
+                    allOf:
+                      - properties:
+                          id:
+                            type: string
+                            example: fsandlifu3n4
+                            description: 難読化したID
+                      - description: 作成/更新時刻
+                        properties:
+                          createdAt:
+                            type: integer
+                            example: 1542290000
+                          updatedAt:
+                            type: integer
+                            example: 1542290000
+                  claimAssessment:
+                    type: object
+                    properties:
+                      targets:
+                        type: array
+                        items:
+                          type: string
+                          enum:
+                            - SELF
+                            - THIRD_PARTY
+                          example: THIRD_PARTY
+                          description: 評価の対象.請求者自身を相手方とするか、第三者を相手方とするか
+                      type:
+                        type: string
+                        enum:
+                          - FIXED
+                          - TIMES
+                          - COMPENSATION
+                        example: FIXED
+                        description: >-
+                          金額評価の方法.FIXED:予め決められた金額,TIMES:予め決められた金額x指定された事故の属性の値,COMPENSATION:被害額の補填
+                      perilFormKey:
+                        type: string
+                        example: firedDate
+                        description: 金額評価に利用する事故の属性
+                  paymentCountLimit:
+                    type: integer
+                    example: 2
+                    description: 保険金支払い回数の上限
+              premium:
+                type: object
+                description: 保険料
+                properties:
+                  min:
+                    type: integer
+                    example: 50000
+                    description: 保険料の取りうる最小値
+                  max:
+                    type: integer
+                    example: 50000
+                    description: 保険料の取りうる最大値
+                  currentValue:
+                    type: integer
+                    example: 50000
+                    description: 現在有効な保険料
+    TokenExpirationError:
+      type: object
+      description: Token失効エラー
+      properties:
+        type:
+          type: string
+          example: unauthorized
+        title:
+          type: string
+          example: Unauthorized request
+        detail:
+          type: string
+          example: code=401, message=invalid key, internal=jwt is expired
+        instance:
+          type: string
+          example: /v1/externalUsers/00000000011
+          description: 実行したエンドポイントのパス
+        status:
+          type: INTEGER
+          example: 401
+paths:
+  /v1/token:
+    post:
+      tags:
+        - auth
+      summary: authenticate client
+      description: クライアント用のアクセストークンを発行する
+      security:
+        - apiKey: []
+        - basicAuth: []
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    example: eyJ...
+                    description: JWT
+                  expiresAt:
+                    type: integer
+                    example: 1700000000
+                  tokenType:
+                    type: string
+                    example: Bearer
+        '400':
+          description: パラメータ不備
+        '401':
+          description: 認証失敗
+  /v1/externalUsers:
+    post:
+      tags:
+        - user
+      summary: create external user
+      description: 外部ユーザーとそのユーザーに紐づいたInspireのユーザーを新規作成する.
+      security:
+        - bearerAuth: []
+        - apiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: 外部ユーザー作成用パラメータ
+              required:
+                - id
+                - email
+              properties:
+                id:
+                  type: string
+                  description: 外部認証システムのユーザーID(1〜256桁)
+                email:
+                  type: string
+                  description: メールアドレス。本システムでは異なるユーザーに対して同一メールアドレスを登録することはできません。
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalUser'
+        '401':
+          description: >-
+            トークン失効エラー。最後のPOST /v1/tokenのレスポンスをBearer
+            Tokenとして利用した6時間経過以降にはTokenが失効します。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenExpirationError'
+        400(1):
+          description: すでにメールアドレスが登録済の場合
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: invalid_params
+                  title:
+                    type: string
+                    example: Your request parameters are invalid
+                  detail:
+                    type: string
+                    example: requested email is already used.
+                  instance:
+                    type: string
+                    example: /v1/externalUsers
+                  status:
+                    type: INTEGER
+                    example: 400
+        400(2):
+          description: idがすでに登録済の場合
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: invalid_params
+                  title:
+                    type: string
+                    example: Your request parameters are invalid
+                  detail:
+                    type: string
+                    example: external user for ID:0000000002 already exists
+                  instance:
+                    type: string
+                    example: /v1/externalUsers
+                  status:
+                    type: INTEGER
+                    example: 400
+  /v1/externalUsers/{externalUserId}:
+    get:
+      tags:
+        - user
+      summary: get external user
+      description: 外部ユーザーを取得する.<br/>外部Idpが発行するユーザーIDからInspireのユーザーIDを取得する.
+      security:
+        - bearerAuth: []
+        - apiKey: []
+      parameters:
+        - in: path
+          name: externalUserId
+          description: 外部ユーザーID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExternalUser'
+        '401':
+          description: >-
+            トークン失効エラー。最後のPOST /v1/tokenのレスポンスをBearer
+            Tokenとして利用した6時間経過以降にはTokenが失効します。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenExpirationError'
+        '404':
+          description: IDに紐づく外部ユーザーが存在しない場合
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: resource_is_not_found
+                  title:
+                    type: string
+                    example: Requested resource is not found in server
+                  detail:
+                    type: string
+                    example: 'ExternalUsers(id: 00000000011) is not found'
+                  instance:
+                    type: string
+                    example: /v1/externalUsers/00000000011
+  /v1/products:
+    get:
+      tags:
+        - product
+      summary: get products
+      description: 商品定義を一覧を取得する
+      security:
+        - apiKey: []
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: filter.brandId.eq
+          description: ブランドIDでフィルタリングする
+          schema:
+            type: string
+        - in: query
+          name: filter.startAt.[lte|gte|lt|gt]
+          description: 開始日でフィルタリングする
+          schema:
+            type: integer
+        - in: query
+          name: filter.endAt.[lte|gte|lt|gt]
+          description: 終了日でフィルタリングする
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/Props_Items'
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+  /v1/products/{productId}:
+    get:
+      tags:
+        - product
+      summary: get product
+      description: 商品定義を取得する
+      parameters:
+        - in: path
+          name: productId
+          description: 商品ID
+          required: true
+          example: 01EFEA6XX2B3MW6CYBJY4RZNKD
+          schema:
+            type: string
+      security:
+        - apiKey: []
+        - bearerAuth: []
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+  /v1/products/{productId}/estimation:
+    post:
+      tags:
+        - product
+      summary: generate estimation for product
+      description: 見積もりの生成
+      parameters:
+        - in: path
+          name: productId
+          description: 商品ID
+          required: true
+          example: 01EFEA6XX2B3MW6CYBJY4RZNKD
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+        - apiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                riderKeys:
+                  type: array
+                  items:
+                    type: string
+                    example: generalPolicyCondition
+                  description: 申し込もうとする特約一覧(=プラン)
+                expiresAt:
+                  type: integer
+                  example: 1700000000
+                  description: 保険の満期日
+                underwrittenAt:
+                  type: integer
+                  example: 1700000000
+                  description: 保険の引受日
+                exposures:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Exposure'
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  specialRiders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SpecialRider'
+                  totalPremium:
+                    $ref: '#/components/schemas/Premium'
+  /v1/users/{userId}/policies:
+    post:
+      tags:
+        - policy
+      summary: touch new policy
+      description: >-
+        契約ドラフト作成。productIdのみを必須としますが、その他の聴取項目は任意で、PUT
+        /v1/policies/{policyId}で更新することができます
+      security:
+        - bearerAuth: []
+        - apiKey: []
+      parameters:
+        - in: path
+          name: userId
+          description: ユーザーID
+          required: true
+          schema:
+            type: string
+            example: 01EFEA6XX2B3MW6CYBJY4RZNKD
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: 契約
+              required:
+                - productId
+              properties:
+                productId:
+                  type: string
+                  example: 01GR5QXA6S07Y8PS95BR93M0W9
+                  description: 加入する保険商品ID
+                exposures:
+                  type: array
+                  items:
+                    type: object
+                    description: 被保険者
+                    required:
+                      - key
+                      - answers
+                      - isPolicyHolder
+                    properties:
+                      key:
+                        type: string
+                        example: exposure1
+                      answers:
+                        type: array
+                        items:
+                          allOf:
+                            - type: object
+                              description: Formの実回答
+                              required:
+                                - key
+                                - value
+                              properties:
+                                key:
+                                  type: string
+                                  example: birthday
+                                options:
+                                  type: array
+                                  items:
+                                    type: object
+                                    description: FormOptionの実回答
+                                    required:
+                                      - key
+                                      - value
+                                    properties:
+                                      key:
+                                        type: string
+                                        example: birthday
+                                      value:
+                                        description: 具体的に入力された値
+                                        example: '1600000000'
+                                  description: 回答
+                          description: 被保険者聴取内容
+                      isPolicyHolder:
+                        type: boolean
+                        example: true
+                        description: 1名はtrueを指定してください
+                riderKeys:
+                  type: array
+                  items:
+                    type: string
+                  description: 契約する特約のkey
+                  example:
+                    - fireRider
+                    - earthquakeRider
+                    - rentRider
+                underwrittenAt:
+                  type: integer
+                  example: 1600000000
+                  description: 希望する保障開始日(unixtime).日付指定可能な商品でのみ有効
+                expiresAt:
+                  type: integer
+                  example: 1650000000
+                  description: 希望する満期日(unixtime).日付指定可能な商品でのみ有効
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+  /v1/policies/{policyId}:
+    put:
+      tags:
+        - policy
+      summary: update a policy
+      description: 契約内容の上書き.DRAFT時のみ利用可能.
+      security:
+        - bearerAuth: []
+        - apiKey: []
+      parameters:
+        - in: path
+          name: policyId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: 契約
+              required:
+                - exposures
+              properties:
+                label:
+                  type: string
+                  example: ''
+                  description: 表示用名称.
+                policyHolder:
+                  allOf:
+                    - properties:
+                        firstName:
+                          type: string
+                          example: 太郎
+                        lastName:
+                          type: string
+                          example: 山田
+                    - properties:
+                        firstNameKana:
+                          type: string
+                          example: タロウ
+                        lastNameKana:
+                          type: string
+                          example: ヤマダ
+                  type: object
+                  description: 保険の契約者
+                  required:
+                    - birthday
+                    - firstName
+                    - lastName
+                    - firstNameKana
+                    - lastNameKana
+                    - address
+                    - telNumber
+                  properties:
+                    userId:
+                      type: string
+                      example: lfkjelq23
+                    birthday:
+                      type: integer
+                      example: 1575530512408
+                    address:
+                      type: object
+                      properties:
+                        zipcode:
+                          type: string
+                          example: 321-4321
+                        prefecture:
+                          type: string
+                          example: 東京都
+                        city:
+                          type: string
+                          example: 千代田区麹町
+                        street:
+                          type: string
+                          example: 1-1-1セント・ルイス大聖堂1101
+                    telNumber:
+                      type: string
+                      example: '09012345678'
+                exposures:
+                  type: array
+                  items:
+                    type: object
+                    description: 被保険者
+                    required:
+                      - key
+                      - answers
+                      - isPolicyHolder
+                    properties:
+                      key:
+                        type: string
+                        example: primary
+                      answers:
+                        type: array
+                        items:
+                          allOf:
+                            - type: object
+                              description: Formの実回答
+                              required:
+                                - key
+                                - value
+                              properties:
+                                key:
+                                  type: string
+                                  example: birthday
+                                options:
+                                  type: array
+                                  items:
+                                    type: object
+                                    description: FormOptionの実回答
+                                    required:
+                                      - key
+                                      - value
+                                    properties:
+                                      key:
+                                        type: string
+                                        example: birthday
+                                      value:
+                                        description: 具体的に入力された値
+                                        example: '1600000000'
+                                  description: 回答
+                          description: 被保険者聴取内容
+                      isPolicyHolder:
+                        type: boolean
+                        example: true
+                riderKeys:
+                  type: array
+                  items:
+                    type: string
+                  description: 契約する特約のkey
+                  example:
+                    - rider1
+                billingSchedule:
+                  type: object
+                  required:
+                    - frequency
+                    - method
+                    - count
+                  properties:
+                    method:
+                      type: string
+                      enum:
+                        - CARD
+                      example: CARD
+                      description: 当該契約で利用する決済手段
+                    methodDetailId:
+                      type: string
+                      example: dlkfjkl32
+                      description: >-
+                        決済手段内でユーザーが複数の選択肢を持っている場合の識別子(たとえば複数のクレジットカードを登録している場合にどれを利用するか)
+                    frequency:
+                      type: integer
+                      example: 1
+                      description: 支払い頻度.Nヶ月ごと請求のN
+                    count:
+                      type: integer
+                      example: 1
+                      description: 支払い分割数.回払いの回
+                underwrittenAt:
+                  type: integer
+                  example: 1600000000
+                  description: 希望する保障開始日(unixtime).日付指定可能な商品でのみ有効
+                expiresAt:
+                  type: integer
+                  example: 1650000000
+                  description: 希望する満期日(unixtime).日付指定可能な商品でのみ有効
+                extras:
+                  type: object
+                  example: {}
+                  description: クライアントからわたされた任意のobjectを記録する
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+    get:
+      tags:
+        - policy
+      summary: get a policy
+      description: 契約情報を取得する
+      security:
+        - bearerAuth: []
+        - apiKey: []
+      parameters:
+        - in: path
+          name: policyId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+  /v1/policies/{policyId}/billings:
+    put:
+      tags:
+        - billing
+      summary: request policy and exec billings
+      description: 契約申込と保険料徴収
+      parameters:
+        - in: path
+          name: policyId
+          description: 契約ID
+          required: true
+          example: 01EFEA6XX2B3MW6CYBJY4RZNKD
+          schema:
+            type: string
+      security:
+        - apiKey: []
+        - bearerAuth: []
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+        '422':
+          description: 下書き以外のステータスで申し込みを行おうとした際にエラーになります。
+          content:
+            application/json:
+              schema:
+                properties:
+                  type:
+                    type: string
+                    example: unprocessable_entity
+                  title:
+                    type: string
+                    example: Your request is unprocessable
+                  detail:
+                    type: string
+                    example: replace is not available except at status=DRAFT
+                  instance:
+                    type: string
+                    example: /v1/policies/01GRWJQ87YPFBT2AQ564TG1S0N/billings
+                  status:
+                    type: integer
+                    example: 422

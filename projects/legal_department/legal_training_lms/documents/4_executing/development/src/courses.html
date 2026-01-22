@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>研修コース一覧 - 法務研修LMS</title>
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <?!= include('Header'); ?>
+  
+  <div class="container">
+    <div class="page-header">
+      <h1>研修コース一覧</h1>
+      <p>参加したい研修コースを選択して予約してください</p>
+    </div>
+    
+    <? if (participant) { ?>
+      <div class="user-group-info">
+        <span class="badge">あなたのグループ: グループ <?= participant.groupId ?></span>
+      </div>
+    <? } ?>
+    
+    <? if (courses && courses.length > 0) { ?>
+      <div class="courses-grid">
+        <? for (var i = 0; i < courses.length; i++) { ?>
+          <? var course = courses[i]; ?>
+          <div class="course-card">
+            <div class="course-header">
+              <h3><?= course.name ?></h3>
+              <span class="badge badge-group">グループ <?= course.groupId ?></span>
+            </div>
+            
+            <div class="course-body">
+              <p class="course-description"><?= course.description || '研修の詳細説明' ?></p>
+              
+              <div class="course-info">
+                <div class="info-row">
+                  <span class="icon">📅</span>
+                  <span>開始日: <?= formatDate(course.startDate) ?></span>
+                </div>
+                <div class="info-row">
+                  <span class="icon">🏁</span>
+                  <span>終了日: <?= formatDate(course.endDate) ?></span>
+                </div>
+                <div class="info-row">
+                  <span class="icon">👥</span>
+                  <span>定員: <?= course.maxParticipants || 50 ?>名</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="course-footer">
+              <? if (participant && participant.groupId === course.groupId) { ?>
+                <a href="?page=reservation&courseId=<?= course.id ?>" class="btn btn-primary btn-block">
+                  予約する
+                </a>
+              <? } else if (participant) { ?>
+                <button class="btn btn-disabled btn-block" disabled>
+                  他のグループ専用
+                </button>
+              <? } else { ?>
+                <a href="?page=home" class="btn btn-secondary btn-block">
+                  受講者登録が必要
+                </a>
+              <? } ?>
+            </div>
+          </div>
+        <? } ?>
+      </div>
+    <? } else { ?>
+      <div class="alert alert-info">
+        <strong>現在、利用可能な研修コースはありません</strong>
+        <p>新しい研修コースが追加されるまでお待ちください。</p>
+      </div>
+    <? } ?>
+  </div>
+  
+  <?!= include('Footer'); ?>
+</body>
+</html>
+

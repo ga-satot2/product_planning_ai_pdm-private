@@ -1,0 +1,38 @@
+# 統合プロジェクトで不要なファイルを除外
+
+# JavaScriptファイル（コンパイル済み）
+*.js
+
+# ドキュメント
+docs/
+*.md
+README.md
+
+# スクリプト
+scripts/
+node_modules/**
+**/node_modules/**
+package.json
+package-lock.json
+
+# ログ
+logs/
+*.log
+
+# CSVファイル
+*.csv
+
+# 画像
+*.png
+*.jpg
+*.jpeg
+
+# 設定ファイル（appsscript.jsonは含める）
+.clasp.json
+.claspignore
+
+# その他
+drive_downloads/
+config/
+analyze_sheet_structure*.gs
+analyze_sheet_structure*.js

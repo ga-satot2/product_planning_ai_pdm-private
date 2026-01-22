@@ -1,0 +1,79 @@
+{
+  "timestamp": "2026-01-14T14:08:01.626390",
+  "summary": {
+    "total": 4,
+    "success": 2,
+    "failure": 2
+  },
+  "results": [
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [],
+      "test_functions_executed": [
+        "testErrorHandling"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testErrorHandling_20260114_140414.log",
+      "test_function": "testErrorHandling"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "14:04:46お知らせ実行開始14:04:46情報=== testAllBoundaryAndEdgeCases: 開始 ===14:04:46情報⚠️ 閾値・エッジケース・異常系のテストを実行します14:04:46情報",
+        "1. 定員管理機能の閾値テスト...14:04:46情報=== testEventCapacityBoundary: 開始 ===14:04:46情報=== getTestData: 開始 ===14:04:46情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します14:04:47情報予約一覧シートの最終行: 10514:04:48情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:14:04:48情報1. t_sato2@ga-tech.co.jp14:04:48情報",
+        "=== getTestData: 完了 ===14:04:48情報⚠️ テストデータが取得できませんでした。createTestEvent()を実行してください。14:04:48情報",
+        "2. 変更期限の閾値テスト...14:04:48情報=== testChangeDeadlineBoundary: 開始 ===14:04:48情報=== getTestData: 開始 ===14:04:48情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します14:04:48情報予約一覧シートの最終行: 10514:04:49情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:14:04:49情報1. t_sato2@ga-tech.co.jp14:04:49情報",
+        "=== getTestData: 完了 ===14:04:49情報⚠️ テストデータが取得できませんでした。createTestEvent()を実行してください。14:04:49情報",
+        "3. 変更回数の閾値テスト...14:04:49情報=== testChangeLimitBoundary: 開始 ===14:04:49情報=== getTestData: 開始 ===14:04:49情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します14:04:49情報予約一覧シートの最終行: 10514:04:50情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:14:04:50情報1. t_sato2@ga-tech.co.jp14:04:50情報",
+        "=== getTestData: 完了 ===14:04:50情報⚠️ テストデータが取得できませんでした。createTestEvent()を実行してください。14:04:50情報",
+        "2. checkDuplicateReservation()の不正な入力値テスト...14:04:52情報=== getTestData: 開始 ===14:04:52情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します14:04:52情報予約一覧シートの最終行: 10514:04:54情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:14:04:54情報1. t_sato2@ga-tech.co.jp14:04:54情報",
+        "1. カレンダーIDが未設定の場合のテスト...14:05:03情報=== getTestData: 開始 ===14:05:03情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します14:05:03情報予約一覧シートの最終行: 10514:05:04情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:14:05:04情報1. t_sato2@ga-tech.co.jp14:05:04情報",
+        "=== getTestData: 完了 ===14:05:04情報⚠️  [2026-01-14T05:05:04.602Z] [WARN] checkEventCapacity: CALENDAR_ID が未設定です14:05:04情報   コンテキスト: {\"eventId\":\"test_event_id\"}14:05:05情報   checkEventCapacity()の結果: null（期待値通り）14:05:05情報   checkChangeDeadline()の結果: isValid=false, message=CALENDAR_ID が未設定です14:05:05情報   ✅ カレンダーID未設定に対して適切にエラーを返しています14:05:05情報"
+      ],
+      "test_functions_executed": [
+        "testAll",
+        "testEventCapacityBoundary",
+        "testChangeDeadlineBoundary",
+        "testChangeLimitBoundary",
+        "testInvalidInputs",
+        "testDataInconsistency",
+        "testErrorHandling",
+        "testAllBoundaryAndEdgeCases"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testAllBoundaryAndEdgeCases_20260114_140530.log",
+      "test_function": "testAllBoundaryAndEdgeCases"
+    },
+    {
+      "success": false,
+      "errors": [],
+      "warnings": [],
+      "test_functions_executed": [
+        "testRebuildDependencies"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testRebuildDependencies_20260114_140645.log",
+      "test_function": "testRebuildDependencies"
+    },
+    {
+      "success": false,
+      "errors": [],
+      "warnings": [
+        "14:07:17お知らせ実行開始14:07:18情報=== testUpdateDashboardAfterReservation: 開始 ===14:07:18情報⚠️ 注意: このテストは実際にダッシュボードを更新します14:07:18情報"
+      ],
+      "test_functions_executed": [
+        "testUpdateDashboardAfterReservation"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testUpdateDashboardAfterReservation_20260114_140801.log",
+      "test_function": "testUpdateDashboardAfterReservation"
+    }
+  ]
+}

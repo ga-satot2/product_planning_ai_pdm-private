@@ -1,0 +1,41 @@
+# CRITICAL: clasp scriptId 変更禁止ルール
+
+## 🚨 最重要ルール
+
+**`.clasp.json`の`scriptId`を変更する前に、必ずユーザーに確認してください。**
+
+## 正しい scriptId
+
+**正しい scriptId**: `1DiZUSkJU_Z4Yc0bBcNgOUH3iqHux8xnSS7qILL5YZMfKgw86QeMvx0S-`
+
+**正しいプロジェクトURL**: https://script.google.com/u/0/home/projects/1DiZUSkJU_Z4Yc0bBcNgOUH3iqHux8xnSS7qILL5YZMfKgw86QeMvx0S-/edit
+
+## 理由
+
+1. **誤ったプロジェクトへのプッシュは致命的**
+   - 別のプロジェクトにコードをプッシュすると、そのプロジェクトのコードが上書きされる
+   - データ損失やシステム障害の原因となる可能性がある
+
+2. **プロジェクトIDの確認方法**
+   - ユーザーが指定したURLからプロジェクトIDを抽出する前に、必ず現在の`.clasp.json`の`scriptId`と比較する
+   - 異なる場合は、ユーザーに確認してから変更する
+
+3. **変更前の必須確認事項**
+   - 現在の`.clasp.json`の`scriptId`を確認
+   - ユーザーが指定したURLのプロジェクトIDを確認
+   - 両者が異なる場合、ユーザーに「現在の設定と異なりますが、変更してよろしいですか？」と確認
+   - ユーザーの明示的な承認を得てから変更する
+
+## 現在の設定（確認済み）
+
+- `.clasp.json`の`scriptId`: `1DiZUSkJU_Z4Yc0bBcNgOUH3iqHux8xnSS7qILL5YZMfKgw86QeMvx0S-` ✅ 正しい
+- この設定を変更する場合は、必ずユーザーに確認すること
+
+## エラー時の対応
+
+もし誤って変更してしまった場合：
+1. すぐに正しい`scriptId`（`1DiZUSkJU_Z4Yc0bBcNgOUH3iqHux8xnSS7qILL5YZMfKgw86QeMvx0S-`）に戻す
+2. ユーザーに報告する
+3. 誤ってプッシュしていないか確認する
+
+

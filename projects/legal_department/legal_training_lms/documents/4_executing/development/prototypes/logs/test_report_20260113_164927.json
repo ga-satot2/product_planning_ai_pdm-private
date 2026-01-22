@@ -1,0 +1,207 @@
+{
+  "summary": {
+    "total": 33,
+    "success": 13,
+    "failure": 5,
+    "unknown": 15,
+    "coverage": 18,
+    "coverage_percentage": 54.54545454545455
+  },
+  "results": [
+    {
+      "test_function": "testSheetFunctions",
+      "success": true,
+      "error": null,
+      "log_file": "logs/playwright_test_testSheetFunctions_20260113_160535.log"
+    },
+    {
+      "test_function": "testCancelReservation",
+      "success": true,
+      "error": null,
+      "log_file": "logs/playwright_test_testCancelReservation_20260113_160633.log"
+    },
+    {
+      "test_function": "testChangeReservation",
+      "success": null,
+      "error": "結果が不明です",
+      "log_file": "logs/playwright_test_testChangeReservation_20260113_160730.log"
+    },
+    {
+      "test_function": "testMarkAttendeeAsReserved",
+      "success": true,
+      "error": null,
+      "log_file": "logs/playwright_test_testMarkAttendeeAsReserved_20260113_160828.log"
+    },
+    {
+      "test_function": "testMarkAttendeeAsUnreserved",
+      "success": true,
+      "error": null,
+      "log_file": "logs/playwright_test_testMarkAttendeeAsUnreserved_20260113_160925.log"
+    },
+    {
+      "test_function": "testAllSheetFunctions",
+      "success": true,
+      "error": null,
+      "log_file": "logs/playwright_test_testAllSheetFunctions_20260113_161023.log"
+    },
+    {
+      "test_function": "testRefreshAttendeeStatus",
+      "success": true,
+      "error": null,
+      "log_file": "logs/playwright_test_testRefreshAttendeeStatus_20260113_161120.log"
+    },
+    {
+      "test_function": "testHandleReservationFormSubmit",
+      "success": null,
+      "error": "結果が不明です",
+      "log_file": "logs/playwright_test_testHandleReservationFormSubmit_20260113_161218.log"
+    },
+    {
+      "test_function": "testOnCreatingSchedule",
+      "success": true,
+      "error": null,
+      "log_file": "logs/playwright_test_testOnCreatingSchedule_20260113_161316.log"
+    },
+    {
+      "test_function": "testOnDashboardAction",
+      "success": true,
+      "error": null,
+      "log_file": "logs/playwright_test_testOnDashboardAction_20260113_161413.log"
+    },
+    {
+      "test_function": "testEditHandler",
+      "success": true,
+      "error": null,
+      "log_file": "logs/playwright_test_testEditHandler_20260113_161510.log"
+    },
+    {
+      "test_function": "testAllUntestedFunctions",
+      "success": true,
+      "error": null,
+      "log_file": "logs/playwright_test_testAllUntestedFunctions_20260113_161608.log"
+    },
+    {
+      "test_function": "testAll",
+      "success": true,
+      "error": null,
+      "log_file": "logs/playwright_test_testAll_20260113_161704.log"
+    },
+    {
+      "test_function": "testEnhancedFunctions",
+      "success": null,
+      "error": "結果が不明です",
+      "log_file": "logs/playwright_test_testEnhancedFunctions_20260113_161802.log"
+    },
+    {
+      "test_function": "testCalendarEnhancedFunctions",
+      "success": null,
+      "error": "結果が不明です",
+      "log_file": "logs/playwright_test_testCalendarEnhancedFunctions_20260113_161900.log"
+    },
+    {
+      "test_function": "testReservationChangeFunctions",
+      "success": null,
+      "error": "結果が不明です",
+      "log_file": "logs/playwright_test_testReservationChangeFunctions_20260113_161957.log"
+    },
+    {
+      "test_function": "testEventCapacityBoundary",
+      "success": null,
+      "error": "結果が不明です",
+      "log_file": "logs/playwright_test_testEventCapacityBoundary_20260113_162056.log"
+    },
+    {
+      "test_function": "testChangeDeadlineBoundary",
+      "success": null,
+      "error": "結果が不明です",
+      "log_file": "logs/playwright_test_testChangeDeadlineBoundary_20260113_162154.log"
+    },
+    {
+      "test_function": "testChangeLimitBoundary",
+      "success": null,
+      "error": "結果が不明です",
+      "log_file": "logs/playwright_test_testChangeLimitBoundary_20260113_162251.log"
+    },
+    {
+      "test_function": "testInvalidInputs",
+      "success": false,
+      "error": "1. checkEventCapacity()の不正な入力値テスト...16:23:18情報   1-1. eventIdがnullの場合...16:23:18情報❌ [2026-01-13T07:2",
+      "log_file": "logs/playwright_test_testInvalidInputs_20260113_162348.log"
+    },
+    {
+      "test_function": "testDataInconsistency",
+      "success": false,
+      "error": "=== getTestData: 完了 ===16:24:18情報⚠️  [2026-01-13T07:24:18.275Z] [WARN] checkEventCapacity: CALENDAR_",
+      "log_file": "logs/playwright_test_testDataInconsistency_20260113_162446.log"
+    },
+    {
+      "test_function": "testErrorHandling",
+      "success": false,
+      "error": "16:25:12お知らせ実行開始16:25:12情報=== testErrorHandling: 開始 ===16:25:12情報",
+      "log_file": "logs/playwright_test_testErrorHandling_20260113_162543.log"
+    },
+    {
+      "test_function": "testAllBoundaryAndEdgeCases",
+      "success": false,
+      "error": "1. checkEventCapacity()の不正な入力値テスト...16:26:13情報   1-1. eventIdがnullの場合...16:26:13情報❌ [2026-01-13T07:2",
+      "log_file": "logs/playwright_test_testAllBoundaryAndEdgeCases_20260113_162641.log"
+    },
+    {
+      "test_function": "testRebuildDependencies",
+      "success": true,
+      "error": null,
+      "log_file": "logs/playwright_test_testRebuildDependencies_20260113_162739.log"
+    },
+    {
+      "test_function": "testGetReservedCountForGroupAndCourse",
+      "success": true,
+      "error": null,
+      "log_file": "logs/playwright_test_testGetReservedCountForGroupAndCourse_20260113_162837.log"
+    },
+    {
+      "test_function": "testGetCourseNumberFromCourseListByCourseName",
+      "success": null,
+      "error": "結果が不明です",
+      "log_file": "logs/playwright_test_testGetCourseNumberFromCourseListByCourseName_20260113_162936.log"
+    },
+    {
+      "test_function": "testUpdateDashboardAfterReservation",
+      "success": null,
+      "error": "結果が不明です",
+      "log_file": "logs/playwright_test_testUpdateDashboardAfterReservation_20260113_163036.log"
+    },
+    {
+      "test_function": "testDeleteCalendarEvent",
+      "success": null,
+      "error": "結果が不明です",
+      "log_file": "logs/playwright_test_testDeleteCalendarEvent_20260113_163133.log"
+    },
+    {
+      "test_function": "testSyncCalendarOnReservationChange",
+      "success": null,
+      "error": "結果が不明です",
+      "log_file": "logs/playwright_test_testSyncCalendarOnReservationChange_20260113_163231.log"
+    },
+    {
+      "test_function": "testSendReservationConfirmationEmail",
+      "success": null,
+      "error": "ログファイルが見つかりません"
+    },
+    {
+      "test_function": "testSendReservationChangeEmail",
+      "success": null,
+      "error": "ログファイルが見つかりません"
+    },
+    {
+      "test_function": "testSendCancellationEmail",
+      "success": null,
+      "error": "ログファイルが見つかりません"
+    },
+    {
+      "test_function": "testAllNewFunctions",
+      "success": false,
+      "error": "if(!(k instanceof Array)){var v;var w=typeof Symbol!=\"undefined\"&&Symbol.iterator&&k[Symbol.iterator",
+      "log_file": "logs/playwright_test_testAllNewFunctions_20260113_142051.log"
+    }
+  ]
+}

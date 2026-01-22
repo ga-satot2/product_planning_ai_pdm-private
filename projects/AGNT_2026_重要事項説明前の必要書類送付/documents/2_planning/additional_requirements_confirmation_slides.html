@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>追加要件の確認事項まとめ - AGNT 2026 重要事項説明前の必要書類送付</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+            background: linear-gradient(135deg, #0066FF 0%, #0077FF 100%);
+            color: #111111;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            padding: 40px;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .slide h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #0066FF;
+            text-align: center;
+        }
+
+        .slide h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #0066FF;
+            text-align: center;
+            border-bottom: 3px solid #0066FF;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            font-size: 1.5em;
+            margin: 20px 0 15px 0;
+            color: #111111;
+        }
+
+        .slide h4 {
+            font-size: 1.2em;
+            margin: 15px 0 10px 0;
+            color: #444444;
+        }
+
+        .slide p, .slide li {
+            font-size: 1em;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .slide ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .slide li {
+            margin-bottom: 10px;
+        }
+
+        .question-box {
+            background: #F5F5F5;
+            border-left: 4px solid #0066FF;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .question-box strong {
+            color: #0066FF;
+        }
+
+        .confirmation-item {
+            background: #FFFFFF;
+            border: 1px solid #EEEEEE;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .confirmation-item h4 {
+            color: #0066FF;
+            margin-top: 0;
+        }
+
+        .confirmation-item .target {
+            color: #444444;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .nav-buttons button {
+            background: #0066FF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .nav-buttons button:hover {
+            background: #0077FF;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        .highlight {
+            background: #F5F5F5;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .data-box {
+            background: #F5F5F5;
+            border-left: 4px solid #0066FF;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .flow-diagram {
+            background: #F5F5F5;
+            border: 2px solid #0066FF;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+
+        .timeline {
+            background: #F5F5F5;
+            border-left: 4px solid #0066FF;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .timeline-item {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #0066FF;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            background: #0066FF;
+            color: white;
+            font-weight: bold;
+        }
+
+        table tr:nth-child(even) {
+            background: #F5F5F5;
+        }
+
+        table tr:hover {
+            background: #F5F5F5;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85em;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: #0066FF;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #F5F5F5;
+        }
+    </style>
+</head>
+<body>
+    <!-- スライド1: タイトル -->
+    <div class="slide active">
+        <div class="slide-content">
+            <h1>追加要件の確認事項まとめ</h1>
+            <h2>AGNT 2026 重要事項説明前の必要書類送付</h2>
+            <div style="text-align: center; margin-top: 40px;">
+                <p style="font-size: 1.2em; margin: 20px 0;">プロジェクト名: AGNT 2026 重要事項説明前の必要書類送付</p>
+                <p style="font-size: 1.2em; margin: 20px 0;">作成日: 2025-12-23</p>
+                <p style="font-size: 1.2em; margin: 20px 0;">作成者: t_sato2@ga-tech.co.jp</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド2: 意思決定ポイント（推奨組み合わせ） -->
+    <div class="slide">
+        <div class="slide-content">
+            <h1 style="color: #D44300; font-size: 2.5em; margin-bottom: 30px;">意思決定ポイント</h1>
+            <div style="background: linear-gradient(135deg, #0066FF 0%, #0077FF 100%); padding: 30px; border-radius: 10px; margin: 20px 0;">
+                <h2 style="color: white; margin-bottom: 20px; text-align: center;">推奨組み合わせの要件で問題ないか？</h2>
+            </div>
+            <div class="confirmation-item" style="border-left: 4px solid #00A771; margin-top: 30px;">
+                <h3 style="color: #0066FF; margin-top: 0;">推奨組み合わせ</h3>
+                <div style="margin: 20px 0;">
+                    <h4 style="color: #0066FF; margin-top: 20px;">1. サブリース契約書送信トリガー: 契約書連携完了時</h4>
+                    <ul>
+                        <li>コスト: 最低（+3〜5テストケース）</li>
+                        <li>オペレーション負荷: 最低（メンテナンス性が最も高い）</li>
+                        <li>UX: 送付タイミングは遅いが、内容が確定している</li>
+                    </ul>
+                    <h4 style="color: #0066FF; margin-top: 20px;">2. 交付後の制約: 自動破棄</h4>
+                    <ul>
+                        <li>コスト: 最低（既存処理に統合可能）</li>
+                        <li>オペレーション負荷: 最低（自動処理）</li>
+                        <li>UX: 修正が必要な場合に自然に対応可能</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="data-box" style="margin-top: 20px;">
+                <h3 style="color: #0066FF; margin-top: 0;">データ分析結果（2025-12-23）</h3>
+                <div style="margin-top: 10px;">
+                    <p><strong>全体のENTRIES:</strong> 33,711件、10,375契約</p>
+                    <p><strong>契約予定日±12時間以内のENTRIES:</strong> 2,513件（7.45%）、1,855契約（17.9%）</p>
+                    <ul style="margin-left: 20px; margin-top: 5px;">
+                        <li>修正稟議: 2,368件（7.02%）、1,711契約</li>
+                        <li>通常のENTRY: 145件（0.43%）、144契約</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>契約予定日±12時間以内の修正稟議の変更内容（2,368件、1,711契約）:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 5px; font-size: 0.9em;">
+                        <li>受取諸費用変更: 417件（17.6%）</li>
+                        <li>契約予定日変更: 237件（10.0%）</li>
+                        <li>諸費用変更: 284件（12.0%）</li>
+                        <li>賃貸借契約変更: 298件（12.6%）</li>
+                        <li>適応率変更: 245件（10.3%）</li>
+                        <li>契約予定時刻変更: 185件（7.8%）</li>
+                        <li>残金変更: 72件（3.0%）</li>
+                        <li>ローン期間変更: 66件（2.8%）</li>
+                        <li>銀行変更: 81件（3.4%）</li>
+                        <li>決済予定日変更: 53件（2.2%）</li>
+                        <li>契約金額変更: 32件（1.4%）</li>
+                        <li>値引き額変更: 32件（1.4%）</li>
+                        <li>手付金変更: 64件（2.7%）</li>
+                    </ul>
+                    <p style="margin-top: 10px;"><strong>交付後の修正稟議:</strong> 4件（1.50%）、3契約</p>
+                </div>
+            </div>
+            <div class="confirmation-item" style="border-left: 4px solid #FF8025; margin-top: 20px;">
+                <h3 style="color: #0066FF; margin-top: 0;">確認が必要な事項</h3>
+                <ul>
+                    <li>サブリース契約書の送付タイミングが遅いことによる顧客への影響</li>
+                    <li>交付後に修正稟議が出るケースの実務的な影響</li>
+                </ul>
+            </div>
+            <div style="margin-top: 40px; text-align: center; padding: 20px; background: #F5F5F5; border-radius: 8px;">
+                <p style="font-size: 1.3em; color: #111111; font-weight: bold;">決定者: PdM（佐藤達也）、開発チーム（小松亮汰）</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド3: AsIsの業務フロー -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>現在の業務フロー（AsIs）</h2>
+            <div class="timeline">
+                <div class="timeline-item">契約準備完了（SUP側で契約書連携）</div>
+                <div class="timeline-item">重要事項の説明（先に説明行為）</div>
+                <div class="timeline-item">手付金の受領</div>
+                <div class="timeline-item">手付金受領後に、マイページの個人認証を実施</div>
+                <div class="timeline-item">認証完了後に、初めて重説をマイページ上でダウンロードできる状態になる（DocuSignのプレビュー画面が閲覧可能になる）← 後から交付されている</div>
+                <div class="timeline-item">契約</div>
+            </div>
+            <div class="confirmation-item" style="border-left: 4px solid #D44300;">
+                <h4>問題点</h4>
+                <ul>
+                    <li>重要事項説明の前に重説が交付されていない（宅建業法・賃貸管理業法違反）</li>
+                    <li>サブリース契約書の送付フローが存在しない（国土交通省から是正を求められている）</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド4: ToBeの業務フロー概要 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>追加要件実装後の業務フロー（ToBe）</h2>
+            <div class="timeline">
+                <div class="timeline-item"><strong>【ステップ1】サブリース契約書の送付（自動送信）</strong><br>トリガー: 未決定（確認事項1を参照）<br>条件: 特定賃貸借物件であること<br>送信先: 顧客のRENOSYアカウントメールアドレス<br>タイミング: トリガーによって異なる（申込報告時/稟議承認時/正式発表時の場合は契約書連携より前、契約書連携完了時の場合は契約書連携後）</div>
+                <div class="timeline-item"><strong>【ステップ2】契約準備完了</strong><br>SUP側で契約書連携完了 → AGNT側で契約ステータスが`contract_preparation`に遷移 → DocuSignエンベロープ作成（ワークフロー一時停止状態）</div>
+                <div class="timeline-item"><strong>【ステップ3】事前交付ボタン押下（重説担当者が手動で送信）</strong><br>ボタン表示条件: 契約書連携済み & 宅建士アサイン済み<br>送信先: 顧客 + 宅建士（CC）<br>送信内容: 35条書面、13条書面（同一エンベロープID）</div>
+                <div class="timeline-item"><strong>【ステップ4】交付後の修正が必要になった場合（オプション）</strong><br>現在の要件（手動破棄）: 「交付内容破棄」ボタン押下 → エンベロープ無効化 → 契約書再連携 → 「事前交付ボタン」を再度押下<br>代替案（自動破棄）: 修正稟議作成 → 自動的にエンベロープ無効化 → 顧客・担当者への通知 → 契約書再連携 → 「事前交付ボタン」を再度押下</div>
+                <div class="timeline-item"><strong>【ステップ5】重要事項説明</strong><br>重説担当者が顧客に対して説明を実施（顧客は事前に送付された重説を確認済み）</div>
+                <div class="timeline-item"><strong>【ステップ6】契約</strong><br>手付金の受領 → マイページの個人認証 → 「マイページ契約ボタン」押下 → 契約書などがDocuSignで送信される</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド5: ToBeの業務フロー図 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>ToBeの業務フロー図</h2>
+            <div class="flow-diagram">【サブリース契約書送付】（自動送信）
+    │   トリガー: 未決定（確認事項1を参照）
+    │   条件: 特定賃貸借物件であること
+    │   送信先: 顧客のRENOSYアカウントメールアドレス
+    │   タイミング: トリガーによって異なる（申込報告時/稟議承認時/正式発表時の場合は契約書連携より前、契約書連携完了時の場合は契約書連携後）
+    │
+    └─→ サブリース契約書をメール送信
+    │
+【契約準備完了】
+    │
+    ├─→ SUP側で契約書連携完了
+    │   └─→ AGNT側で契約ステータスが`contract_preparation`に遷移
+    │       └─→ DocuSignエンベロープ作成（ワークフロー一時停止状態）
+    │
+    └─→ 【事前交付ボタン押下】（重説担当者が手動で送信）
+        │   ボタン表示条件:
+        │   - 契約書連携済み
+        │   - 宅建士アサイン済み
+        │
+        ├─→ DocuSignワークフロー解除
+        │   └─→ 重説を送信
+        │       - 送信先: 顧客 + 宅建士（CC）
+        │       - 送信内容: 35条書面、13条書面（同一エンベロープID）
+        │
+        ├─→ 【交付後の修正が必要になった場合】（オプション）
+        │   │
+        │   ├─→ 現在の要件（手動破棄）の場合:
+        │   │   1. 「交付内容破棄」ボタンを押下
+        │   │   2. エンベロープ無効化（void）
+        │   │   3. 契約書再連携
+        │   │   4. 「事前交付ボタン」を再度押下
+        │   │
+        │   └─→ 代替案（自動破棄）の場合:
+        │       1. 修正稟議を作成
+        │          └─→ 自動的にエンベロープ無効化（void）
+        │          └─→ 顧客・担当者への通知
+        │       2. 契約書再連携（修正稟議承認後）
+        │       3. 「事前交付ボタン」を再度押下
+        │
+        └─→ 【重要事項説明】
+            │   重説担当者が顧客に対して説明を実施
+            │   （顧客は事前に送付された重説を確認済み）
+            │
+            └─→ 【契約】
+                │   手付金の受領
+                │   マイページの個人認証
+                │   「マイページ契約ボタン」押下
+                │   └─→ 契約書などがDocuSignで送信される</div>
+        </div>
+    </div>
+
+    <!-- スライド6: 交付後の修正が必要になった場合 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>交付後の修正が必要になった場合</h2>
+            <div class="confirmation-item">
+                <h4>現在の要件（手動破棄）の場合</h4>
+                <div class="timeline">
+                    <div class="timeline-item">修正が必要なことを認識（重説担当者）</div>
+                    <div class="timeline-item">「交付内容破棄」ボタンを押下（重説担当者）</div>
+                    <div class="timeline-item">DocuSignエンベロープを無効化（void）（システム自動）</div>
+                    <div class="timeline-item">SUP側で契約書を再連携（SUP側の処理）</div>
+                    <div class="timeline-item">「事前交付ボタン」を再度押下（重説担当者）</div>
+                </div>
+            </div>
+            <div class="confirmation-item">
+                <h4>代替案（自動破棄）の場合</h4>
+                <div class="timeline">
+                    <div class="timeline-item">修正が必要なことを認識（重説担当者）</div>
+                    <div class="timeline-item">修正稟議を作成（重説担当者）<br>→ 自動的にエンベロープが無効化（void）<br>→ 顧客・担当者への通知</div>
+                    <div class="timeline-item">SUP側で契約書を再連携（修正稟議承認後、SUP側の処理）</div>
+                    <div class="timeline-item">「事前交付ボタン」を再度押下（重説担当者）</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド7: サブリース契約書送信トリガー - 概要 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>確認事項1: サブリース契約書送信トリガー</h2>
+            <h3>検討中のトリガー候補</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>トリガー</th>
+                        <th>送付タイミング</th>
+                        <th>内容確定度</th>
+                        <th>テストケース増加</th>
+                        <th>備考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>申込報告時</strong><br>（現在の要件）</td>
+                        <td>早い</td>
+                        <td>中（稟議承認前）</td>
+                        <td>+15〜20ケース<br>（最多）</td>
+                        <td>正式発表判定が必要</td>
+                    </tr>
+                    <tr>
+                        <td><strong>稟議承認時</strong><br>（推奨）</td>
+                        <td>中</td>
+                        <td>高（承認済み）</td>
+                        <td>+8〜12ケース</td>
+                        <td>verdandi側の既存実装を活用可能</td>
+                    </tr>
+                    <tr>
+                        <td><strong>契約書連携完了時</strong></td>
+                        <td>遅い</td>
+                        <td>高（確定済み）</td>
+                        <td>+3〜5ケース<br>（最少）</td>
+                        <td>「もっと前に」ニーズに応えられない</td>
+                    </tr>
+                    <tr>
+                        <td><strong>正式発表時</strong></td>
+                        <td>最も早い</td>
+                        <td>高（確定度が高い）</td>
+                        <td>+10〜15ケース</td>
+                        <td>申込報告で正式発表されていないケースがあるのでケアが必要</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- スライド8: サブリース契約書送信トリガー - 確認事項4（実務チーム） -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>サブリース契約書送信トリガー</h2>
+            <h3>確認事項1-4: 「もっと前に顧客に目を通してほしい」ニーズの優先度</h3>
+            <div class="question-box">
+                <strong>Q:</strong> 早期提供のニーズと内容確定度のバランスはどうするか？
+            </div>
+            <div class="data-box">
+                <strong>背景:</strong><br>
+                タイムライン（2025-12-17）で指摘された「もっと前に顧客に目を通してほしい」というニーズを考慮すると、申込報告時または正式発表時が適切。ただし、内容が確定していない可能性がある。
+            </div>
+            <div class="confirmation-item">
+                <h4>確認内容</h4>
+                <ul>
+                    <li>「もっと前に顧客に目を通してほしい」というニーズの優先度はどの程度か？</li>
+                    <li>早期提供のニーズと内容確定度のバランスはどうするか？</li>
+                    <li>どのタイミングで送付するのが実務的に適切か？</li>
+                    <li>稟議承認時に内容が変更された場合の再送付の必要性は許容範囲か？</li>
+                    <li>顧客への混乱を招く可能性は許容範囲か？</li>
+                </ul>
+                <div class="target">確認先: 契約チーム（根本祐次郎さん）、重説担当者</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド9: 交付後の制約 - 概要 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>確認事項2: 交付後の制約に関する代替案</h2>
+            <h3>検討中の2つのアプローチ</h3>
+            <div class="confirmation-item">
+                <h4>現在の要件（手動破棄）</h4>
+                <ul>
+                    <li>交付されたら、契約まで修正稟議はNGとする</li>
+                    <li>交付内容を破棄する機能が必要</li>
+                    <li>破棄した場合は、DocuSignのエンベロープを無効化（void）し、SUP側で契約書を再連携</li>
+                </ul>
+            </div>
+            <div class="confirmation-item">
+                <h4>代替案（自動破棄）</h4>
+                <ul>
+                    <li>修正稟議を出したら既存のエンベロープは自動破棄</li>
+                    <li>交付後の修正稟議制限は不要（修正稟議を許可）</li>
+                    <li>コミュニケーション要件（顧客・担当者への通知）が必要</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド10: 交付後の制約 - 確認事項2: 実務的な観点（最重要） -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>交付後の制約に関する代替案</h2>
+            <h3>確認事項2-2: 実務的な観点（最重要）</h3>
+            <div class="question-box">
+                <strong>Q:</strong> 交付後に修正稟議が出るケースは実際に存在するか？
+            </div>
+            <div class="data-box">
+                <strong>データ分析結果（2025-12-23）:</strong><br>
+                ・交付後の修正稟議: 4件（1.50%）、3契約<br>
+                ・契約予定日±12時間以内の修正稟議: 2,368件（7.02%）、1,711契約<br>
+                ・契約予定日±24時間以内の修正稟議: 4,150件（12.31%）、2,694契約
+            </div>
+            <div class="confirmation-item">
+                <h4>確認内容</h4>
+                <ul>
+                    <li>事前交付後、重要事項説明前に修正が必要になったケースはあるか？</li>
+                    <li>事前交付後、重要事項説明中に修正が必要になったケースはあるか？</li>
+                    <li>事前交付後、契約直前になって修正が必要になったケースはあるか？</li>
+                    <li>これらのケースの発生頻度はどの程度か？</li>
+                </ul>
+                <div class="target">確認先: 契約チーム（根本祐次郎さん）、重説担当者</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド11: 交付後の制約 - 確認事項2（続き） -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>交付後の制約に関する代替案</h2>
+            <h3>確認事項2-2: 実務的な観点（続き）</h3>
+            <div class="question-box">
+                <strong>Q:</strong> 交付後に修正稟議が出た場合、顧客への影響は許容範囲か？
+            </div>
+            <div class="question-box">
+                <strong>Q:</strong> 修正稟議が承認されるまでの間、顧客に書類が届かない期間が発生することは問題ないか？
+            </div>
+            <div class="question-box">
+                <strong>Q:</strong> 顧客への事前通知は必要か？
+            </div>
+            <div class="confirmation-item">
+                <h4>交付後の修正稟議制限の効果について</h4>
+                <ul>
+                    <li>交付後の修正稟議制限により、交付前に修正を徹底するようになりますか？</li>
+                    <li>交付後の修正稟議制限により、「軽微な修正」を我慢するようになりますか？</li>
+                    <li>交付後に修正が必要になった場合、交付内容破棄の手間を避けるため、修正を避けるようになりますか？</li>
+                </ul>
+                <div class="target">確認先: 契約チーム（根本祐次郎さん）、重説担当者</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド12: 交付後の制約 - 確認事項3: 実装上の観点 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>交付後の制約に関する代替案</h2>
+            <h3>確認事項2-3: 実装上の観点</h3>
+            <div class="question-box">
+                <strong>Q1:</strong> 修正稟議の検知タイミングでエンベロープを無効化する処理を実装することは技術的に可能か？
+            </div>
+            <div class="question-box">
+                <strong>Q2:</strong> 既存の修正稟議処理に統合することは可能か？
+            </div>
+            <div class="confirmation-item">
+                <h4>実装工数見積もりが必要な項目</h4>
+                <ul>
+                    <li>手動破棄機能の実装工数</li>
+                    <li>自動破棄機能の実装工数</li>
+                    <li>コミュニケーション機能の実装工数:
+                        <ul>
+                            <li>顧客へのメール通知機能の実装工数</li>
+                            <li>担当者へのSlack通知機能の実装工数</li>
+                            <li>DocuSignのメッセージカスタマイズの実装工数</li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="target">確認先: AGNT開発チーム</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド13: 確認事項の優先度 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>確認事項の優先度</h2>
+            <div class="confirmation-item" style="border-left: 4px solid #D44300;">
+                <h4>最優先（ブロッカー）</h4>
+                <ul>
+                    <li>実務的な観点の確認（契約チーム、重説担当者）</li>
+                </ul>
+            </div>
+            <div class="confirmation-item" style="border-left: 4px solid #FF8025;">
+                <h4>高優先度</h4>
+                <ul>
+                    <li>「もっと前に顧客に目を通してほしい」ニーズの優先度確認（実務チーム）</li>
+                </ul>
+            </div>
+            <div class="confirmation-item" style="border-left: 4px solid #0066FF;">
+                <h4>中優先度</h4>
+                <ul>
+                    <li>交付後の修正稟議制限の効果の検証（データ分析）</li>
+                    <li>修正が必要な場合の手間の比較（実務担当者へのヒアリング）</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド14: 確認先一覧 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>確認先一覧</h2>
+            <div class="confirmation-item">
+                <h4>契約チーム・重説担当者</h4>
+                <p>根本祐次郎さん、重説担当者</p>
+                <ul>
+                    <li><strong>サブリース契約書送信トリガー関連:</strong>
+                        <ul>
+                            <li>「もっと前に顧客に目を通してほしい」ニーズの優先度</li>
+                            <li>早期提供のニーズと内容確定度のバランス</li>
+                            <li>どのタイミングで送付するのが実務的に適切か</li>
+                        </ul>
+                    </li>
+                    <li><strong>交付後の制約関連:</strong>
+                        <ul>
+                            <li>交付後に修正稟議が出るケースとその影響</li>
+                            <li>修正稟議が承認されるまでの間、顧客に書類が届かない期間が発生することは問題ないか</li>
+                            <li>顧客への事前通知は必要か</li>
+                            <li>交付後の修正稟議制限の効果について</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド15: 確認先一覧（続き） -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>確認先一覧（続き）</h2>
+            <div class="confirmation-item">
+                <h4>実務チーム向けの確認事項</h4>
+                <p>このスライドは実務チーム（根本祐次郎さん）との確認用です。</p>
+                <p>開発チーム向けの確認事項は別途実施してください。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド16: コスト・オペレーション負荷・UX比較 - サブリース契約書送信トリガー -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>コスト・オペレーション負荷・UX比較</h2>
+            <h3>サブリース契約書送信トリガー</h3>
+            <div style="overflow-x: auto; margin: 20px 0;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.9em;">
+                    <thead>
+                        <tr style="background: #0066FF; color: white;">
+                            <th style="padding: 10px; border: 1px solid #ddd;">観点</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">候補1: 申込報告時</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">候補2: 稟議承認時</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">候補3: 契約書連携完了時</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">候補4: 正式発表時</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">コスト（開発工数）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">高（+15〜20テストケース）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">中（+8〜12テストケース）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd; background: #F5F5F5; font-weight: bold;">低（+3〜5テストケース）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">中（+10〜15テストケース）</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">オペレーション負荷</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">高（正式発表待ち処理が必要）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">低（既存実装活用可能）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd; background: #F5F5F5; font-weight: bold;">低（メンテナンス性が最高）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">中</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">UX（顧客体験）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">中（内容が未確定の可能性）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd; background: #F5F5F5; font-weight: bold;">高（内容が確定している）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">低（送付タイミングが遅い）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd; background: #F5F5F5; font-weight: bold;">高（送付タイミングが最も早い）</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="data-box" style="margin-top: 20px;">
+                <strong>総合評価:</strong> 候補2（稟議承認時）が推奨、候補3（契約書連携完了時）がコスト・オペレーション負荷が最低
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド17: コスト・オペレーション負荷・UX比較 - 交付後の制約 -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>コスト・オペレーション負荷・UX比較</h2>
+            <h3>交付後の制約に関する代替案</h3>
+            <div style="overflow-x: auto; margin: 20px 0;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.9em;">
+                    <thead>
+                        <tr style="background: #0066FF; color: white;">
+                            <th style="padding: 10px; border: 1px solid #ddd;">観点</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">現在の要件（手動破棄）</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">代替案（自動破棄）</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">コスト（開発工数）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">高（手動破棄機能の実装が必要）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd; background: #F5F5F5; font-weight: bold;">低（既存処理に統合可能）</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">オペレーション負荷</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">高（手動操作が必要）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd; background: #F5F5F5; font-weight: bold;">低（自動処理）</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">UX（顧客体験）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">低（修正稟議が制限される）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd; background: #F5F5F5; font-weight: bold;">高（自然に対応可能）</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">法的リスク</td>
+                            <td style="padding: 10px; border: 1px solid #ddd; background: #F5F5F5;">低（修正稟議を制限）</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">要確認（法的確認が必要）</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="data-box" style="margin-top: 20px;">
+                <strong>総合評価:</strong> 代替案（自動破棄）がコスト・オペレーション負荷・UXで優位、ただし法的確認が必要
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド18: 推奨組み合わせ（詳細） -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>推奨組み合わせ</h2>
+            <div class="confirmation-item" style="border-left: 4px solid #00A771;">
+                <h4>最もコストが安く、オペレーション負荷が低く、UXも良い組み合わせ</h4>
+                <div style="margin: 20px 0;">
+                    <h4 style="color: #0066FF; margin-top: 20px;">1. サブリース契約書送信トリガー: 候補3（契約書連携完了時）</h4>
+                    <ul>
+                        <li>コスト: 最低（+3〜5テストケース）</li>
+                        <li>オペレーション負荷: 最低（メンテナンス性が最も高い）</li>
+                        <li>UX: 送付タイミングは遅いが、内容が確定している</li>
+                    </ul>
+                    <h4 style="color: #0066FF; margin-top: 20px;">2. 交付後の制約: 代替案（自動破棄）</h4>
+                    <ul>
+                        <li>コスト: 最低（既存処理に統合可能）</li>
+                        <li>オペレーション負荷: 最低（自動処理）</li>
+                        <li>UX: 修正が必要な場合に自然に対応可能</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="confirmation-item" style="border-left: 4px solid #FF8025; margin-top: 20px;">
+                <h4>ただし、以下の確認が必要</h4>
+                <ul>
+                    <li>サブリース契約書の送付タイミングが遅いことによる顧客への影響</li>
+                    <li>交付後の修正稟議が法的に問題ないか</li>
+                    <li>交付後に修正稟議が出るケースの実務的な影響</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド19: 次のステップ -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>次のステップ</h2>
+            <div class="confirmation-item" style="border-left: 4px solid #00A771;">
+                <h4>進められる項目（データ分析・ドキュメント整理）</h4>
+                <ul>
+                    <li>✅ 交付前と交付後の修正稟議の件数比較</li>
+                    <li>✅ 交付前に修正稟議が出た契約で、交付後にも修正稟議が出るケースの分析</li>
+                    <li>✅ 交付後に修正が必要になったケースの分析</li>
+                    <li>✅ 契約予定日±12時間以内のENTRIES分析</li>
+                    <li>✅ 契約予定日±24時間以内のENTRIES分析</li>
+                </ul>
+            </div>
+            <div class="confirmation-item" style="border-left: 4px solid #FF8025;">
+                <h4>ユーザー・関係者が実施する必要がある項目</h4>
+                <ul>
+                    <li>⏳ 実務への確認（根本祐次郎さん）</li>
+                    <li>⏳ 要件の決定</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- スライド20: まとめ -->
+    <div class="slide">
+        <div class="slide-content">
+            <h2>まとめ</h2>
+            <div class="confirmation-item">
+                <h4>もともと検討していた業務フロー</h4>
+                <ul>
+                    <li>サブリース契約書送付（自動） → 契約準備完了 → 事前交付ボタン押下（手動） → 交付後の修正（オプション） → 重要事項説明 → 契約</li>
+                    <li>サブリース契約書送付のタイミングはトリガーによって異なる</li>
+                </ul>
+            </div>
+            <div class="confirmation-item">
+                <h4>今回決定したいポイントの推奨パターン</h4>
+                <ul>
+                    <li><strong>サブリース契約書送信トリガー:</strong> 契約書連携完了時（コスト・オペレーション負荷が最低）</li>
+                    <li><strong>交付後の制約:</strong> 自動破棄（コスト・オペレーション負荷・UXで優位、ただし法的確認が必要）</li>
+                </ul>
+            </div>
+            <div class="confirmation-item">
+                <h4>確認が必要な事項</h4>
+                <ul>
+                    <li>サブリース契約書の送付タイミングが遅いことによる顧客への影響</li>
+                    <li>交付後に修正稟議が出るケースの実務的な影響</li>
+                </ul>
+            </div>
+            <div style="margin-top: 40px; text-align: center;">
+                <p style="font-size: 1.2em; color: #0066FF;">確認結果を踏まえて、要件を決定する</p>
+                <p style="margin-top: 20px;">決定者: PdM（佐藤達也）、開発チーム（小松亮汰）</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <button onclick="previousSlide()">← 前へ</button>
+        <button onclick="nextSlide()">次へ →</button>
+    </div>
+
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">25</span>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // キーボードナビゲーション
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+    </script>
+</body>
+</html>
+

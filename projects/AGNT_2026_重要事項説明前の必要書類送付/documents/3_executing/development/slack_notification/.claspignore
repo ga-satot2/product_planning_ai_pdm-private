@@ -1,0 +1,7 @@
+# claspで無視するファイル
+**/**
+!*.gs
+!appsscript.json
+!.clasp.json
+!.claspignore
+

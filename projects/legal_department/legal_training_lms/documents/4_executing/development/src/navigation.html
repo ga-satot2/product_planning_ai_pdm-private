@@ -1,0 +1,14 @@
+<script>
+  // ページナビゲーション関数（全ページ共通）
+  function navigateTo(page) {
+    const baseUrl = window.location.origin + window.location.pathname;
+    window.location.href = baseUrl + '?page=' + page;
+  }
+  
+  // 予約ページへのナビゲーション
+  function navigateToReservation(courseId) {
+    const baseUrl = window.location.origin + window.location.pathname;
+    window.location.href = baseUrl + '?page=reservation&courseId=' + courseId;
+  }
+</script>
+

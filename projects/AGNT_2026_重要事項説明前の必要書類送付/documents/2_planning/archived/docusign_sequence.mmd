@@ -1,0 +1,91 @@
+```mermaid
+sequenceDiagram
+    participant SUP as SUPPLIER<br/>(CMS)
+    participant AGNT_BE as AGNT<br/>(Backend/Verdandi)
+    participant AGNT_FE as AGNT(Mypage)<br/>(Frontend)
+    participant WEB as WEB動画システム
+    participant 従業員 as 従業員
+    participant 顧客 as 顧客
+    participant 決済 as 決済システム
+    participant DS_API as Docusign API<br/>(DocuSign_eSign)
+    participant DS_UI as Docusign UI<br/>(docusign.net)
+
+    SUP->>AGNT_BE: 1. 契約書・重要事項説明書データ送信<br/>(API連携)
+    AGNT_BE->>AGNT_BE: 2. Contractモデルに保存<br/>DocumentSignFileとして管理
+
+    従業員->>AGNT_FE: 3. 活動作成画面で「Zoom URLを発行する」チェックON<br/>(create_zoom_url: true)
+    AGNT_FE->>AGNT_BE: 4. POST /negotiations<br/>{create_zoom_url: true, ...}
+    AGNT_BE->>AGNT_BE: 5. Negotiations::UpdateService#create_zoom_meeting!<br/>(negotiation.zoom_meeting.blank? && create_zoom_url == true)
+    AGNT_BE->>WEB: 6. Zoom::Meeting.create!<br/>(email: closer.email, topic: "顧客名様_ご面談", start_time: start_scheduled_time)
+    WEB-->>AGNT_BE: 7. {join_url: "https://zoom.us/j/...", passcode: "123456", meeting_id: xxx}
+    AGNT_BE->>AGNT_BE: 8. ZoomMeeting作成<br/>(negotiation.create_zoom_meeting!)
+    AGNT_BE->>AGNT_BE: 9. Opportunity#link_with_mypage<br/>(web_meeting_url, web_meeting_passcode含む)
+    AGNT_BE->>AGNT_FE: 10. RenosyAsset::Client.request_account_id_and_send_email<br/>(マイページにZoom URL送信)
+    顧客->>WEB: 11. Web面談に参加<br/>(Zoom join_urlから)
+    従業員->>WEB: 12. Web面談に参加<br/>(Zoom join_urlから)
+    従業員->>WEB: 13. 重要事項説明書PDFを画面共有・スクロール<br/>(Zoom画面共有機能)
+    WEB->>顧客: 14. 書類を閲覧<br/>(画面共有でPDF表示)
+    顧客-->>従業員: 15. 両重説完了（形式的には）
+
+    従業員->>顧客: 16. 手付金支払い依頼
+    顧客->>決済: 17. 手付金支払い
+    決済->>AGNT_BE: 18. 契約認証フラグON<br/>(Webhook/API連携)
+    AGNT_BE->>AGNT_BE: 19. Opportunity.contract_authenticated = true
+
+    従業員->>AGNT_FE: 20. 「マイページ契約」ボタン押下<br/>(管理画面操作)
+    AGNT_FE->>AGNT_BE: 21. POST /document_sign_envelopes/create_from_mypage<br/>{contract_id: xxx}
+    AGNT_BE->>AGNT_BE: 22. Contract.can_sign_request? チェック
+    AGNT_BE->>DS_API: 23. DocumentSign::Envelope.new.send()<br/>create_envelope(ACCOUNT_ID, envelope_definition)
+    DS_API-->>AGNT_BE: 24. Envelope作成成功<br/>{envelope_id: "xxx", status: "sent"}
+    AGNT_BE->>AGNT_BE: 25. DocumentSignEnvelope作成<br/>(is_for_mypage: true, envelope_id保存)
+    AGNT_BE->>AGNT_BE: 26. Opportunity.generate_document_sign_authentication_code<br/>(8桁英数字生成)
+    AGNT_BE-->>AGNT_FE: 27. リダイレクト: マイページ契約画面
+
+    AGNT_FE->>顧客: 28. 「契約をはじめる」ボタン表示<br/>(契約認証フラグON時のみ)
+    顧客->>AGNT_FE: 29. 「契約をはじめる」ボタン押下<br/>(★契約認証)
+    AGNT_FE->>AGNT_FE: 30. GET /investment/mypage/contracts/:id/documents/:contract_id/authentication
+    AGNT_FE->>顧客: 31. 契約認証コード入力画面表示
+    顧客->>AGNT_FE: 32. 認証コード入力<br/>(8桁英数字)
+    AGNT_FE->>AGNT_FE: 33. JavaScript: contractAuthentication()<br/>入力検証
+
+    AGNT_FE->>AGNT_FE: 34. POST /investment/mypage/contracts/:id/docusign/:contract_id<br/>{authentication_code: "xxxx"}
+    AGNT_FE->>AGNT_FE: 35. Mypage::Contract.validate!(:authentication_code)<br/>(8桁英数字チェック)
+    AGNT_FE->>AGNT_FE: 36. session["authentication_code_#{opportunity_id}"] = code
+    AGNT_FE->>AGNT_BE: 37. POST /customer_api/v1/contracts/:contract_id/generate_docusign_url<br/>{account_id, authentication_code, redirect_url}
+    AGNT_BE->>AGNT_BE: 38. Contract.generate_docusign_url_from_mypage(redirect_url)
+    AGNT_BE->>AGNT_BE: 39. DocumentSignEnvelope.for_mypage.order(:id).last取得
+    AGNT_BE->>AGNT_BE: 40. DocumentSignEnvelope.generate_recipient_view_url(redirect_url)
+    AGNT_BE->>DS_API: 41. DocumentSign::Envelope.new<br/>create_recipient_view(ACCOUNT_ID, envelope_id, view_request)
+    DS_API-->>AGNT_BE: 42. {url: "https://demo.docusign.net/..."}
+    AGNT_BE-->>AGNT_FE: 43. {url: "https://demo.docusign.net/..."}
+    AGNT_FE->>DS_UI: 44. redirect_to docusign_url<br/>(allow_other_host: true)
+
+    DS_UI->>顧客: 45. 契約書・重要事項説明書プレビュー表示
+    顧客->>DS_UI: 46. 書類確認・スクロール
+    顧客->>DS_UI: 47. サイン実行
+    DS_UI->>DS_API: 48. サイン処理
+    DS_API->>DS_API: 49. Envelope status更新: 'Completed'
+
+    DS_API->>AGNT_BE: 50. POST /api/docusign/v1/envelope/callback<br/>(XML形式: DocuSignEnvelopeInformation)
+    AGNT_BE->>AGNT_BE: 51. CallbacksController#create<br/>XML解析: {Status: "Completed", EnvelopeID: "xxx"}
+    AGNT_BE->>AGNT_BE: 52. DocumentSignEnvelope.find_by(envelope_id)
+    alt is_for_mypage == false
+        AGNT_BE->>AGNT_BE: 53. envelope.update_relations_after_signed
+        AGNT_BE->>DS_API: 54. get_list_documents(envelope_id)
+        DS_API-->>AGNT_BE: 55. documents情報
+        AGNT_BE->>AGNT_BE: 56. envelope.save_signed_documents(documents_info)
+    end
+    AGNT_BE-->>DS_API: 57. HTTP 201 Created
+
+    DS_UI->>AGNT_FE: 58. redirect to redirect_url<br/>(/investment/mypage/contracts/:id/docusign/:contract_id/callback)
+    AGNT_FE->>AGNT_BE: 59. GET /investment/mypage/contracts/:id/docusign/:contract_id/callback<br/>{contract_id, event: "signing_complete"}
+    AGNT_FE->>AGNT_BE: 60. Agnt::SignedCallbackResponse.fetch<br/>(contract_id, account_id)
+    AGNT_BE->>AGNT_BE: 61. Contract.fetch_signed_docusign_documents<br/>(envelope_id取得 → Docusign API呼び出し)
+    AGNT_BE->>DS_API: 62. get_envelope(envelope_id)
+    DS_API-->>AGNT_BE: 63. Envelope情報 (status: "Completed")
+    AGNT_BE->>DS_API: 64. get_list_documents(envelope_id)
+    DS_API-->>AGNT_BE: 65. サイン済書類リスト
+    AGNT_BE->>AGNT_BE: 66. DocumentSignEnvelope.save_signed_documents<br/>(DocumentSignFile作成)
+    AGNT_BE-->>AGNT_FE: 67. サイン済書類情報
+    AGNT_FE->>顧客: 68. 書類表示・ダウンロード画面<br/>(thanks_investment_mypage_contract_documents_path)
+```

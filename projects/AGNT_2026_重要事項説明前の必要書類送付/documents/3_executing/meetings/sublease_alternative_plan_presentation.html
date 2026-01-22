@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【緊急対応】サブリース契約対応 代替案の検討結果と今後の進め方</title>
+    <style>
+        /* リセットCSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 基本スタイル */
+        body {
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        /* プレゼンテーションコンテナ */
+        .presentation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* スライドスタイル */
+        .slide {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin: 40px 0;
+            padding: 60px;
+            min-height: 600px;
+            display: none;
+            animation: slideIn 0.5s ease-in-out;
+            border-left: 5px solid #3498db;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* タイトルスライド */
+        .title-slide {
+            text-align: center;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-left: none;
+        }
+
+        .title-slide h1 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.3;
+        }
+
+        .title-slide .subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            opacity: 0.95;
+            margin-bottom: 40px;
+        }
+
+        .title-slide .meta {
+            margin-top: 60px;
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 2;
+        }
+
+        /* 見出しスタイル */
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 2rem;
+            margin: 30px 0 20px 0;
+        }
+
+        h3 {
+            color: #7f8c8d;
+            font-size: 1.5rem;
+            margin: 20px 0 15px 0;
+        }
+
+        /* リストスタイル */
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* グリッドレイアウト */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 30px 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        /* カードスタイル */
+        .card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            border-left: 4px solid #3498db;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* ハイライト */
+        .highlight {
+            background: linear-gradient(120deg, #ffd89b 0%, #ff6e7f 100%);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .highlight-red {
+            background: #fff3cd;
+            color: #856404;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            border: 1px solid #ffc107;
+        }
+
+        .highlight-green {
+            background: linear-gradient(120deg, #51cf66 0%, #40c057 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* テーブルスタイル */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1rem;
+        }
+
+        table th {
+            background: #34495e;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table tr:hover {
+            background: #f8f9fa;
+        }
+
+        table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* 決定事項カード */
+        .decision-card {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .decision-card h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        /* アクションアイテム */
+        .action-item {
+            background: #fff;
+            border-left: 4px solid #3498db;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .action-item strong {
+            color: #3498db;
+            font-size: 1.1rem;
+        }
+
+        /* ナビゲーション */
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .nav-btn:hover {
+            background: #3498db;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* スライドカウンター */
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+        }
+
+        /* レスポンシブデザイン */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+                margin: 20px 0;
+            }
+
+            .title-slide h1 {
+                font-size: 2rem;
+            }
+
+            .title-slide .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            table th,
+            table td {
+                padding: 8px;
+            }
+        }
+
+        /* アイコン風の装飾 */
+        .icon-badge {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- スライド1: 表紙 -->
+        <div class="slide title-slide active">
+            <h1>【緊急対応】<br>サブリース契約対応<br>代替案の検討結果と今後の進め方</h1>
+            <div class="subtitle">2025年11月21日</div>
+            <div class="meta">
+                <p><strong>作成者</strong>: t_sato2@ga-tech.co.jp</p>
+                <p><strong>最終更新</strong>: 2025-11-21</p>
+                <p><strong>参加者</strong>: @佐藤達也、矢作豊庸、鍋谷恵</p>
+                <p><strong>特記事項</strong>: 会議録画：あり</p>
+            </div>
+        </div>
+
+        <!-- スライド2: 会議の目的と背景 -->
+        <div class="slide">
+            <h1><span class="icon-badge">🎯</span> 会議の目的と背景</h1>
+            
+            <div class="card">
+                <h2>会議の目的</h2>
+                <p style="font-size: 1.2rem; line-height: 1.8;">
+                    サブリース契約対応における<strong class="highlight-red">リスク回避</strong>のための代替案を検討し、今後の進め方を決定する。
+                </p>
+            </div>
+
+            <div class="card" style="margin-top: 30px;">
+                <h2><span class="icon-badge">🚨</span> 背景：対応すべきリスク</h2>
+                <ul>
+                    <li>サブリース契約書および<strong class="highlight-red">重説（重要事項説明書）の内容に不備</strong>がある。<br>
+                        <span style="color: #7f8c8d;">（特に重説は内容が非常に薄い）</span></li>
+                    <li>この状態でのリリースは、国交省への通報やトラブル発生時の<strong class="highlight-red">説明責任</strong>が果たせず、大きなリスクとなる。</li>
+                    <li><strong>対象規模</strong>: サブリース比率22%、<span class="highlight">約150件強</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- スライド3: 主な決定事項 -->
+        <div class="slide">
+            <h1><span class="icon-badge">🌟</span> 主な決定事項</h1>
+            <p style="font-size: 1.1rem; margin-bottom: 30px; color: #7f8c8d;">
+                リスクを最小限に抑えるための決定事項
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">No.</th>
+                        <th>決定事項</th>
+                        <th>詳細</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1</strong></td>
+                        <td><strong>リリース時期の変更</strong></td>
+                        <td>
+                            <span class="highlight-green">1月14日頃</span>に延期<br>
+                            <span style="color: #7f8c8d;">（変更前：12月末）</span><br>
+                            <small>理由：重説・契約書の不備によるリスク回避のため</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>2</strong></td>
+                        <td><strong>重説の改善方針</strong></td>
+                        <td>
+                            重説への9項目組み込みは見送り、<br>
+                            <span class="highlight-green">「特約」シートを別途作成</span>し、重説とセットで提供する。
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>3</strong></td>
+                        <td><strong>ミニマムな対策</strong></td>
+                        <td>
+                            お客さんにとって不利になり得る事項を盛り込んだ<br>
+                            <strong>「特約」</strong>を作成し、説明責任を果たす。
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>4</strong></td>
+                        <td><strong>試験的実施</strong></td>
+                        <td>
+                            <span class="highlight-green">12月第1週（来週）</span>から<br>
+                            リスクの高い物件（<span class="highlight">約10件</span>）で前倒しで試験的実施を開始。
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- スライド4: 重説改善の代替案と判断理由 -->
+        <div class="slide">
+            <h1><span class="icon-badge">💡</span> 重説改善の代替案と判断理由</h1>
+
+            <h2>重説への9項目組み込みの代替案</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>対応案</th>
+                        <th>開発負荷</th>
+                        <th>現場負荷</th>
+                        <th>効果/リスク</th>
+                        <th>判断</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>案A: 重説へ9項目を組み込み</strong></td>
+                        <td><span class="highlight-red">高い</span><br><small>（時間がかかる）</small></td>
+                        <td>変わらない</td>
+                        <td>本来の形だが、リリースが大幅に遅延するリスク</td>
+                        <td><span class="highlight-red">見送り</span></td>
+                    </tr>
+                    <tr style="background: #e8f5e9;">
+                        <td><strong>案B: 「特約」シートを別途作成</strong></td>
+                        <td><span class="highlight-green">低い</span></td>
+                        <td>変わらない</td>
+                        <td>開発負荷を抑えつつ、説明責任を果たせる。通報リスクも低減。</td>
+                        <td><span class="highlight-green">採用</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="card" style="margin-top: 30px;">
+                <h2>✅ ミニマムな対策の内容（特約）</h2>
+                <ul>
+                    <li><strong>目的</strong>: 国交省の指摘事項や判例に基づいた<strong class="highlight">9つの項目</strong>を明記。</li>
+                    <li><strong>内容</strong>: <strong class="highlight-red">お客さんにとって不利になり得る事項</strong>を重点的に記載し、納得を得る。</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- スライド5: 試験的実施の計画とメリット -->
+        <div class="slide">
+            <h1><span class="icon-badge">🚀</span> 試験的実施の計画とメリット</h1>
+
+            <div class="grid">
+                <div>
+                    <h2>年内の「特約」送付・説明の試験的実施</h2>
+                    <table>
+                        <tr>
+                            <th style="width: 150px;">項目</th>
+                            <th>詳細</th>
+                        </tr>
+                        <tr>
+                            <td><strong>対象物件</strong></td>
+                            <td><span class="highlight">リスクの高い約10件</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>開始時期</strong></td>
+                            <td><span class="highlight-green">12月の第1週（来週）</span>から開始</td>
+                        </tr>
+                        <tr>
+                            <td><strong>実施内容</strong></td>
+                            <td>
+                                <ul style="margin: 0; padding-left: 20px;">
+                                    <li>重説のタイミングで「特約」に関するコミュニケーションを実施。</li>
+                                    <li><strong class="highlight-red">録画記録を必ず残す</strong>。</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h2>✨ 試験的実施のメリット</h2>
+                    <div class="decision-card">
+                        <h3>リスク低減</h3>
+                        <p>リスクの高い物件から前倒しで対応することで、早急に説明責任を果たす。</p>
+                    </div>
+                    <div class="decision-card" style="margin-top: 20px;">
+                        <h3>対国交省説明</h3>
+                        <p>「システム対応前に<strong>前倒しで対応を始めている</strong>」と説明できる材料となる。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- スライド6: アクションアイテム -->
+        <div class="slide">
+            <h1><span class="icon-badge">🗓️</span> アクションアイテム</h1>
+            <p style="font-size: 1.1rem; margin-bottom: 30px; color: #7f8c8d;">
+                今後の具体的なアクションプラン
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 200px;">担当</th>
+                        <th style="width: 150px;">期限/時期</th>
+                        <th>アクション</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>矢作豊庸</strong></td>
+                        <td><span class="highlight-red">本日中</span></td>
+                        <td>結束氏を含めた関係者へ、本日の決定事項（特にリリース時期変更・特約対応）を共有</td>
+                    </tr>
+                    <tr>
+                        <td><strong>関係者</strong></td>
+                        <td>追って調整</td>
+                        <td>国交省の指摘・判例に基づいた<strong>9項目</strong>を記載した「<strong>特約シート</strong>」を作成</td>
+                    </tr>
+                    <tr>
+                        <td><strong>関係者</strong></td>
+                        <td><span class="highlight-green">来週初め</span></td>
+                        <td>試験的実施の対象物件（約10件）を特定し、<strong>12月第1週</strong>からの実施準備</td>
+                    </tr>
+                    <tr>
+                        <td><strong>関係者</strong></td>
+                        <td>12月第1週〜</td>
+                        <td>特約に関するコミュニケーション時の<strong>録画記録体制を整備</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>関係者</strong></td>
+                        <td>追って調整</td>
+                        <td><strong>1月14日頃のリリース</strong>に向けた、特約シートを添付するなどのシステム周りのスケジュール調整</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- スライド7: まとめ -->
+        <div class="slide title-slide">
+            <h1>ご清聴ありがとうございました</h1>
+            <div class="subtitle" style="margin-top: 60px;">
+                <p style="font-size: 1.2rem; margin-bottom: 30px;">
+                    ご質問・ご意見をお聞かせください
+                </p>
+                <p style="font-size: 1.1rem; opacity: 0.9;">
+                    お問い合わせ先: t_sato2@ga-tech.co.jp
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ナビゲーション -->
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()" title="前のスライド">‹</button>
+        <button class="nav-btn" onclick="nextSlide()" title="次のスライド">›</button>
+    </div>
+
+    <!-- スライドカウンター -->
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">7</span>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // キーボードナビゲーション
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousSlide();
+            }
+        });
+
+        // タッチスワイプ対応（モバイル）
+        let startX = 0;
+        let endX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            endX = e.changedTouches[0].clientX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const threshold = 50;
+            const diff = startX - endX;
+
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    previousSlide();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+

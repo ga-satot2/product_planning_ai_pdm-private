@@ -1,0 +1,716 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>サブリース販売手法の改善要求</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2e0123d3-e9f6-8089-b91c-dcfd24f6e2e5" class="page sans"><header><h1 class="page-title" dir="auto">サブリース販売手法の改善要求</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/priority-high_gray.svg" style="width:14px;height:14px;display:block"/></span>優先度</th><td><span class="selected-value select-value-color-red">高</span></td></tr><tr class="property-row property-row-auto_increment_id"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/numero_gray.svg" style="width:14px;height:14px;display:block"/></span>ID</th><td>62</td></tr><tr class="property-row property-row-status"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/burst_gray.svg" style="width:14px;height:14px;display:block"/></span>ステータス</th><td><span class="status-value select-value-color-yellow"><div class="status-dot status-dot-color-yellow"></div>レビュー待ち</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>担当チーム</th><td><span class="selected-value select-value-color-purple">toB</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>担当プロダクト</th><td><span class="selected-value select-value-color-purple">Asset Planning</span><span class="selected-value select-value-color-green">Supply Chain</span></td></tr><tr class="property-row property-row-person"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/friends_gray.svg" style="width:14px;height:14px;display:block"/></span>担当者</th><td><span class="user"><img src="%E3%82%B5%E3%83%96%E3%83%AA%E3%83%BC%E3%82%B9%E8%B2%A9%E5%A3%B2%E6%89%8B%E6%B3%95%E3%81%AE%E6%94%B9%E5%96%84%E8%A6%81%E6%B1%82/06_%E3%80%90profile%E3%80%91201105_1.png" class="icon user-icon"/>佐藤達也</span></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h1 id="2e0123d3-e9f6-80ac-b0c9-f10e25f834ee" class=""><mark class="highlight-blue"><strong>ISSUE</strong></mark></h1></div><div style="display:contents" dir="auto"><h3 id="2e0123d3-e9f6-80d5-bf6b-d35b1ff6f292" class=""><strong>ターゲットユーザー</strong></h3></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-80a3-9f60-da82f6dfa493" class="bulleted-list"><li style="list-style-type:disc"><strong>顧客（投資用不動産の購入予定者）</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-8068-8d45-dc721eab8b6c" class="bulleted-list"><li style="list-style-type:disc"><strong>販売担当者：Asset Design I Planner</strong>（サブリース物件を顧客に提案する）</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-803a-84c0-c99ae655b852" class="bulleted-list"><li style="list-style-type:disc"><strong>重説担当者：Supply Chain事業部Process Managementチーム</strong>（重要事項説明書の事前交付を実施する）</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-80e6-89ab-c9cc46545ce1" class="bulleted-list"><li style="list-style-type:disc"><strong>仕入担当者：Acquisition事業部Buyerチーム</strong>（仕入れた物件を販売可能な状態にする）</li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-8052-a7d2-f68eef573590" class="bulleted-list"><li style="list-style-type:disc"><strong>RENOSY事業横断組織 Compliance Guard</strong>（サブリース関連のSOS案件を対処する）</li></ul></div><div style="display:contents" dir="auto"><h3 id="2e1123d3-e9f6-8034-958d-ddbe92879b6b" class="">現状と事実 (FACT)</h3></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-805e-adee-d1c080211fdb" class="numbered-list" start="1"><li>サプリースの仕入れ件数</li></ol></div><div style="display:contents" dir="ltr"><figure id="2e1123d3-e9f6-805f-abfb-d19c36743554" class="image"><a href="%E3%82%B5%E3%83%96%E3%83%AA%E3%83%BC%E3%82%B9%E8%B2%A9%E5%A3%B2%E6%89%8B%E6%B3%95%E3%81%AE%E6%94%B9%E5%96%84%E8%A6%81%E6%B1%82/image.png"><img style="width:709.984375px" src="%E3%82%B5%E3%83%96%E3%83%AA%E3%83%BC%E3%82%B9%E8%B2%A9%E5%A3%B2%E6%89%8B%E6%B3%95%E3%81%AE%E6%94%B9%E5%96%84%E8%A6%81%E6%B1%82/image.png"/></a></figure></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-80a9-ad9c-d85a245da1eb" class="numbered-list" start="2"><li><strong>告知不足の発生</strong><strong>：</strong> サブリース物件であること、およびその契約特性が顧客に正しく認識されないまま販売に至るケースが発生しているため、のちのトラブルに発展した。</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-80d7-9b39-d9ba7b96e7f5" class="numbered-list" start="3"><li><strong>是正勧告：</strong> FY25時点でサブリース物件の販売に関連し、顧客から「サブリース契約である認識がなかった（契約無効の主張）」等のトラブルが発生、国土交通省に通報が2件される。それにより、2025年7月に国土交通省より運用の是正を求められている。</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-802b-8553-ef2ee5f8388d" class="numbered-list" start="4"><li><strong>改善方針：</strong><div style="display:contents" dir="auto"><ol type="a" id="2e2123d3-e9f6-801e-835c-d22f11e17a1e" class="numbered-list" start="1"><li>契約締結前の適切なタイミングで、顧客が契約内容を十分に理解し意思決定できる仕組みを構築する。</li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="2e2123d3-e9f6-807d-b207-ff2090449748" class="numbered-list" start="2"><li>仕組みの構築を完了させるまでは、暫定で、手動による通知を実施する。</li></ol></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e2123d3-e9f6-806a-a612-d4d560c1a760" class="numbered-list" start="5"><li>放置した場合のリスクと損失：<div style="display:contents" dir="auto"><ol type="a" id="2e2123d3-e9f6-8025-80af-fd1b6c0e9760" class="numbered-list" start="1"><li></li></ol></div></li></ol></div><div style="display:contents" dir="auto"><h3 id="2e1123d3-e9f6-80d8-95d8-c00800f8c6e5" class="">リスクと損失 (DAMAGE)</h3></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-80bf-af1a-fc5c58dba862" class="bulleted-list"><li style="list-style-type:disc"><strong>事業継続リスク：</strong> 運用是正が遅延し、法令違反状態が継続した場合、3ヶ月間の業務停止命令等の行政処分により<strong>200-600億円</strong>規模の損害が生じる恐れがある。</li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-807c-9182-efd9e0a52735" class="bulleted-list"><li style="list-style-type:disc"><strong>直接的損失：</strong> 契約取消に伴う買い戻しおよび損害賠償により、現在、累計<strong>1,166万円</strong>の損失が発生。</li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-8097-b28f-f0ed4cc8ad25" class="bulleted-list"><li style="list-style-type:disc"><strong>レピュテーションリスク</strong>：SNS等で該当顧客が発信してしまう事案が過去に発生。</li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-805c-8492-d063f75a0e53" class="bulleted-list"><li style="list-style-type:disc"><strong>コンプライアンス：</strong> 現在のリスクスコアは「20点/25点」と極めて高く、早急な対応が不可欠。</li></ul></div><div style="display:contents" dir="auto"><h3 id="2e1123d3-e9f6-80f1-9767-f7ffe44bf666" class="">課題の要因 (ROOT CAUSE)</h3></div><div style="display:contents" dir="auto"><ul id="2e2123d3-e9f6-80b1-b91e-c75e499f2626" class="bulleted-list"><li style="list-style-type:disc">認識の不一致：<div style="display:contents" dir="auto"><ul id="2e2123d3-e9f6-8046-bdd8-ddf3e49079cc" class="bulleted-list"><li style="list-style-type:circle">XXXXXの程度の解釈が一致しないため、法務は認識をしているものの、販売現場は認識が甘く十分に説明されることがない</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-80db-8c9b-dd6cc474d2ea" class="bulleted-list"><li style="list-style-type:disc"><strong>フローの欠如：</strong><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-809b-a763-cdd3b96c2c57" class="bulleted-list"><li style="list-style-type:circle">サブリース物件の特性を顧客に事前理解していただく必要があると理解しているもののの、ための標準化されたプロセス（仕入れ時にGAが判別する→販売時に顧客が知り、理解し、決断する）が存在しない</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-80ba-ab50-e86483115613" class="bulleted-list"><li style="list-style-type:disc"><strong>属人化：</strong><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-8086-ac6b-e7190c721068" class="bulleted-list"><li style="list-style-type:circle">販売時、顧客が理解してからサブリース契約を進めることに対して、営業担当（アセットプランナー）への通達のみに依存しており、システム的な強制力がない</li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-8055-b8b2-fa52bb83ef0a" class="bulleted-list"><li style="list-style-type:circle">仕入れ時、サブクラ物件であるかはBuyerマネージャーの判断に委ねられており、100%の精度で判断することができていない</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><h2 id="2e1123d3-e9f6-806e-b072-ee82c16ee58e" class="">ASIS業務フロー</h2></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-80e0-9854-d0173d3288fc" class="numbered-list" start="1"><li><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-80c0-9e10-dbd84d8d9861" class="bulleted-list"><li style="list-style-type:disc">特定賃貸借物件を仕入れた際、賃貸契約関連の書類をサブリース契約書のフォルダに格納する</li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-80f2-9402-d990d15284a7" class="bulleted-list"><li style="list-style-type:disc">サブリース契約書のフォルダ内にある書類は社内オペレーションでのみ活用される想定</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-8080-bbd4-de65089e23b6" class="numbered-list" start="2"><li><strong>物件提案・申込</strong>（Asset Design I Planner）<div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-8076-9c5b-ddc70a136389" class="bulleted-list"><li style="list-style-type:disc">アセットプランナーが顧客に物件を提案する際、サブリース契約のメリット／デメリットを顧客に伝えて意思決定していただく<div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-8082-9e2a-c824c8349696" class="bulleted-list"><li style="list-style-type:circle">デメリットの通達方法は販売担当者による</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-8028-ab1f-e264ea188aec" class="bulleted-list"><li style="list-style-type:disc">顧客が申込を行う</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-8019-a576-ef9497dbefc7" class="numbered-list" start="3"><li><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-80e0-8ee1-dbc60a450697" class="bulleted-list"><li style="list-style-type:disc">重要事項説明時、サブリース関連の質問があった場合は回答をおこなうが、顧客が正しく理解できていなかった場合は質問が発生しない</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-8028-b555-c224a886cc7a" class="numbered-list" start="4"><li><strong>契約締結後</strong><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-8076-8049-c06d8566aebe" class="bulleted-list"><li style="list-style-type:disc">RAMで数年間運用、家賃更新のタイミングで顧客がCSから「家賃交渉が難しい」旨を伝えたことから理由を追及され発覚</li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-804c-af4c-ed1e26bfa630" class="bulleted-list"><li style="list-style-type:disc">サブリース会社から直接オーナーに連絡が入り発覚</li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-8065-9e12-ceddf4f1f5f6" class="bulleted-list"><li style="list-style-type:disc">サブリース契約のデメリットが十分に説明されていない、サブリース契約として契約していないとの事由で、顧客側からクレーム・契約取消の申し立て・賠償を求められてしまう</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><hr id="2e0123d3-e9f6-800f-9580-c90b4177727e"/></div><div style="display:contents" dir="auto"><h1 id="2e0123d3-e9f6-8033-920f-cecacb18ae5d" class=""><mark class="highlight-blue"><strong>USER SCENARIO</strong></mark></h1></div><div style="display:contents" dir="auto"><h2 id="2e1123d3-e9f6-8048-9d72-f7e0d43ecdeb" class=""><strong>TOBE業務フロー</strong></h2></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-80fe-9b3b-c3c7f1928fef" class="numbered-list" start="1"><li><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-80c1-86f5-d1e0133bd252" class="bulleted-list"><li style="list-style-type:disc">特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、サブリース契約書の抜粋を登録し物件発表（正式発表）する<div style="display:contents" dir="auto"><p id="2e2123d3-e9f6-80ab-b2bc-f2ef40bcde34" class="">1.賃料の額</p></div><div style="display:contents" dir="auto"><hr id="2e2123d3-e9f6-8027-a537-eac1500160ad"/></div><div style="display:contents" dir="auto"><p id="2e2123d3-e9f6-809a-b18c-e1c07902e124" class="">2.サブリース会社の名称</p></div><div style="display:contents" dir="auto"><hr id="2e2123d3-e9f6-805e-9380-c3b54172bbab"/></div><div style="display:contents" dir="auto"><p id="2e2123d3-e9f6-8066-8f68-f15c86cbab47" class="">3.契約期間</p></div><div style="display:contents" dir="auto"><hr id="2e2123d3-e9f6-80b7-b2c3-ceb6bdf99055"/></div><div style="display:contents" dir="auto"><p id="2e2123d3-e9f6-80eb-ad67-ff2415e89eee" class="">4.特定賃貸借契約の解約条件</p></div><div style="display:contents" dir="auto"><hr id="2e2123d3-e9f6-80bc-aa3a-fe9795bd31b3"/></div><div style="display:contents" dir="auto"><p id="2e2123d3-e9f6-80be-9bfb-e63680fcbeae" class="">5.入居中・退去後の原状回復の際のオーナー負担分</p></div><div style="display:contents" dir="auto"><hr id="2e2123d3-e9f6-80df-a722-f82d4d63d98c"/></div><div style="display:contents" dir="auto"><p id="2e2123d3-e9f6-8075-b024-f4941577008c" class="">6.賃料の変更条件</p></div><div style="display:contents" dir="auto"><hr id="2e2123d3-e9f6-80d4-85f3-c342aa4181a8"/></div><div style="display:contents" dir="auto"><p id="2e2123d3-e9f6-806e-87f0-d5b696fb5e1a" class="">7.賃料の改定履歴</p></div><div style="display:contents" dir="auto"><hr id="2e2123d3-e9f6-80aa-81c7-c01483c47ba5"/></div><div style="display:contents" dir="auto"><p id="2e2123d3-e9f6-80ea-a126-e90875b1047f" class="">8.家賃保証・空室補償の条件（免責等）</p></div><div style="display:contents" dir="auto"><hr id="2e2123d3-e9f6-8019-b71b-d291f88e822b"/></div><div style="display:contents" dir="auto"><p id="2e2123d3-e9f6-807d-8e4f-f747954ada57" class="">9.転貸の条件</p></div><div style="display:contents" dir="auto"><hr id="2e2123d3-e9f6-8085-8599-ec27c558f0b5"/></div></li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-80f0-8bc1-c673588187a1" class="numbered-list" start="2"><li><strong>物件提案・申込</strong>（Asset Design I Planner）<div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-800a-bebe-f1ac2251054a" class="bulleted-list"><li style="list-style-type:disc">アセットプランナーが顧客に物件を提案</li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-80a2-977f-fec9c2249013" class="bulleted-list"><li style="list-style-type:disc">顧客が申込を行う</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-80fb-860e-c8855ea964f3" class="numbered-list" start="3"><li><mark class="highlight-red"><strong>サブリース契約書の送付</strong></mark><mark class="highlight-red"><strong> （追加システムによる自動処理）</strong></mark><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-80b6-9ffb-ee9419b05630" class="bulleted-list"><li style="list-style-type:disc">申込完了後、サブリース契約書が顧客に確実に届く</li></ul></div><div style="display:contents" dir="auto"><ul id="2e2123d3-e9f6-8094-bc2e-cbd0e80f1e12" class="bulleted-list"><li style="list-style-type:disc">メール送信を予定しているが、文面については検討中<div style="display:contents" dir="auto"><ul id="2e2123d3-e9f6-805c-a2dc-da8da95b8698" class="bulleted-list"><li style="list-style-type:circle">必要項目</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-800c-8e10-e70a56c11fd7" class="bulleted-list"><li style="list-style-type:disc">顧客は事前に契約書を確認できる</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-8004-b6f6-cb9b9345a6a9" class="numbered-list" start="4"><li><mark class="highlight-red"><strong>顧客の確認・判断</strong></mark><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-80ca-9770-e00a769dcb4e" class="bulleted-list"><li style="list-style-type:disc">顧客が契約書を確認</li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-8021-adba-e8c49a32852f" class="bulleted-list"><li style="list-style-type:disc">リスクを理解した上で、契約を進めるか判断する</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ul id="2e2123d3-e9f6-8089-9bc3-fbe1320b5f63" class="bulleted-list"><li style="list-style-type:disc">重要事項説明書の事前送付</li></ul></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-8063-bf48-e9d0d5dd2128" class="numbered-list" start="1"><li><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-801a-b094-f2b811be961e" class="bulleted-list"><li style="list-style-type:disc">顧客が事前に契約書を確認しているため、具体的な質問が可能</li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-800a-85b5-ebc9ff81cba8" class="bulleted-list"><li style="list-style-type:disc">重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-8018-9f67-cf069a649493" class="numbered-list" start="2"><li><strong>契約締結後</strong><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-80e0-a920-c9c311348cbc" class="bulleted-list"><li style="list-style-type:disc">リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</li></ul></div></li></ol></div><div style="display:contents" dir="auto"><hr id="2e0123d3-e9f6-8090-bcb5-dbe2da060100"/></div><div style="display:contents" dir="auto"><h1 id="2e0123d3-e9f6-80ca-9395-caca5c6dc9d0" class=""><mark class="highlight-blue"><strong>IMPACT</strong></mark></h1></div><div style="display:contents" dir="auto"><h2 id="2e0123d3-e9f6-809f-b2d2-fc873c6ee032" class="">定性</h2></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-80cb-9881-f934e382408b" class="bulleted-list"><li style="list-style-type:disc"><strong>法令違反リスクの解消</strong>：賃貸管理業法の要件を満たし、リスクスコア20→3への改善により、顧客からの通報・クレームリスクを回避</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-8099-bb49-ff34f8fb556b" class="bulleted-list"><li style="list-style-type:disc"><strong>事業継続リスクの回避</strong>：国土交通省からの指摘事項に対応し、免許停止等の行政処分リスクを回避</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-80f5-b933-da5bae7f9210" class="bulleted-list"><li style="list-style-type:disc"><strong>顧客体験の向上：</strong>書類を確認できることで、説明時間の短縮と理解度向上を実現し、「話が違う」「騙された」という不満や不信感を解消</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-800b-a0b2-d0707c871ad9" class="bulleted-list"><li style="list-style-type:disc"><strong>業務効率化</strong>：標準化されたプロセスにより、手動作業の削減と送付漏れリスクの排除</li></ul></div><div style="display:contents" dir="auto"><h2 id="2e0123d3-e9f6-80e5-bb03-ca0a8c68ac2e" class="">定量</h2></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-80f5-9d26-d207ea20ebce" class="bulleted-list"><li style="list-style-type:disc"><strong>上位目標 (GOAL)：</strong><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-80a0-be40-f22fe17ea954" class="bulleted-list"><li style="list-style-type:circle"><strong>リスク対応（主目的）：</strong> リスクスコア20→3への改善、免許停止リスクの回避</li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-8073-abb6-cffb1690789f" class="bulleted-list"><li style="list-style-type:disc"><strong>主要成果指標 (KEY METRICS)：</strong><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-8095-9dca-f4fe5e4982d9" class="bulleted-list"><li style="list-style-type:circle"><strong>リスクスコア：</strong> 20 → 3（法令違反リスクの大幅な軽減）</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-8095-8289-e7ac2e439af5" class="bulleted-list"><li style="list-style-type:circle"><strong>顧客からの通報件数：</strong> 法令違反に起因する顧客からの通報・クレームの発生を防止</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-8099-ae83-c42727fe4b69" class="bulleted-list"><li style="list-style-type:circle"><strong>送付漏れ率：</strong> 0%（システム的な自動化により送付漏れを防止）</li></ul></div><div style="display:contents" dir="auto"><ul id="2e2123d3-e9f6-8040-a62c-e9cc97a54503" class="bulleted-list"><li style="list-style-type:circle"><strong>サブリース物件の契約率：</strong></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-80b3-83a1-d6788ef85616" class="bulleted-list"><li style="list-style-type:disc"><strong>計測の仕方：</strong><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-8037-87ae-ee0130ac52e4" class="bulleted-list"><li style="list-style-type:circle">リスクスコアの評価（法務評価による）</li></ul></div><div style="display:contents" dir="auto"><ul id="2e1123d3-e9f6-804d-abb3-c4df5daa65d0" class="bulleted-list"><li style="list-style-type:circle">送付件数の記録（送付の証跡管理）</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-80d0-ad23-d8b79977de60" class="bulleted-list"><li style="list-style-type:circle">顧客からの通報・クレームの発生状況のモニタリング</li></ul></div><div style="display:contents" dir="auto"><ul id="2e2123d3-e9f6-8012-b5fe-fba966f80c0a" class="bulleted-list"><li style="list-style-type:circle"></li></ul></div></li></ul></div><div style="display:contents" dir="auto"><h2 id="2e0123d3-e9f6-800d-9052-c2f085fab16e" class="">短期経営KPIへの寄与</h2></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-80a0-882d-f69bd97e0de8" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">新規成約人数の増加</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-806d-b85d-cc9951a5404e" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">LTV向上</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-8019-bc9a-e789df974ccc" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">CAC抑制</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-8003-8e93-f2a1a8230aee" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">粗利率の確保</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-8003-9e5e-fece557e1b73" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">CCCの短縮</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-80e4-896b-c133f6c85e58" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">安心（法令違反リスクの解消による安心の提供）</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-8052-bc1b-f2ea6e0b2a6c" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">品揃え</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><hr id="2e0123d3-e9f6-80de-9b80-e9215d833afa"/></div><div style="display:contents" dir="auto"><h1 id="2e0123d3-e9f6-80ba-b8d4-ed98ec885471" class=""><mark class="highlight-blue"><strong>Appendix</strong></mark></h1></div><div style="display:contents" dir="auto"><h3 id="2e1123d3-e9f6-8002-a011-e0a877353f83" class="">① 顧客体験：検討中</h3></div><div style="display:contents" dir="auto"><ul id="2e0123d3-e9f6-8023-a013-ea0356d6d0c1" class="bulleted-list"><li style="list-style-type:disc">サブリース契約書は難解であるため、ご理解いただくための事前メール送信案を検討しているが、<strong>下記の理由から、サブリース物件の成約率が下がる可能性がある。</strong><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-8066-a375-cb6797a459cc" class="numbered-list" start="1"><li>事前送信したとして、顧客は自身で判断できない可能性が高くChatGPTなどに質問するケースがあり得る<br/>※送信内容（重説に記載される抜粋項目と同一）<div style="display:contents" dir="ltr"><figure id="2e1123d3-e9f6-8028-b096-de36d5a2c722" class="image"><a href="%E3%82%B5%E3%83%96%E3%83%AA%E3%83%BC%E3%82%B9%E8%B2%A9%E5%A3%B2%E6%89%8B%E6%B3%95%E3%81%AE%E6%94%B9%E5%96%84%E8%A6%81%E6%B1%82/image%201.png"><img style="width:384px" src="%E3%82%B5%E3%83%96%E3%83%AA%E3%83%BC%E3%82%B9%E8%B2%A9%E5%A3%B2%E6%89%8B%E6%B3%95%E3%81%AE%E6%94%B9%E5%96%84%E8%A6%81%E6%B1%82/image%201.png"/></a></figure></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e1123d3-e9f6-80ac-bc9c-c09b7d198709" class="numbered-list" start="2"><li>送信される想定の内容を、ChatGPTに要約・判断させた。<br/>下記の通り、ネガティブな判定を受ける可能性が高い<div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-8037-905d-ccd7eb2823cc" class=""><span style="border-bottom:0.05em solid">ChatGPT結果抜粋：</span></p></div><div style="display:contents" dir="ltr"><figure id="2e1123d3-e9f6-8007-a1d3-ed6d0e20c897" class="image"><a href="%E3%82%B5%E3%83%96%E3%83%AA%E3%83%BC%E3%82%B9%E8%B2%A9%E5%A3%B2%E6%89%8B%E6%B3%95%E3%81%AE%E6%94%B9%E5%96%84%E8%A6%81%E6%B1%82/image%202.png"><img style="width:528px" src="%E3%82%B5%E3%83%96%E3%83%AA%E3%83%BC%E3%82%B9%E8%B2%A9%E5%A3%B2%E6%89%8B%E6%B3%95%E3%81%AE%E6%94%B9%E5%96%84%E8%A6%81%E6%B1%82/image%202.png"/></a></figure></div></li></ol></div></li></ul></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-80b0-af42-ce2eb7f20c51" class="">一方、上記資料で契約を見送った顧客は、潜在的に契約後にトラブルになる可能性が高かった顧客であるとも捉えられる（仮説）。</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-805b-8d8e-eb77698e0389" class="">現状、クレーム発生として顕在化したトラブルが、契約前に顕在化するだけではないか、というのが事業部側（契約T）と会話した内容。</p></div><div style="display:contents" dir="auto"><h3 id="2e1123d3-e9f6-8078-a085-cacac6fd9833" class="">② Buyerオペレーションの懸念点について、事業部側と目線合わせを行うために作成された資料（馬場さん）</h3></div><div style="display:contents" dir="auto"><p id="2e2123d3-e9f6-8066-9f36-d707a9439629" class="">todo: オペレーション懸念事項をまとめる</p></div><div style="display:contents" dir="auto"><p id="2e2123d3-e9f6-8090-ba4a-dcf36a6359cd" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="2e1123d3-e9f6-8079-9f46-e84a3f306413"><div class="source">https://docs.google.com/presentation/d/1WPREWNumvHX6hQ3MkUVATFCL7DtfTairKg-nFrtYVx8/edit?slide=id.g36ba3f495ff_0_1#slide=id.g36ba3f495ff_0_1</div></figure></div><div style="display:contents" dir="auto"><h3 id="2e1123d3-e9f6-805e-9586-fe827300a80f" class="">③ 国土交通省「サブリース契約の注意喚起資料」</h3></div><div style="display:contents" dir="ltr"><figure id="2e1123d3-e9f6-8034-9e7b-c961c8344b50" class="image"><a href="%E3%82%B5%E3%83%96%E3%83%AA%E3%83%BC%E3%82%B9%E8%B2%A9%E5%A3%B2%E6%89%8B%E6%B3%95%E3%81%AE%E6%94%B9%E5%96%84%E8%A6%81%E6%B1%82/image%203.png"><img style="width:710px" src="%E3%82%B5%E3%83%96%E3%83%AA%E3%83%BC%E3%82%B9%E8%B2%A9%E5%A3%B2%E6%89%8B%E6%B3%95%E3%81%AE%E6%94%B9%E5%96%84%E8%A6%81%E6%B1%82/image%203.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2e1123d3-e9f6-8015-bffd-c2ac22fc0abf" class="">④ 法務作成　サブクラ対応の方向性案</h3></div><div style="display:contents" dir="ltr"><figure id="2e1123d3-e9f6-80f1-a77b-d8c4ddea7cb8"><div class="source">https://docs.google.com/presentation/d/1qEToxIHzxRI3egfRG2i0aCuoesjDYCcAY8vj2mQS6xE/edit?slide=id.g20629f94109_1_153#slide=id.g20629f94109_1_153</div></figure></div><div style="display:contents" dir="auto"><p id="2e2123d3-e9f6-8078-b9fc-d3ef4da8920f" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2e2123d3-e9f6-806d-bf10-f1de87b1c979" class="">USER STORY</p></div><div style="display:contents" dir="auto"><h3 id="2e1123d3-e9f6-8035-8e76-d4ec91d7de55" class="">【顧客（投資用不動産の購入者）】</h3></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-80d1-87d7-f01268dfe967" class="">田中さん（30代、会社員）は、RENOSYで投資用不動産の購入を検討していました。アセットプランナーから「家賃保証付きで安心です」と説明を受け、特定賃貸借物件に興味を持ちました。<br/><mark class="highlight-default">物件の申込をした翌日、田中さんのメールボックスにサブリース契約書が届きました。</mark><mark class="highlight-red"><br/></mark><br/>初めて見る契約書の内容に、田中さんは少し戸惑いました。「解約条件ってどういう意味？家賃が下がる可能性もあるの？」と疑問が湧いてきます。<br/></p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-8028-a81a-fb4db023e0c9" class="">専門的な言葉の理解が難しかった田中さんは、契約書の内容をChatGPTに入力して要約してもらいました。<br/>その結果、「家賃保証＝安全ではない」「家賃が20-30%下がったり、修繕費でキャッシュフローが悪化する可能性がある」「売却時に価格が下がる可能性がある」といった注意点が明確になりました。売却時の価格下落についてはアセットプランナーから説明を受けていましたが、キャッシュフローの悪化については想定できていませんでした。</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-8021-9953-db98951069ad" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-8015-8c7c-dcbf2535b2d5" class="">重要事項説明の前に、これらの情報を整理できた田中さんは、宅建士による重要事項説明の際に、「家賃が下がった場合の返済計画はどうなるか？」「修繕が必要な場合のシミュレーションは？」「解約時の条件を詳しく教えてください」と具体的な質問ができました。<br/>重説担当者も、事前に契約書を確認している田中さんに対して、丁寧に説明することができました。</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-8057-9b07-e25d95fd9228" class="">結果として、田中さんは「リスクを理解した上で投資する」という意思決定ができ、契約後も「話が違う」という不満を抱くことなく、安心して物件を保有できています。<br/>一方、リスクを理解した上で「この物件は自分には合わない」と判断した顧客もいました。<br/>しかし、その顧客は「契約後にトラブルになる可能性が高かった顧客」でもあり、事前に判断できたことで、お互いにとって良い結果となりました。</p></div><div style="display:contents" dir="auto"><h3 id="2e1123d3-e9f6-8089-81b5-df89baabbfe7" class="">【販売担当者：Asset Design I Planner】</h3></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-8064-89c3-cac2410532e7" class="">アセットプランナーの高橋さんは、これまでサブリース物件を提案する際、「家賃保証があるので安心です」と説明していました。<br/>しかし、契約後に「サブリース契約の内容を理解していなかった」というクレームが発生し、説明不足を指摘されることがありました。</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-80aa-90cc-cdf618540671" class="">改善後、高橋さんが物件を提案し、顧客が申込をすると、サブリース契約書が顧客に確実に届くようになります。<br/>高橋さんは「申込いただいた物件のサブリース契約書をお送りしました。ご確認いただき、ご不明点があればお気軽にお聞きください」と伝えるだけで良くなります。</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-80fe-9579-fcf49421dbcf" class="">一方で、高橋さんには懸念もありました。<br/>「顧客が契約書を確認して、リスクを理解したら、契約を断られる可能性が高まるのではないか？」という不安です。</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-80cb-a168-fd2a86c6b37d" class="">実際、契約書を確認した顧客の中には、ChatGPTで要約してもらった結果、「家賃保証＝安全ではない」「家賃が20-30%下がる可能性がある」といったネガティブな判定を受け、契約を見送るケースもありました。</p></div><div style="display:contents" dir="auto"><h3 id="2e1123d3-e9f6-8038-8039-d485b03c5469" class="">【仕入担当者：Acquisition事業部Buyerチーム】</h3></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-8087-996f-e8ceb59aec55" class="">Buyerチームの鈴木さんは、仕入れた物件が特定賃貸借物件の場合、サブリース契約書をSUPPLIERに登録する必要があります。<br/>これまで、サブリース契約書を顧客に送付するフローが存在しなかったため、現行システムのサブリース契約書格納場所には、仲介から受け取った書類一式が整理されずに格納されている状態でした。</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-8078-84c0-db5b111e5c38" class="">改善後、SUPPLIERにサブリース契約書のデータを登録すれば、顧客に確実に届くようになります。鈴木さんは送付漏れの心配をすることなく、安心して業務を進められます。</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-80e7-b3cb-df241ff24013" class="">一方で、鈴木さんには「サブリース契約書の登録が必須になり、業務負荷が高まるのではないか？」という不安がありました。<br/>確かに、これまで整理されずに格納されていた契約書を、構造化されたデータとして登録する必要があるため、初期の作業負荷は増加します。</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-8035-aac6-c0ac11b7b1ec" class="">しかし、このデータ登録により、大きなメリットが生まれます。手作業で行っていた「サブリース重説9項目の抽出」が標準化され、自動的に生成されるようになります。<br/>初期は難しかった作業が、システムによって自動化されることで、長期的には業務効率が大幅に向上します。また、送付漏れのリスクがなくなり、「契約書を送り忘れた」というミスが発生しなくなりました。「いつ送ったか」という証跡も残り、後から確認することもできます。</p></div><div style="display:contents" dir="auto"><h3 id="2e1123d3-e9f6-8096-8d92-f4ecd40bf7df" class="">【契約関係者：Supply Chain事業部Process Managementチーム】</h3></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-804e-a4a8-df9886fe11ad" class="">Supply Chain事業部Process Managementチームの重説担当者である山田さんは、これまで、顧客がサブリース契約書を確認できていない状態で説明を行う必要がありました。</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-8030-9e2a-e1c4139083f2" class="">改善後、サブリース契約書が確実に顧客に届くため、顧客が事前に契約書を確認した上で重要事項説明に臨むことができます。<br/>これにより、山田さんは「契約書をまだ見ていない」という状況で説明を始める必要がなくなり、顧客が既に内容を理解している前提で説明を進められるようになります。</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-80b4-a0f5-c873670b217b" class="">また、重要事項説明書にサブリース契約の内容が明記されるため、「説明していなかった」というリスクもなくなります。<br/>顧客が事前に契約書を確認しているため、重要事項説明の際に具体的な質問が増え、より丁寧で質の高い説明ができるようになります。<br/>説明時間は長引く可能性もありますが、顧客の理解度が向上し、契約後のトラブルを防ぐことで、結果的に業務効率が向上します。</p></div><div style="display:contents" dir="auto"><h3 id="2e1123d3-e9f6-8033-bd7c-e070f5fa8841" class="">【RENOSY事業横断組織 Compliance Guard】</h3></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-8048-a76b-d38eac7d5c84" class="">Compliance Guardの渡辺さんは、これまで契約後に「サブリース契約の内容を理解していなかった」という相談やクレームに対応することがありました。<br/>その都度、面談の録画データを確認して、サブリース契約書の説明が行われていたか、契約書を顧客に提示していたかなどを裏どりする必要があり、対応に時間がかかっていました。</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-804c-8b64-c1100c1e46ec" class="">改善後、サブリース契約書が確実に顧客に届くため、「契約書を確認していなかった」という相談は大幅に減少します。また、相談があった場合も、確実に送付されていることを根拠として「説明していない可能性」を排除できます。</p></div><div style="display:contents" dir="auto"><p id="2e1123d3-e9f6-801a-8516-d17bbd00163b" class="">契約後の相談対応件数が減少し、渡辺さんの業務負荷も軽減されます。また、契約前にリスクを理解した上で判断した顧客が増えたため、契約後のトラブルも減少しました。<br/>面談の録画確認などの裏どり作業も、送付の証跡があることで、より効率的に行えるようになります。</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"><hr/><details open="" style="padding-top:1em"><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">解決済みのページコメント</summary><div class="indented"><div><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">網</span></span><span><b>網本直哉</b> <time style="font-size:0.8em">Jan 7, 2026, 9:55 AM</time></span></span></div><div style="padding:0.2em">軸が2つある？<br/>1. 業務フロー軸（契約前に重要事項説明書が送られるフローになってない ←法令違反）<br/>2. そもそもダメ軸（サブリース賃貸借契約書が自動でも手動でも送付されてない ←普通にやばい）</div><div style="padding:0.3em"></div></li><li><div><span class="user" style="padding:0.2em"><img src="https://s3-us-west-2.amazonaws.com/public.notion-static.com/26b690f6-89d9-4047-b634-d8aa894ab7f0/06_【profile】201105_1.png" class="icon user-icon"/><span><b>佐藤達也</b> <time style="font-size:0.8em">Jan 7, 2026, 5:54 PM</time></span></span></div><div style="padding:0.2em">「そもそもダメ」軸にフォーカスするように変更</div><div style="padding:0.3em"></div></li></ul></div><hr/></div></details><details open="" style="padding-top:1em"><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">インラインコメント</summary><div class="indented"><div><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 10:35 PM</time></span></span></div><div style="padding:0.2em">馬場さんの資料から抜粋して貼り付け</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">ケース</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 8:55 PM</time></span></span></div><div style="padding:0.2em">何件なのか？または何％なのか、数字があれば、入れてください。<br/><br/>もし、なければ、例：XX月　XX件　という記載でもOK。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>告知不足の発生</strong></mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:39 PM</time></span></span></div><div style="padding:0.2em">そもそも法令があるので、その法令の内容を簡単にまとめて、追加しましょう。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">トラブル</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 8:55 PM</time></span></span></div><div style="padding:0.2em">トラブル件数があれば、入れてください</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>改善方針：</strong> 契約締結前の適切なタイミングで、顧客が契約内容を十分に理解し意思決定できる仕組みを構築すること。</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 8:57 PM</time></span></span></div><div style="padding:0.2em">これはGAが国土交通書への回答？<br/>その運用是正勧告に対してGAがとう回答したのか、何を約束したのか、書いた方が良い</div><div style="padding:0.3em"></div></li><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 10:39 PM</time></span></span></div><div style="padding:0.2em">あと、12月に手動対応の結果を国土交通省に一回報告済みで、仕組み構築はXX月まで完了させる必要がある　<br/><br/>↑見たい内容で、どのような対策をすでにやったのか、このソリューションはいつ必要なのか、という切迫感が伝わる事実を記載しましょう</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>200-600億円</strong></mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 8:59 PM</time></span></span></div><div style="padding:0.2em">200~600億は売り上げ？利益？<br/>そして、下限の200億ですが、三ヶ月は200億って小さいかなと思います。もっと大きな数字ではないかと思います。違うかな</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">現在<strong>1,166万円</strong>の損失が発生</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:00 PM</time></span></span></div><div style="padding:0.2em">何件で1166万円？</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">現在のリスクスコアは「20点/25点」と極めて高く、早急な対応が不可欠。</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:01 PM</time></span></span></div><div style="padding:0.2em">リスクスコアはわからない人がいるから、GA自己評価のリスクスコアでしだっけ？<br/><br/>そして、20点はどんなリスクなのか、以前一枚の図を見た記憶がありますので、ここに貼り付けたほうが良い</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>重要事項説明</strong></mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:07 PM</time></span></span></div><div style="padding:0.2em">重要事項説明書の交付？</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><mark class="highlight-blue"><strong>USER SCENARIO</strong></mark></mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:31 PM</time></span></span></div><div style="padding:0.2em">ユーザーシナリオの記載方法が実体験をイメージしやすい記載のやり方でGoodですが、AS-ISのフローがありますので、同じ順番でT0ーBEフローを簡潔に記載したほうがもっとわかりやすいかと思います。<br/>こちらの記載はUpdateしたうえ、Appendixに移しましょうか？</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>主要成果指標 (KEY METRICS)：</strong></mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:38 PM</time></span></span></div><div style="padding:0.2em">そのほかのMonitoring指標として<br/><br/>サブリース物件の契約率<br/></div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">顧客体験の検討</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:43 PM</time></span></span></div><div style="padding:0.2em">ここの検討の結論はなんでしだっけ？<br/><br/>安心の提供を優先して、メールを送ること？<br/>契約しないという事業リスクがあるものの、事業判断として許容する　とのこと？</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">特定賃貸借物</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:08 PM</time></span></span></div><div style="padding:0.2em">これはサブリースのこと？</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">その結果、「家賃保証＝安全ではない」「家賃が20-30%下がったり、修繕費でキャッシュフローが悪化する可能性がある」「売却時に価格が下がる可能性がある」といった注意点が明確になりました。売却時の価格下落についてはアセットプランナーから説明を受けていましたが、キャッシュフローの悪化については想定できていませんでした。</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:13 PM</time></span></span></div><div style="padding:0.2em">そもそも、営業からこちらの説明がないのは大丈夫かな？説明すべきだと思います。<br/><br/>今回の対応は営業の説明資料のUpdateも含まれているでしょうか？</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">宅建士による重要事項説明の際に、「家賃が下がった場合の返済計画はどうなるか？」「修繕が必要な場合のシミュレーションは？」「解約時の条件を詳しく教えてください」と具体的な質問ができました。</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:14 PM</time></span></span></div><div style="padding:0.2em">おそらく宅建士は返済計画、修繕のシミュレーションは説明できないです。<br/>ご確認お願い致します。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">リスクを理解した上で「この物件は自分には合わない」と判断した顧客もいました。<br/>しかし、その顧客は「契約後にトラブルになる可能性が高かった顧客」でもあり、事前に判断できたことで、お互いにとって良い結果となりました。</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:16 PM</time></span></span></div><div style="padding:0.2em">これは良くない体験かと思います。やっぱりサブリースのリスクの説明タイミングを再考したほうが良い。<br/><br/>重説の際、キャンセルとなると、お客様にもGAにも良くないなと思います。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">これまで、サブリース契約書を顧客に送付するフローが存在しなかったため、現行システムのサブリース契約書格納場所には、仲介から受け取った書類一式が整理されずに格納されている状態でした。</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:22 PM</time></span></span></div><div style="padding:0.2em">サブリース判定はどこでやりますか？</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">SUPPLIERにサブリース契約書のデータを登録すれば、顧客に確実に届くようになります。鈴木さんは送付漏れの心配をすることなく、安心して業務を進められます。</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:27 PM</time></span></span></div><div style="padding:0.2em">格納したらすぐお客様に送信されます？</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>改善方針：</strong> 契約締結前の適切なタイミングで、顧客が契約内容を十分に理解し意思決定できる仕組みを構築すること。</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 8:57 PM</time></span></span></div><div style="padding:0.2em">これはGAが国土交通書への回答？<br/>その運用是正勧告に対してGAがとう回答したのか、何を約束したのか、書いた方が良い</div><div style="padding:0.3em"></div></li><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 10:39 PM</time></span></span></div><div style="padding:0.2em">あと、12月に手動対応の結果を国土交通省に一回報告済みで、仕組み構築はXX月まで完了させる必要がある　<br/><br/>↑見たい内容で、どのような対策をすでにやったのか、このソリューションはいつ必要なのか、という切迫感が伝わる事実を記載しましょう</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">事前理解していただくため</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:04 PM</time></span></span></div><div style="padding:0.2em">GAが事前に理解してもらう必要があるというのは認識している？<br/><br/>例えば、このような記載がもっとわかりやすいかも<br/><br/>XXXXを事前に告知と理解してもらう必要があると理解しているものの、フローの欠如やオペレーションの属人により、XXXXX</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:35 PM</time></span></span></div><div style="padding:0.2em">今回の改善で自動化されたところがれば、記載しましょう。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">重要事項説明の抜粋</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 10:28 PM</time></span></span></div><div style="padding:0.2em">抜粋って、９項目のことでしょうか？<br/>であれば、項目名をリストアップしましょう。<br/><br/>この9項目が十分なのか、何か根拠ありますか？</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">顧客に物件を提案</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:33 PM</time></span></span></div><div style="padding:0.2em">サブリースのメリットとリスクの説明はする？</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">顧客に確実に届く</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 10:29 PM</time></span></span></div><div style="padding:0.2em">DocuSignのEmail？</div><div style="padding:0.3em"></div></li><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 10:29 PM</time></span></span></div><div style="padding:0.2em">文面のサンプルがあれば、こちらに添付しましょう。</div><div style="padding:0.3em"></div></li><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 10:30 PM</time></span></span></div><div style="padding:0.2em">お客様との接点はここだけ？</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">顧客が契約書を確認</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:33 PM</time></span></span></div><div style="padding:0.2em">Signが必要？</div><div style="padding:0.3em"></div></li><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 10:31 PM</time></span></span></div><div style="padding:0.2em">こちらの契約書はASーISのものと同じですかね。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background"><strong>TOBE業務フロー</strong><br/><strong>物件仕入・登録</strong>（Acquisition事業部Buyerチーム）<br/>特定賃貸借物件を仕入れた際、サブリース契約書を適切に管理し、重要事項説明の抜粋を登録し物件発表（正式発表）する<br/><strong>物件提案・申込</strong>（Asset Design I Planner）<br/>アセットプランナーが顧客に物件を提案<br/>顧客が申込を行う<br/><strong>サブリース契約書の送付</strong><br/>申込完了後、サブリース契約書が顧客に確実に届く<br/>顧客は事前に契約書を確認できる<br/><strong>顧客の確認・判断</strong><br/>顧客が契約書を確認<br/>リスクを理解した上で、契約を進めるか判断する<br/><strong>重要事項説明</strong>（Supply Chain事業部Process Managementチームの重説担当者）<br/>顧客が事前に契約書を確認しているため、具体的な質問が可能<br/>重説担当者も、理解した上で契約に進む顧客に対して丁寧に説明できる<br/><strong>契約締結後</strong><br/>リスクを理解した上で契約に進むため、「話が違う」「騙された」という不満が発生しない</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:32 PM</time></span></span></div><div style="padding:0.2em">これはわかりやすいので、もうちょっとUpdateしてUser Scenarioのメインのコンテンツにしても良いです。</div><div style="padding:0.3em"></div></li></ul></div><hr/></div><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">送信内容（重説に記載される抜粋項目と同一）</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 9:40 PM</time></span></span></div><div style="padding:0.2em">スクショの文字が読めない</div><div style="padding:0.3em"></div></li></ul></div><hr/></div></details><details open="" style="padding-top:1em"><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">解決済みのインラインコメント</summary><div class="indented"><div><p style="padding:0.2em"><b>ブロックテキスト</b>: <mark class="highlight-yellow_background">国土交通省より運用の是正を求められている。</mark></p><ul class="toggle"><li><div><span class="user" style="padding:0.2em"><span class="icon text-icon user-icon"><span class="user-icon-inner">趙</span></span><span><b>趙黎明</b> <time style="font-size:0.8em">Jan 7, 2026, 8:55 PM</time></span></span></div><div style="padding:0.2em">2025年XX月　時期を記載しましょう</div><div style="padding:0.3em"></div></li></ul></div><hr/></div></details></span></body></html>

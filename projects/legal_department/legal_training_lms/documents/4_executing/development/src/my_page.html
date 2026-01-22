@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マイページ - 法務研修LMS</title>
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <?!= include('Header'); ?>
+  
+  <div class="container">
+    <div class="page-header">
+      <h1>マイページ</h1>
+      <p>予約状況と研修履歴を確認できます</p>
+    </div>
+    
+    <? if (participant) { ?>
+      <!-- 受講者情報 -->
+      <div class="user-info">
+        <h2>受講者情報</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">氏名</span>
+            <span class="value"><?= participant.name ?></span>
+          </div>
+          <div class="info-item">
+            <span class="label">社員番号</span>
+            <span class="value"><?= participant.employeeId ?></span>
+          </div>
+          <div class="info-item">
+            <span class="label">メールアドレス</span>
+            <span class="value"><?= participant.email ?></span>
+          </div>
+          <div class="info-item">
+            <span class="label">部署</span>
+            <span class="value"><?= participant.department || '未設定' ?></span>
+          </div>
+          <div class="info-item">
+            <span class="label">グループ</span>
+            <span class="value">グループ <?= participant.groupId ?></span>
+          </div>
+          <div class="info-item">
+            <span class="label">ステータス</span>
+            <span class="value">
+              <span class="badge badge-success">
+                <?= participant.status === 'active' ? '有効' : '無効' ?>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 予約一覧 -->
+      <div class="reservations-section">
+        <h2>予約一覧</h2>
+        
+        <? if (reservations && reservations.length > 0) { ?>
+          <div class="reservations-list">
+            <? for (var i = 0; i < reservations.length; i++) { ?>
+              <? var reservation = reservations[i]; ?>
+              <? var session = reservation.session; ?>
+              <? var course = reservation.course; ?>
+              
+              <div class="reservation-card <?= reservation.status === 'cancelled' ? 'cancelled' : '' ?>">
+                <div class="reservation-header">
+                  <h3><?= course ? course.name : '研修コース' ?></h3>
+                  <? if (reservation.status === 'confirmed') { ?>
+                    <span class="badge badge-success">予約済み</span>
+                  <? } else if (reservation.status === 'cancelled') { ?>
+                    <span class="badge badge-danger">キャンセル済み</span>
+                  <? } else { ?>
+                    <span class="badge">保留中</span>
+                  <? } ?>
+                </div>
+                
+                <? if (session) { ?>
+                  <div class="reservation-body">
+                    <div class="info-row">
+                      <span class="icon">📅</span>
+                      <span><?= formatDate(session.scheduledDate) ?></span>
+                    </div>
+                    <div class="info-row">
+                      <span class="icon">🕒</span>
+                      <span><?= session.startTime ?> 〜 <?= session.endTime ?></span>
+                    </div>
+                    <div class="info-row">
+                      <span class="icon">📍</span>
+                      <span><?= session.meetingRoomId || '会議室未定' ?></span>
+                    </div>
+                    <div class="info-row">
+                      <span class="icon">📝</span>
+                      <span>予約日: <?= formatDate(reservation.createdAt) ?></span>
+                    </div>
+                  </div>
+                  
+                  <? if (reservation.status === 'confirmed') { ?>
+                    <div class="reservation-actions">
+                      <button 
+                        class="btn btn-secondary btn-sm" 
+                        onclick="handleCancelReservation('<?= reservation.id ?>')"
+                      >
+                        予約をキャンセル
+                      </button>
+                      <button class="btn btn-primary btn-sm" disabled>
+                        予約変更（準備中）
+                      </button>
+                    </div>
+                  <? } ?>
+                <? } ?>
+              </div>
+            <? } ?>
+          </div>
+        <? } else { ?>
+          <div class="alert alert-info">
+            <strong>予約がありません</strong>
+            <p><a href="?page=courses">研修コース一覧</a>から予約してください。</p>
+          </div>
+        <? } ?>
+      </div>
+      
+      <!-- クイックアクション -->
+      <div class="quick-actions">
+        <h2>クイックアクション</h2>
+        <div class="actions-grid">
+          <a href="?page=courses" class="action-card">
+            <span class="action-icon">📚</span>
+            <span class="action-text">新しい研修を予約</span>
+          </a>
+          <a href="?page=test" class="action-card">
+            <span class="action-icon">✅</span>
+            <span class="action-text">テストを受ける</span>
+          </a>
+          <a href="?page=results" class="action-card">
+            <span class="action-icon">📊</span>
+            <span class="action-text">成績を確認</span>
+          </a>
+        </div>
+      </div>
+      
+    <? } else { ?>
+      <div class="alert alert-warning">
+        <strong>受講者登録が必要です</strong>
+        <p>マイページを利用するには受講者登録が必要です。</p>
+        <a href="?page=register" class="btn btn-primary">受講者登録</a>
+      </div>
+    <? } ?>
+  </div>
+  
+  <?!= include('Footer'); ?>
+  
+  <script>
+    function formatDate(date) {
+      if (!date) return '-';
+      const d = new Date(date);
+      return d.toLocaleDateString('ja-JP', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric'
+      });
+    }
+    
+    function handleCancelReservation(reservationId) {
+      if (!confirm('この予約をキャンセルしますか？\n※この操作は取り消せません')) {
+        return;
+      }
+      
+      google.script.run
+        .withSuccessHandler(function(response) {
+          if (response.success) {
+            alert('予約をキャンセルしました');
+            location.reload();
+          } else {
+            alert('キャンセルに失敗しました: ' + response.message);
+          }
+        })
+        .withFailureHandler(function(error) {
+          alert('エラーが発生しました: ' + error.message);
+        })
+        .handleCancelReservation({
+          action: 'cancel_reservation',
+          reservationId: reservationId
+        }, Session.getActiveUser().getEmail());
+    }
+  </script>
+  
+  <style>
+    .reservations-section,
+    .quick-actions {
+      background-color: var(--card-background);
+      border-radius: 8px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .reservations-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .reservation-card {
+      background-color: var(--card-background);
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.2s;
+    }
+    
+    .reservation-card.cancelled {
+      opacity: 0.5;
+      background-color: #fafafa;
+    }
+    
+    .reservation-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .reservation-header h3 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
+    
+    .reservation-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    
+    .reservation-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+    
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .action-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 2rem;
+      background-color: var(--background-color);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.2s;
+    }
+    
+    .action-card:hover {
+      background-color: var(--primary-color);
+      color: white;
+      transform: translateY(-4px);
+    }
+    
+    .action-icon {
+      font-size: 2.5rem;
+    }
+    
+    .action-text {
+      font-weight: 600;
+      text-align: center;
+    }
+  </style>
+</body>
+</html>
+

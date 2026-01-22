@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理者ダッシュボード - 法務研修LMS</title>
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <?!= include('Header'); ?>
+  
+  <div class="container">
+    <div class="page-header">
+      <h1>管理者ダッシュボード</h1>
+      <p>研修の全体状況を確認・管理できます</p>
+    </div>
+    
+    <!-- システム統計 -->
+    <div class="stats-cards">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value"><?= stats.totalParticipants ?></div>
+        <div class="stat-label">総受講者数</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">📚</div>
+        <div class="stat-value"><?= stats.totalCourses ?></div>
+        <div class="stat-label">研修コース数</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-value"><?= stats.totalReservations ?></div>
+        <div class="stat-label">総予約数</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-value"><?= stats.activeReservations ?></div>
+        <div class="stat-label">有効予約数</div>
+      </div>
+    </div>
+    
+    <!-- 管理メニュー -->
+    <div class="admin-menu">
+      <h2>管理メニュー</h2>
+      <div class="menu-grid">
+        <a href="?page=admin&view=courses" class="menu-card">
+          <span class="menu-icon">📚</span>
+          <h3>研修コース管理</h3>
+          <p>コースの作成・編集・削除</p>
+        </a>
+        
+        <a href="?page=admin&view=sessions" class="menu-card">
+          <span class="menu-icon">📅</span>
+          <h3>セッション管理</h3>
+          <p>研修日程・会議室の設定</p>
+        </a>
+        
+        <a href="?page=admin&view=participants" class="menu-card">
+          <span class="menu-icon">👥</span>
+          <h3>受講者管理</h3>
+          <p>受講者情報・グループ分け</p>
+        </a>
+        
+        <a href="?page=admin&view=reservations" class="menu-card">
+          <span class="menu-icon">📝</span>
+          <h3>予約管理</h3>
+          <p>予約状況の確認・調整</p>
+        </a>
+        
+        <a href="?page=admin&view=attendance" class="menu-card">
+          <span class="menu-icon">✅</span>
+          <h3>出席管理</h3>
+          <p>出席状況・成績の確認</p>
+        </a>
+        
+        <a href="?page=admin&view=reports" class="menu-card">
+          <span class="menu-icon">📊</span>
+          <h3>レポート</h3>
+          <p>各種レポートの生成</p>
+        </a>
+        
+        <a href="?page=admin&view=notifications" class="menu-card">
+          <span class="menu-icon">📧</span>
+          <h3>通知管理</h3>
+          <p>メール送信・リマインド設定</p>
+        </a>
+        
+        <a href="?page=admin&view=settings" class="menu-card">
+          <span class="menu-icon">⚙️</span>
+          <h3>システム設定</h3>
+          <p>各種設定・環境変数</p>
+        </a>
+      </div>
+    </div>
+    
+    <!-- クイック操作 -->
+    <div class="quick-operations">
+      <h2>クイック操作</h2>
+      <div class="operations-list">
+        <button class="operation-btn" onclick="exportData()">
+          <span class="operation-icon">💾</span>
+          <span>データエクスポート</span>
+        </button>
+        
+        <button class="operation-btn" onclick="sendBulkEmail()">
+          <span class="operation-icon">📧</span>
+          <span>一斉メール送信</span>
+        </button>
+        
+        <button class="operation-btn" onclick="generateReport()">
+          <span class="operation-icon">📊</span>
+          <span>レポート生成</span>
+        </button>
+        
+        <button class="operation-btn" onclick="syncCalendar()">
+          <span class="operation-icon">🔄</span>
+          <span>カレンダー同期</span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- システム情報 -->
+    <div class="system-info">
+      <h2>システム情報</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">バージョン</span>
+          <span class="value">v1.0.0</span>
+        </div>
+        <div class="info-item">
+          <span class="label">最終更新</span>
+          <span class="value">2025-10-16</span>
+        </div>
+        <div class="info-item">
+          <span class="label">管理者</span>
+          <span class="value"><?= user ?></span>
+        </div>
+        <div class="info-item">
+          <span class="label">ステータス</span>
+          <span class="value">
+            <span class="badge badge-success">正常稼働中</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <?!= include('Footer'); ?>
+  
+  <script>
+    function exportData() {
+      if (!confirm('全データをエクスポートしますか？')) return;
+      alert('エクスポート機能は準備中です（Phase 3で実装予定）');
+    }
+    
+    function sendBulkEmail() {
+      if (!confirm('一斉メールを送信しますか？')) return;
+      alert('一斉メール機能は準備中です（Phase 2で実装予定）');
+    }
+    
+    function generateReport() {
+      alert('レポート生成機能は準備中です（Phase 3で実装予定）');
+    }
+    
+    function syncCalendar() {
+      if (!confirm('Googleカレンダーと同期しますか？')) return;
+      alert('カレンダー同期機能は準備中です（Phase 2で実装予定）');
+    }
+  </script>
+  
+  <style>
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    
+    .stat-card {
+      background-color: var(--card-background);
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: all 0.3s;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .stat-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    
+    .admin-menu,
+    .quick-operations,
+    .system-info {
+      background-color: var(--card-background);
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+    
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .menu-card {
+      background-color: var(--background-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .menu-card:hover {
+      background-color: var(--primary-color);
+      color: white;
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .menu-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .menu-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .menu-card p {
+      font-size: 0.875rem;
+      opacity: 0.8;
+    }
+    
+    .operations-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .operation-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      background-color: var(--background-color);
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    
+    .operation-btn:hover {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .operation-icon {
+      font-size: 1.5rem;
+    }
+  </style>
+</body>
+</html>
+

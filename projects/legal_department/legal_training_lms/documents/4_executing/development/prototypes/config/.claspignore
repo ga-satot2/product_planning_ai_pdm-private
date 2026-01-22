@@ -1,0 +1,12 @@
+**/**
+!src/**
+!src/**/*.gs
+!src/**/*.html
+!src/**/*.json
+!.clasp.json
+!.claspignore
+!README.md
+!deploy.sh
+!setup_clasp.sh
+
+

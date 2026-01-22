@@ -1,0 +1,512 @@
+{
+  "summary": {
+    "total": 33,
+    "success": 29,
+    "failure": 4,
+    "unknown": 0,
+    "coverage": 33,
+    "coverage_percentage": 100.0
+  },
+  "results": [
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "17:50:49お知らせ実行開始17:50:50情報=== testSheetFunctions: 開始 ===17:50:50情報1. getUtils()のテスト...17:50:50情報✅ getUtils()成功17:50:50情報2. getConfig()のテスト...17:50:50情報✅ getConfig()成功17:50:50情報3. getCalendarId()のテスト...17:50:50情報✅ getCalendarId()成功: t_sato2@ga-tech.co.jp17:50:50情報4. findEventInfoByEventId()のテスト...17:50:51情報⚠️ findEventInfoByEventId()でイベントが見つかりませんでした: test_event_id17:50:51情報   これは正常です。実際のeventIdが必要です。17:50:51情報=== testSheetFunctions: 完了 ===17:50:51お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testSheetFunctions"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testSheetFunctions_20260113_175120.log",
+      "test_function": "testSheetFunctions"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "17:51:47お知らせ実行開始17:51:48情報=== testCancelReservation: 開始 ===17:51:48情報⚠️ 安全対策: テスト実行者のメールアドレスのみを使用します17:51:48情報テストパラメータ: email=t_sato2@ga-tech.co.jp, eventId=hvqdc7k9t1d96clvbq5nvk6jks17:51:48情報cancelReservation()を実行中...17:51:48情報ℹ️  [2026-01-13T08:51:48.191Z] [INFO] cancelReservation: 予約削除を開始17:51:48情報   コンテキスト: {\"email\":\"t_sato2@ga-tech.co.jp\",\"eventId\":\"hvqdc7k9t1d96clvbq5nvk6jks\"}17:51:49情報removeGuestFromCalendarEvent: ゲストは既に削除済みです email=t_sato2@ga-tech.co.jp, eventId=hvqdc7k9t1d96clvbq5nvk6jks17:51:49情報markAttendeeAsUnreserved: イベント情報を取得できませんでした eventId=hvqdc7k9t1d96clvbq5nvk6jks17:51:49情報📤 Slack送信（Webhook）: 予約キャンセル通知"
+      ],
+      "test_functions_executed": [
+        "testCancelReservation"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testCancelReservation_20260113_175218.log",
+      "test_function": "testCancelReservation"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "17:52:45お知らせ実行開始17:52:45情報=== testChangeReservation: 開始 ===17:52:45情報⚠️ 安全対策: テスト実行者のメールアドレスのみを使用します17:52:45情報=== getTestData: 開始 ===17:52:45情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します17:52:46情報予約一覧シートの最終行: 10517:52:47情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:17:52:47情報1. t_sato2@ga-tech.co.jp17:52:47情報",
+        "=== getTestData: 完了 ===17:52:47情報⚠️ テスト用データが取得できませんでした。createTestEvent()を実行してください。17:52:47お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testChangeReservation"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testChangeReservation_20260113_175316.log",
+      "test_function": "testChangeReservation"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "17:53:43お知らせ実行開始17:53:44情報=== testMarkAttendeeAsReserved: 開始 ===17:53:44情報⚠️ 安全対策: テスト実行者のメールアドレスのみを使用します17:53:44情報テストパラメータ: email=t_sato2@ga-tech.co.jp, eventId=hvqdc7k9t1d96clvbq5nvk6jks17:53:44情報markAttendeeAsReserved()を実行中...17:53:44情報markAttendeeAsReserved: イベント情報を取得できませんでした eventId=hvqdc7k9t1d96clvbq5nvk6jks17:53:44情報✅ markAttendeeAsReserved()実行完了17:53:44情報=== testMarkAttendeeAsReserved: 完了 ===17:53:45お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testMarkAttendeeAsReserved"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testMarkAttendeeAsReserved_20260113_175414.log",
+      "test_function": "testMarkAttendeeAsReserved"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "17:54:42お知らせ実行開始17:54:42情報=== testMarkAttendeeAsUnreserved: 開始 ===17:54:42情報⚠️ 安全対策: テスト実行者のメールアドレスのみを使用します17:54:42情報テストパラメータ: email=t_sato2@ga-tech.co.jp, eventId=hvqdc7k9t1d96clvbq5nvk6jks17:54:42情報markAttendeeAsUnreserved()を実行中...17:54:43情報markAttendeeAsUnreserved: イベント情報を取得できませんでした eventId=hvqdc7k9t1d96clvbq5nvk6jks17:54:43情報✅ markAttendeeAsUnreserved()実行完了17:54:43情報=== testMarkAttendeeAsUnreserved: 完了 ===17:54:43お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testMarkAttendeeAsUnreserved"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testMarkAttendeeAsUnreserved_20260113_175513.log",
+      "test_function": "testMarkAttendeeAsUnreserved"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "17:55:39お知らせ実行開始17:55:40情報=== testAllSheetFunctions: 開始 ===17:55:40情報1. testSheetFunctions()を実行...17:55:40情報=== testSheetFunctions: 開始 ===17:55:40情報1. getUtils()のテスト...17:55:40情報✅ getUtils()成功17:55:40情報2. getConfig()のテスト...17:55:40情報✅ getConfig()成功17:55:40情報3. getCalendarId()のテスト...17:55:40情報✅ getCalendarId()成功: t_sato2@ga-tech.co.jp17:55:40情報4. findEventInfoByEventId()のテスト...17:55:40情報⚠️ findEventInfoByEventId()でイベントが見つかりませんでした: test_event_id17:55:40情報   これは正常です。実際のeventIdが必要です。17:55:40情報=== testSheetFunctions: 完了 ===17:55:40情報",
+        "2. getTestData()を実行してテスト用データを取得...17:55:40情報=== getTestData: 開始 ===17:55:40情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します17:55:41情報予約一覧シートの最終行: 10517:55:41情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:17:55:41情報1. t_sato2@ga-tech.co.jp17:55:41情報",
+        "=== getTestData: 完了 ===17:55:41情報⚠️ テスト用データが取得できませんでした。手動でパラメータを設定してください。17:55:41情報",
+        "4. testCancelReservation()を実行...17:55:41情報=== testCancelReservation: 開始 ===17:55:41情報⚠️ 安全対策: テスト実行者のメールアドレスのみを使用します17:55:41情報テストパラメータ: email=t_sato2@ga-tech.co.jp, eventId=hvqdc7k9t1d96clvbq5nvk6jks17:55:41情報cancelReservation()を実行中...17:55:41情報ℹ️  [2026-01-13T08:55:41.612Z] [INFO] cancelReservation: 予約削除を開始17:55:41情報   コンテキスト: {\"email\":\"t_sato2@ga-tech.co.jp\",\"eventId\":\"hvqdc7k9t1d96clvbq5nvk6jks\"}17:55:43情報removeGuestFromCalendarEvent: ゲストは既に削除済みです email=t_sato2@ga-tech.co.jp, eventId=hvqdc7k9t1d96clvbq5nvk6jks17:55:43情報markAttendeeAsUnreserved: イベント情報を取得できませんでした eventId=hvqdc7k9t1d96clvbq5nvk6jks17:55:44情報📤 Slack送信（Webhook）: 予約キャンセル通知",
+        "5. testChangeReservation()を実行...17:55:45情報=== testChangeReservation: 開始 ===17:55:45情報⚠️ 安全対策: テスト実行者のメールアドレスのみを使用します17:55:45情報=== getTestData: 開始 ===17:55:45情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します17:55:46情報予約一覧シートの最終行: 10517:55:47情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:17:55:47情報1. t_sato2@ga-tech.co.jp17:55:47情報",
+        "=== getTestData: 完了 ===17:55:47情報⚠️ テスト用データが取得できませんでした。createTestEvent()を実行してください。17:55:47情報",
+        "6. testMarkAttendeeAsReserved()を実行...17:55:47情報=== testMarkAttendeeAsReserved: 開始 ===17:55:47情報⚠️ 安全対策: テスト実行者のメールアドレスのみを使用します17:55:47情報テストパラメータ: email=t_sato2@ga-tech.co.jp, eventId=hvqdc7k9t1d96clvbq5nvk6jks17:55:47情報markAttendeeAsReserved()を実行中...17:55:47情報markAttendeeAsReserved: イベント情報を取得できませんでした eventId=hvqdc7k9t1d96clvbq5nvk6jks17:55:47情報✅ markAttendeeAsReserved()実行完了17:55:47情報=== testMarkAttendeeAsReserved: 完了 ===17:55:47情報",
+        "7. testMarkAttendeeAsUnreserved()を実行...17:55:47情報=== testMarkAttendeeAsUnreserved: 開始 ===17:55:47情報⚠️ 安全対策: テスト実行者のメールアドレスのみを使用します17:55:47情報テストパラメータ: email=t_sato2@ga-tech.co.jp, eventId=hvqdc7k9t1d96clvbq5nvk6jks17:55:47情報markAttendeeAsUnreserved()を実行中...17:55:48情報markAttendeeAsUnreserved: イベント情報を取得できませんでした eventId=hvqdc7k9t1d96clvbq5nvk6jks17:55:48情報✅ markAttendeeAsUnreserved()実行完了17:55:48情報=== testMarkAttendeeAsUnreserved: 完了 ===17:55:48情報"
+      ],
+      "test_functions_executed": [
+        "testSheetFunctions",
+        "testCancelReservation",
+        "testChangeReservation",
+        "testMarkAttendeeAsReserved",
+        "testMarkAttendeeAsUnreserved",
+        "testAllSheetFunctions",
+        "testAll"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testAllSheetFunctions_20260113_175610.log",
+      "test_function": "testAllSheetFunctions"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "17:56:37お知らせ実行開始17:56:38情報=== testRefreshAttendeeStatus: 開始 ===17:56:38情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを対象にします17:56:38情報   実際の従業員データには影響を与えません17:56:38情報テスト用email: t_sato2@ga-tech.co.jp17:56:38情報refreshAttendeeStatus()を実行中（テストモード）...17:56:38情報refreshAttendeeStatus: 実行開始17:56:39情報eventMap size: 017:56:39情報予約一覧に有効なイベントがありません。処理を終了します。17:56:39情報✅ refreshAttendeeStatus()実行完了17:56:39情報=== testRefreshAttendeeStatus: 完了 ===17:56:39お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testRefreshAttendeeStatus"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testRefreshAttendeeStatus_20260113_175709.log",
+      "test_function": "testRefreshAttendeeStatus"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "17:57:36お知らせ実行開始17:57:36情報=== testHandleReservationFormSubmit: 開始 ===17:57:36情報=== getTestData: 開始 ===17:57:36情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します17:57:37情報予約一覧シートの最終行: 10517:57:38情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:17:57:38情報1. t_sato2@ga-tech.co.jp17:57:38情報",
+        "=== getTestData: 完了 ===17:57:38情報⚠️ テスト用eventIdが見つかりません。createTestEvent()を実行してください。17:57:39お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testHandleReservationFormSubmit"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testHandleReservationFormSubmit_20260113_175807.log",
+      "test_function": "testHandleReservationFormSubmit"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [],
+      "test_functions_executed": [
+        "testOnCreatingSchedule"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testOnCreatingSchedule_20260113_175905.log",
+      "test_function": "testOnCreatingSchedule"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [],
+      "test_functions_executed": [
+        "testOnDashboardAction"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testOnDashboardAction_20260113_180003.log",
+      "test_function": "testOnDashboardAction"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [],
+      "test_functions_executed": [
+        "testEditHandler"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testEditHandler_20260113_180100.log",
+      "test_function": "testEditHandler"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:01:27お知らせ実行開始18:01:27情報=== testAllUntestedFunctions: 開始 ===18:01:27情報⚠️ 安全対策: テスト実行者のメールアドレスのみを使用します18:01:27情報   詳細は docs/TEST_SAFETY_POLICY.md を参照してください18:01:27情報",
+        "1. testRefreshAttendeeStatus()を実行...18:01:27情報=== testRefreshAttendeeStatus: 開始 ===18:01:27情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを対象にします18:01:27情報   実際の従業員データには影響を与えません18:01:27情報テスト用email: t_sato2@ga-tech.co.jp18:01:27情報refreshAttendeeStatus()を実行中（テストモード）...18:01:27情報refreshAttendeeStatus: 実行開始18:01:28情報eventMap size: 018:01:28情報予約一覧に有効なイベントがありません。処理を終了します。18:01:28情報✅ refreshAttendeeStatus()実行完了18:01:28情報=== testRefreshAttendeeStatus: 完了 ===18:01:28情報",
+        "2. testHandleReservationFormSubmit()を実行...18:01:28情報=== testHandleReservationFormSubmit: 開始 ===18:01:28情報=== getTestData: 開始 ===18:01:28情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:01:28情報予約一覧シートの最終行: 10518:01:29情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:01:29情報1. t_sato2@ga-tech.co.jp18:01:29情報",
+        "=== getTestData: 完了 ===18:01:29情報⚠️ テスト用eventIdが見つかりません。createTestEvent()を実行してください。18:01:29情報",
+        "6. testEnhancedFunctions()を実行...18:01:29情報=== testEnhancedFunctions: 開始 ===18:01:29情報=== getTestData: 開始 ===18:01:29情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:01:29情報予約一覧シートの最終行: 10518:01:29情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:01:29情報1. t_sato2@ga-tech.co.jp18:01:29情報",
+        "=== getTestData: 完了 ===18:01:29情報⚠️ テストデータが取得できませんでした。getTestData()を実行してください。18:01:29情報",
+        "7. testCalendarEnhancedFunctions()を実行...18:01:29情報=== testCalendarEnhancedFunctions: 開始 ===18:01:29情報=== getTestData: 開始 ===18:01:29情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:01:29情報予約一覧シートの最終行: 10518:01:30情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:01:30情報1. t_sato2@ga-tech.co.jp18:01:30情報",
+        "=== getTestData: 完了 ===18:01:30情報⚠️ テストデータが取得できませんでした。getTestData()を実行してください。18:01:30情報",
+        "8. testReservationChangeFunctions()を実行...18:01:30情報=== testReservationChangeFunctions: 開始 ===18:01:30情報=== getTestData: 開始 ===18:01:30情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:01:30情報予約一覧シートの最終行: 10518:01:31情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:01:31情報1. t_sato2@ga-tech.co.jp18:01:31情報",
+        "=== getTestData: 完了 ===18:01:31情報⚠️ テストデータが取得できませんでした。getTestData()を実行してください。18:01:31情報",
+        "9. testImportReservationData()を実行...18:01:31情報⚠️ 注意: importReservationData()は実際のデータをインポートします18:01:31情報   テストをスキップします（必要に応じて手動で実行してください）18:01:31情報",
+        "12. testUpdateDashboardAfterReservation()を実行...18:01:38情報=== testUpdateDashboardAfterReservation: 開始 ===18:01:38情報⚠️ 注意: このテストは実際にダッシュボードを更新します18:01:38情報"
+      ],
+      "test_functions_executed": [
+        "testRefreshAttendeeStatus",
+        "testHandleReservationFormSubmit",
+        "testOnCreatingSchedule",
+        "testOnDashboardAction",
+        "testEditHandler",
+        "testAllUntestedFunctions",
+        "testAll",
+        "testEnhancedFunctions",
+        "testCalendarEnhancedFunctions",
+        "testReservationChangeFunctions",
+        "testGetReservedCountForGroupAndCourse",
+        "testGetCourseNumberFromCourseListByCourseName",
+        "testUpdateDashboardAfterReservation"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testAllUntestedFunctions_20260113_180158.log",
+      "test_function": "testAllUntestedFunctions"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:02:26お知らせ実行開始18:02:27情報=== testAllSheetFunctions: 開始 ===18:02:27情報1. testSheetFunctions()を実行...18:02:27情報=== testSheetFunctions: 開始 ===18:02:27情報1. getUtils()のテスト...18:02:27情報✅ getUtils()成功18:02:27情報2. getConfig()のテスト...18:02:27情報✅ getConfig()成功18:02:27情報3. getCalendarId()のテスト...18:02:27情報✅ getCalendarId()成功: t_sato2@ga-tech.co.jp18:02:27情報4. findEventInfoByEventId()のテスト...18:02:27情報⚠️ findEventInfoByEventId()でイベントが見つかりませんでした: test_event_id18:02:27情報   これは正常です。実際のeventIdが必要です。18:02:27情報=== testSheetFunctions: 完了 ===18:02:27情報",
+        "2. getTestData()を実行してテスト用データを取得...18:02:27情報=== getTestData: 開始 ===18:02:27情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:02:27情報予約一覧シートの最終行: 10518:02:28情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:02:28情報1. t_sato2@ga-tech.co.jp18:02:28情報",
+        "=== getTestData: 完了 ===18:02:28情報⚠️ テスト用データが取得できませんでした。手動でパラメータを設定してください。18:02:28情報",
+        "4. testCancelReservation()を実行...18:02:28情報=== testCancelReservation: 開始 ===18:02:28情報⚠️ 安全対策: テスト実行者のメールアドレスのみを使用します18:02:28情報テストパラメータ: email=t_sato2@ga-tech.co.jp, eventId=hvqdc7k9t1d96clvbq5nvk6jks18:02:28情報cancelReservation()を実行中...18:02:28情報ℹ️  [2026-01-13T09:02:28.162Z] [INFO] cancelReservation: 予約削除を開始18:02:28情報   コンテキスト: {\"email\":\"t_sato2@ga-tech.co.jp\",\"eventId\":\"hvqdc7k9t1d96clvbq5nvk6jks\"}18:02:28情報removeGuestFromCalendarEvent: ゲストは既に削除済みです email=t_sato2@ga-tech.co.jp, eventId=hvqdc7k9t1d96clvbq5nvk6jks18:02:29情報markAttendeeAsUnreserved: イベント情報を取得できませんでした eventId=hvqdc7k9t1d96clvbq5nvk6jks18:02:29情報📤 Slack送信（Webhook）: 予約キャンセル通知",
+        "5. testChangeReservation()を実行...18:02:30情報=== testChangeReservation: 開始 ===18:02:30情報⚠️ 安全対策: テスト実行者のメールアドレスのみを使用します18:02:30情報=== getTestData: 開始 ===18:02:30情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:02:30情報予約一覧シートの最終行: 10518:02:31情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:02:31情報1. t_sato2@ga-tech.co.jp18:02:31情報",
+        "=== getTestData: 完了 ===18:02:31情報⚠️ テスト用データが取得できませんでした。createTestEvent()を実行してください。18:02:31情報",
+        "6. testMarkAttendeeAsReserved()を実行...18:02:31情報=== testMarkAttendeeAsReserved: 開始 ===18:02:31情報⚠️ 安全対策: テスト実行者のメールアドレスのみを使用します18:02:31情報テストパラメータ: email=t_sato2@ga-tech.co.jp, eventId=hvqdc7k9t1d96clvbq5nvk6jks18:02:31情報markAttendeeAsReserved()を実行中...18:02:32情報markAttendeeAsReserved: イベント情報を取得できませんでした eventId=hvqdc7k9t1d96clvbq5nvk6jks18:02:32情報✅ markAttendeeAsReserved()実行完了18:02:32情報=== testMarkAttendeeAsReserved: 完了 ===18:02:32情報",
+        "7. testMarkAttendeeAsUnreserved()を実行...18:02:32情報=== testMarkAttendeeAsUnreserved: 開始 ===18:02:32情報⚠️ 安全対策: テスト実行者のメールアドレスのみを使用します18:02:32情報テストパラメータ: email=t_sato2@ga-tech.co.jp, eventId=hvqdc7k9t1d96clvbq5nvk6jks18:02:32情報markAttendeeAsUnreserved()を実行中...18:02:32情報markAttendeeAsUnreserved: イベント情報を取得できませんでした eventId=hvqdc7k9t1d96clvbq5nvk6jks18:02:32情報✅ markAttendeeAsUnreserved()実行完了18:02:32情報=== testMarkAttendeeAsUnreserved: 完了 ===18:02:32情報"
+      ],
+      "test_functions_executed": [
+        "testSheetFunctions",
+        "testCancelReservation",
+        "testChangeReservation",
+        "testMarkAttendeeAsReserved",
+        "testMarkAttendeeAsUnreserved",
+        "testAllSheetFunctions",
+        "testAll"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testAll_20260113_180257.log",
+      "test_function": "testAll"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:03:24お知らせ実行開始18:03:25情報=== testEnhancedFunctions: 開始 ===18:03:25情報=== getTestData: 開始 ===18:03:25情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:03:26情報予約一覧シートの最終行: 10518:03:27情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:03:27情報1. t_sato2@ga-tech.co.jp18:03:27情報",
+        "=== getTestData: 完了 ===18:03:27情報⚠️ テストデータが取得できませんでした。getTestData()を実行してください。18:03:27お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testEnhancedFunctions"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testEnhancedFunctions_20260113_180355.log",
+      "test_function": "testEnhancedFunctions"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:04:22お知らせ実行開始18:04:24情報=== testCalendarEnhancedFunctions: 開始 ===18:04:24情報=== getTestData: 開始 ===18:04:24情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:04:24情報予約一覧シートの最終行: 10518:04:26情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:04:26情報1. t_sato2@ga-tech.co.jp18:04:26情報",
+        "=== getTestData: 完了 ===18:04:26情報⚠️ テストデータが取得できませんでした。getTestData()を実行してください。18:04:26お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testCalendarEnhancedFunctions"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testCalendarEnhancedFunctions_20260113_180453.log",
+      "test_function": "testCalendarEnhancedFunctions"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:05:20お知らせ実行開始18:05:21情報=== testReservationChangeFunctions: 開始 ===18:05:21情報=== getTestData: 開始 ===18:05:21情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:05:21情報予約一覧シートの最終行: 10518:05:22情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:05:22情報1. t_sato2@ga-tech.co.jp18:05:22情報",
+        "=== getTestData: 完了 ===18:05:22情報⚠️ テストデータが取得できませんでした。getTestData()を実行してください。18:05:23お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testReservationChangeFunctions"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testReservationChangeFunctions_20260113_180552.log",
+      "test_function": "testReservationChangeFunctions"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:06:20お知らせ実行開始18:06:21情報=== testEventCapacityBoundary: 開始 ===18:06:21情報=== getTestData: 開始 ===18:06:21情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:06:21情報予約一覧シートの最終行: 10518:06:23情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:06:23情報1. t_sato2@ga-tech.co.jp18:06:23情報",
+        "=== getTestData: 完了 ===18:06:23情報⚠️ テストデータが取得できませんでした。createTestEvent()を実行してください。18:06:23お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testEventCapacityBoundary"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testEventCapacityBoundary_20260113_180651.log",
+      "test_function": "testEventCapacityBoundary"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:07:18お知らせ実行開始18:07:19情報=== testChangeDeadlineBoundary: 開始 ===18:07:19情報=== getTestData: 開始 ===18:07:19情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:07:19情報予約一覧シートの最終行: 10518:07:20情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:07:20情報1. t_sato2@ga-tech.co.jp18:07:20情報",
+        "=== getTestData: 完了 ===18:07:20情報⚠️ テストデータが取得できませんでした。createTestEvent()を実行してください。18:07:20お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testChangeDeadlineBoundary"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testChangeDeadlineBoundary_20260113_180749.log",
+      "test_function": "testChangeDeadlineBoundary"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:08:16お知らせ実行開始18:08:16情報=== testChangeLimitBoundary: 開始 ===18:08:16情報=== getTestData: 開始 ===18:08:16情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:08:17情報予約一覧シートの最終行: 10518:08:18情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:08:18情報1. t_sato2@ga-tech.co.jp18:08:18情報",
+        "=== getTestData: 完了 ===18:08:18情報⚠️ テストデータが取得できませんでした。createTestEvent()を実行してください。18:08:18お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testChangeLimitBoundary"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testChangeLimitBoundary_20260113_180847.log",
+      "test_function": "testChangeLimitBoundary"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "2. checkDuplicateReservation()の不正な入力値テスト...18:09:18情報=== getTestData: 開始 ===18:09:18情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:09:18情報予約一覧シートの最終行: 10518:09:20情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:09:20情報1. t_sato2@ga-tech.co.jp18:09:20情報"
+      ],
+      "test_functions_executed": [
+        "testInvalidInputs"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testInvalidInputs_20260113_180945.log",
+      "test_function": "testInvalidInputs"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "1. カレンダーIDが未設定の場合のテスト...18:10:12情報=== getTestData: 開始 ===18:10:12情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:10:12情報予約一覧シートの最終行: 10518:10:14情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:10:14情報1. t_sato2@ga-tech.co.jp18:10:14情報",
+        "=== getTestData: 完了 ===18:10:14情報⚠️  [2026-01-13T09:10:14.072Z] [WARN] checkEventCapacity: CALENDAR_ID が未設定です18:10:14情報   コンテキスト: {\"eventId\":\"test_event_id\"}18:10:14情報   checkEventCapacity()の結果: null（期待値通り）18:10:14情報   checkChangeDeadline()の結果: isValid=false, message=CALENDAR_ID が未設定です18:10:14情報   ✅ カレンダーID未設定に対して適切にエラーを返しています18:10:14情報"
+      ],
+      "test_functions_executed": [
+        "testDataInconsistency"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testDataInconsistency_20260113_181042.log",
+      "test_function": "testDataInconsistency"
+    },
+    {
+      "success": false,
+      "errors": [
+        "18:11:11お知らせ実行開始18:11:11情報=== testErrorHandling: 開始 ===18:11:11情報"
+      ],
+      "warnings": [],
+      "test_functions_executed": [
+        "testErrorHandling"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testErrorHandling_20260113_181142.log",
+      "test_function": "testErrorHandling"
+    },
+    {
+      "success": false,
+      "test_function": "testAllBoundaryAndEdgeCases",
+      "error": "Page.goto: net::ERR_ADDRESS_UNREACHABLE at https://script.google.com/u/0/home/projects/1DiZUSkJU_Z4Yc0bBcNgOUH3iqHux8xnSS7qILL5YZMfKgw86QeMvx0S-/edit\nCall log:\n  - navigating to \"https://script.google.com/u/0/home/projects/1DiZUSkJU_Z4Yc0bBcNgOUH3iqHux8xnSS7qILL5YZMfKgw86QeMvx0S-/edit\", waiting until \"domcontentloaded\"\n"
+    },
+    {
+      "success": false,
+      "errors": [],
+      "warnings": [],
+      "test_functions_executed": [
+        "testRebuildDependencies"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testRebuildDependencies_20260113_181253.log",
+      "test_function": "testRebuildDependencies"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [],
+      "test_functions_executed": [
+        "testGetReservedCountForGroupAndCourse"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testGetReservedCountForGroupAndCourse_20260113_181351.log",
+      "test_function": "testGetReservedCountForGroupAndCourse"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [],
+      "test_functions_executed": [
+        "testGetCourseNumberFromCourseListByCourseName"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testGetCourseNumberFromCourseListByCourseName_20260113_181450.log",
+      "test_function": "testGetCourseNumberFromCourseListByCourseName"
+    },
+    {
+      "success": false,
+      "errors": [],
+      "warnings": [
+        "18:15:17お知らせ実行開始18:15:17情報=== testUpdateDashboardAfterReservation: 開始 ===18:15:17情報⚠️ 注意: このテストは実際にダッシュボードを更新します18:15:17情報"
+      ],
+      "test_functions_executed": [
+        "testUpdateDashboardAfterReservation"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testUpdateDashboardAfterReservation_20260113_181548.log",
+      "test_function": "testUpdateDashboardAfterReservation"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:16:14お知らせ実行開始18:16:15情報=== testDeleteCalendarEvent: 開始 ===18:16:15情報⚠️ 注意: このテストは実際にカレンダーイベントを削除します18:16:15情報   テスト用イベントのみを使用してください18:16:15情報=== getTestData: 開始 ===18:16:15情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:16:15情報予約一覧シートの最終行: 10518:16:17情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:16:17情報1. t_sato2@ga-tech.co.jp18:16:17情報",
+        "=== getTestData: 完了 ===18:16:17情報⚠️ テスト用eventIdが見つかりません。createTestEvent()を実行してください。18:16:17お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testDeleteCalendarEvent"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testDeleteCalendarEvent_20260113_181645.log",
+      "test_function": "testDeleteCalendarEvent"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:17:13お知らせ実行開始18:17:13情報=== testSyncCalendarOnReservationChange: 開始 ===18:17:13情報⚠️ 注意: このテストは実際にカレンダーイベントを変更します18:17:13情報=== getTestData: 開始 ===18:17:13情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:17:14情報予約一覧シートの最終行: 10518:17:15情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:17:15情報1. t_sato2@ga-tech.co.jp18:17:15情報",
+        "=== getTestData: 完了 ===18:17:15情報⚠️ テスト用eventIdが2つ以上必要です。createTestEvent()を2回実行してください。18:17:16お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testSyncCalendarOnReservationChange"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testSyncCalendarOnReservationChange_20260113_181744.log",
+      "test_function": "testSyncCalendarOnReservationChange"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:18:11お知らせ実行開始18:18:12情報=== testSendReservationConfirmationEmail: 開始 ===18:18:12情報⚠️ 注意: このテストは実際にメールを送信する可能性があります18:18:12情報=== getTestData: 開始 ===18:18:12情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:18:12情報予約一覧シートの最終行: 10518:18:13情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:18:13情報1. t_sato2@ga-tech.co.jp18:18:13情報",
+        "=== getTestData: 完了 ===18:18:13情報⚠️ テスト用eventIdが見つかりません。createTestEvent()を実行してください。18:18:14お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testSendReservationConfirmationEmail"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testSendReservationConfirmationEmail_20260113_181843.log",
+      "test_function": "testSendReservationConfirmationEmail"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:19:10お知らせ実行開始18:19:11情報=== testSendReservationChangeEmail: 開始 ===18:19:11情報⚠️ 注意: このテストは実際にメールを送信する可能性があります18:19:11情報=== getTestData: 開始 ===18:19:11情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:19:11情報予約一覧シートの最終行: 10518:19:13情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:19:13情報1. t_sato2@ga-tech.co.jp18:19:13情報",
+        "=== getTestData: 完了 ===18:19:13情報⚠️ テスト用eventIdが2つ以上必要です。createTestEvent()を2回実行してください。18:19:13お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testSendReservationChangeEmail"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testSendReservationChangeEmail_20260113_181941.log",
+      "test_function": "testSendReservationChangeEmail"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:20:08お知らせ実行開始18:20:08情報=== testSendCancellationEmail: 開始 ===18:20:08情報⚠️ 注意: このテストは実際にメールを送信する可能性があります18:20:08情報=== getTestData: 開始 ===18:20:08情報⚠️ テスト実行時の安全対策: t_sato2@ga-tech.co.jpのみを使用します18:20:09情報予約一覧シートの最終行: 10518:20:10情報",
+        "⚠️ テスト用メールアドレス（安全のため1件のみ）:18:20:10情報1. t_sato2@ga-tech.co.jp18:20:10情報",
+        "=== getTestData: 完了 ===18:20:10情報⚠️ テスト用eventIdが見つかりません。createTestEvent()を実行してください。18:20:11お知らせ実行完了読み込んでいます..."
+      ],
+      "test_functions_executed": [
+        "testSendCancellationEmail"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testSendCancellationEmail_20260113_182039.log",
+      "test_function": "testSendCancellationEmail"
+    },
+    {
+      "success": true,
+      "errors": [],
+      "warnings": [
+        "18:21:08お知らせ実行開始18:21:09情報=== testAllNewFunctions: 開始 ===18:21:09情報⚠️ 新規実装された関数のテストを実行します18:21:09情報",
+        "3. updateDashboardAfterReservation()のテスト...18:21:18情報=== testUpdateDashboardAfterReservation: 開始 ===18:21:18情報⚠️ 注意: このテストは実際にダッシュボードを更新します18:21:18情報"
+      ],
+      "test_functions_executed": [
+        "testAll",
+        "testGetReservedCountForGroupAndCourse",
+        "testGetCourseNumberFromCourseListByCourseName",
+        "testUpdateDashboardAfterReservation",
+        "testAllNewFunctions"
+      ],
+      "execution_time": null,
+      "log_file": "/Users/t_sato2/product_planning_ai_pdm/stock/projects/legal_department/legal_training_lms/documents/4_executing/development/prototypes/scripts/../logs/playwright_test_testAllNewFunctions_20260113_182137.log",
+      "test_function": "testAllNewFunctions"
+    }
+  ]
+}

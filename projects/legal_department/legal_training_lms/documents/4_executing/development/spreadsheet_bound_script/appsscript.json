@@ -1,0 +1,25 @@
+{
+  "timeZone": "Asia/Tokyo",
+  "dependencies": {
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Calendar",
+        "version": "v3",
+        "serviceId": "calendar"
+      }
+    ],
+    "libraries": [
+      {
+        "userSymbol": "LMSUtils",
+        "version": "0",
+        "libraryId": "1tjRFSbY1AuGmhEsKEgcBSLMJzaMYORdnIRApv6VhYkKOIswtD_EN9DtQ",
+        "developmentMode": true
+      }
+    ]
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "executionApi": {
+    "access": "DOMAIN"
+  }
+}
