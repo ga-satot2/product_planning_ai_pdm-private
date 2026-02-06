@@ -26,16 +26,25 @@ function checkNewSubleaseApplicationsPeriodically() {
 /**
  * 手動実行用テスト関数（テスト用Webhook URLで実行）
  * 実行後は削除してください
+ * 
+ * 注意: テスト用Webhook URLはスクリプトプロパティの「TEST_SLACK_WEBHOOK_URL」から取得してください
+ * テスト用チャンネルIDはスクリプトプロパティの「TEST_SLACK_CHANNEL_ID」から取得してください
  */
 function testManualExecution() {
-  var testWebhookUrl = 'PropertiesService.getScriptProperties().getProperty("TEST_SLACK_WEBHOOK_URL")';
-  // テスト用チャンネルID（「____さとたつ」チャンネル）
-  var testChannelId = 'PropertiesService.getScriptProperties().getProperty("TEST_SLACK_CHANNEL_ID")';
+  var testWebhookUrl = PropertiesService.getScriptProperties().getProperty('TEST_SLACK_WEBHOOK_URL');
+  var testChannelId = PropertiesService.getScriptProperties().getProperty('TEST_SLACK_CHANNEL_ID');
   
-  Logger.log('📤 手動実行テスト開始（テスト用Webhook URL、テスト用チャンネルID: ' + testChannelId + '）');
+  if (!testWebhookUrl) {
+    Logger.log('❌ テスト用Webhook URLが設定されていません。スクリプトプロパティに「TEST_SLACK_WEBHOOK_URL」を設定してください。');
+    return;
+  }
+  
+  Logger.log('📤 手動実行テスト開始（テスト用Webhook URL、テスト用チャンネルID: ' + (testChannelId || '未設定') + '）');
   
   // テスト用チャンネルIDを一時的に設定
-  PropertiesService.getScriptProperties().setProperty('SLACK_CHANNEL_ID_TEMP', testChannelId);
+  if (testChannelId) {
+    PropertiesService.getScriptProperties().setProperty('SLACK_CHANNEL_ID_TEMP', testChannelId);
+  }
   
   checkNewSubleaseApplicationsPeriodicallyWithWebhook(testWebhookUrl);
   
@@ -47,16 +56,25 @@ function testManualExecution() {
  * テスト用: 指定したCONTRACT_IDからチェックを開始
  * @param {number} startContractId - 開始CONTRACT_ID（例: 43000）
  * 例: testFromContractId(43000)
+ * 
+ * 注意: テスト用Webhook URLはスクリプトプロパティの「TEST_SLACK_WEBHOOK_URL」から取得してください
+ * テスト用チャンネルIDはスクリプトプロパティの「TEST_SLACK_CHANNEL_ID」から取得してください
  */
 function testFromContractId(startContractId) {
-  var testWebhookUrl = 'PropertiesService.getScriptProperties().getProperty("TEST_SLACK_WEBHOOK_URL")';
-  // テスト用チャンネルID（「____さとたつ」チャンネル）
-  var testChannelId = 'PropertiesService.getScriptProperties().getProperty("TEST_SLACK_CHANNEL_ID")';
+  var testWebhookUrl = PropertiesService.getScriptProperties().getProperty('TEST_SLACK_WEBHOOK_URL');
+  var testChannelId = PropertiesService.getScriptProperties().getProperty('TEST_SLACK_CHANNEL_ID');
+  
+  if (!testWebhookUrl) {
+    Logger.log('❌ テスト用Webhook URLが設定されていません。スクリプトプロパティに「TEST_SLACK_WEBHOOK_URL」を設定してください。');
+    return;
+  }
   
   Logger.log('📤 テスト実行開始（開始CONTRACT_ID: ' + startContractId + '、varシートを更新しません）');
   
   // テスト用チャンネルIDを一時的に設定
-  PropertiesService.getScriptProperties().setProperty('SLACK_CHANNEL_ID_TEMP', testChannelId);
+  if (testChannelId) {
+    PropertiesService.getScriptProperties().setProperty('SLACK_CHANNEL_ID_TEMP', testChannelId);
+  }
   
   checkNewSubleaseApplicationsPeriodicallyWithWebhookInternalWithStartId(testWebhookUrl, true, startContractId);
   
@@ -67,30 +85,45 @@ function testFromContractId(startContractId) {
 /**
  * テスト用: CONTRACT_ID 43000からチェックを開始
  * この関数を実行すると、CONTRACT_ID 43000からチェックを開始します
+ * 
+ * 注意: テスト用チャンネルIDはスクリプトプロパティの「TEST_SLACK_CHANNEL_ID」から取得してください
  */
 function testFrom43000() {
   // テスト用チャンネルIDを一時的に設定
-  PropertiesService.getScriptProperties().setProperty('SLACK_CHANNEL_ID_TEMP', 'PropertiesService.getScriptProperties().getProperty("TEST_SLACK_CHANNEL_ID")');
+  var testChannelId = PropertiesService.getScriptProperties().getProperty('TEST_SLACK_CHANNEL_ID');
+  if (testChannelId) {
+    PropertiesService.getScriptProperties().setProperty('SLACK_CHANNEL_ID_TEMP', testChannelId);
+  }
   testFromContractId(43000);
 }
 
 /**
  * テスト用: CONTRACT_ID 43500からチェックを開始
  * この関数を実行すると、CONTRACT_ID 43500からチェックを開始します
+ * 
+ * 注意: テスト用チャンネルIDはスクリプトプロパティの「TEST_SLACK_CHANNEL_ID」から取得してください
  */
 function testFrom43500() {
   // テスト用チャンネルIDを一時的に設定
-  PropertiesService.getScriptProperties().setProperty('SLACK_CHANNEL_ID_TEMP', 'PropertiesService.getScriptProperties().getProperty("TEST_SLACK_CHANNEL_ID")');
+  var testChannelId = PropertiesService.getScriptProperties().getProperty('TEST_SLACK_CHANNEL_ID');
+  if (testChannelId) {
+    PropertiesService.getScriptProperties().setProperty('SLACK_CHANNEL_ID_TEMP', testChannelId);
+  }
   testFromContractId(43500);
 }
 
 /**
  * テスト用: CONTRACT_ID 44000からチェックを開始
  * この関数を実行すると、CONTRACT_ID 44000からチェックを開始します
+ * 
+ * 注意: テスト用チャンネルIDはスクリプトプロパティの「TEST_SLACK_CHANNEL_ID」から取得してください
  */
 function testFrom44000() {
   // テスト用チャンネルIDを一時的に設定
-  PropertiesService.getScriptProperties().setProperty('SLACK_CHANNEL_ID_TEMP', 'PropertiesService.getScriptProperties().getProperty("TEST_SLACK_CHANNEL_ID")');
+  var testChannelId = PropertiesService.getScriptProperties().getProperty('TEST_SLACK_CHANNEL_ID');
+  if (testChannelId) {
+    PropertiesService.getScriptProperties().setProperty('SLACK_CHANNEL_ID_TEMP', testChannelId);
+  }
   testFromContractId(44000);
 }
 

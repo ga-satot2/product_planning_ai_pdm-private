@@ -26,9 +26,15 @@ function checkNewSubleaseApplicationsPeriodically() {
 /**
  * 手動実行用テスト関数（テスト用Webhook URLで実行）
  * 実行後は削除してください
+ * 
+ * 注意: テスト用Webhook URLはスクリプトプロパティの「TEST_SLACK_WEBHOOK_URL」から取得してください
  */
 function testManualExecution() {
-  var testWebhookUrl = 'PropertiesService.getScriptProperties().getProperty("TEST_SLACK_WEBHOOK_URL")';
+  var testWebhookUrl = PropertiesService.getScriptProperties().getProperty('TEST_SLACK_WEBHOOK_URL');
+  if (!testWebhookUrl) {
+    Logger.log('❌ テスト用Webhook URLが設定されていません。スクリプトプロパティに「TEST_SLACK_WEBHOOK_URL」を設定してください。');
+    return;
+  }
   Logger.log('📤 手動実行テスト開始（テスト用Webhook URL）');
   checkNewSubleaseApplicationsPeriodicallyWithWebhook(testWebhookUrl);
 }

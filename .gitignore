@@ -7,3 +7,16 @@
 
 # プロジェクト内の.DS_Storeも無視
 **/.DS_Store
+
+# シークレット・設定ファイル
+**/config.js
+**/secrets.js
+**/secrets.gs
+**/.env
+**/.env.local
+**/slack_config.js
+**/slack_config.gs
+
+# ログファイル
+**/*.log
+**/logs/
