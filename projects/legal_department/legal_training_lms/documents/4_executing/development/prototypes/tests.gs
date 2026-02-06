@@ -708,19 +708,31 @@ function testAll() {
  * Slack Webhook URLを設定する関数
  * 
  * ⚠️ 注意: この関数を実行すると、スクリプトプロパティにWebhook URLが設定されます
+ * 
+ * 使用方法:
+ * 1. スクリプトプロパティに「SLACK_WEBHOOK_URL」を手動で設定してください
+ * 2. または、この関数を編集して、WEBHOOK_URL変数に値を設定してから実行してください
  */
 function setSlackWebhookUrl() {
   try {
     Logger.log('=== setSlackWebhookUrl: 開始 ===');
     
-    const WEBHOOK_URL = 'PropertiesService.getScriptProperties().getProperty("SLACK_WEBHOOK_URL")';
+    // ⚠️ シークレット: スクリプトプロパティから取得するか、手動で設定してください
+    // スクリプトプロパティに「SLACK_WEBHOOK_URL」を設定することを推奨します
+    const WEBHOOK_URL = PropertiesService.getScriptProperties().getProperty('SLACK_WEBHOOK_URL');
+    
+    if (!WEBHOOK_URL) {
+      Logger.log('❌ SLACK_WEBHOOK_URLが設定されていません。スクリプトプロパティに「SLACK_WEBHOOK_URL」を設定してください。');
+      return;
+    }
+    
     const props = PropertiesService.getScriptProperties();
     
     // 現在の設定を確認
     const currentWebhookUrl = props.getProperty('SLACK_WEBHOOK_URL');
     Logger.log(`現在のSLACK_WEBHOOK_URL: ${currentWebhookUrl ? '設定済み' : '(未設定)'}`);
     
-    // Webhook URLを設定
+    // Webhook URLを設定（既に設定されている場合は更新）
     props.setProperty('SLACK_WEBHOOK_URL', WEBHOOK_URL);
     Logger.log(`✅ Webhook URLを設定しました`);
     
