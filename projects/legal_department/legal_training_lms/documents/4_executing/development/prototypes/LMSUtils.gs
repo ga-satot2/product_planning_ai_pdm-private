@@ -179,7 +179,7 @@ class LMSUtils {
 
             COURSE_ID: 1,           // A: コースID(自動発行)
 
-            TRAINING_TYPE: 2,       // B: 研修種別
+            TRAINING_TYPE: 2,       // B: 研修種別（継続研修/アベンジャーズ等、人事評価用）
 
             SHEET_NUMBER: 3,        // C: 参加シート番号
 
@@ -190,6 +190,56 @@ class LMSUtils {
             DURATION: 6,            // F: 授業時間（分）
 
             MATERIALS: 7            // G: 研修資料
+
+          }
+
+        },
+
+        attendance: {
+
+          name: "出欠簿",
+
+          rows: { FIRST: 2 },
+
+          columns: {
+
+            NAME: 1,                // A: 参加者名
+
+            EMAIL: 2,               // B: メールアドレス
+
+            COURSE_ID: 3,           // C: コースID
+
+            STATUS: 4,               // D: 出席状況（出席/欠席/遅刻）
+
+            TEST_SCORE: 5,          // E: テスト結果
+
+            PASS_FAIL: 6            // F: 合格/不合格
+
+          }
+
+        },
+
+        personnelEvalSummary: {
+
+          name: "人事評価サマリ",
+
+          rows: { FIRST: 2 },
+
+          columns: {
+
+            NAME: 1,                      // A: 参加者名
+
+            EMAIL: 2,                     // B: メールアドレス
+
+            GROUP: 3,                     // C: 所属グループ
+
+            CONTINUING_PARTICIPATION: 4,  // D: 継続研修参加回数
+
+            AVENGERS_PARTICIPATION: 5,    // E: アベンジャーズ研修参加回数
+
+            UNREPORTED_COUNT: 6,          // F: 未報告回数
+
+            SURVEY_RESPONSE_RATE: 7       // G: サーベイ回答率（%）
 
           }
 
