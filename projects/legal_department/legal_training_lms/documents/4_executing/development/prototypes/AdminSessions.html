@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>セッション管理 - 法務研修LMS</title>
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <?!= include('Header'); ?>
+  
+  <div class="container">
+    <div class="page-header">
+      <h1>セッション管理</h1>
+      <p>予約枠（セッション）はスプレッドシート「予約一覧」で管理しています</p>
+    </div>
+    
+    <p><a href="<?= sheetUrl ?>" target="_blank" class="btn btn-primary">スプレッドシートで編集</a></p>
+    
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>予約ID</th>
+            <th>コースID</th>
+            <th>研修名</th>
+            <th>日程</th>
+            <th>開始</th>
+            <th>終了</th>
+            <th>場所</th>
+            <th>ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <? for (var i = 0; i < (sessions || []).length; i++) { ?>
+          <tr>
+            <td><?= sessions[i].id ?></td>
+            <td><?= sessions[i].courseId ?></td>
+            <td><?= sessions[i].sessionName ?></td>
+            <td><?= typeof sessions[i].scheduledDate === 'object' && sessions[i].scheduledDate ? sessions[i].scheduledDate.toLocaleDateString('ja-JP') : (sessions[i].scheduledDate || '-') ?></td>
+            <td><?= sessions[i].startTime || '-' ?></td>
+            <td><?= sessions[i].endTime || '-' ?></td>
+            <td><?= sessions[i].location || '-' ?></td>
+            <td><?= sessions[i].status ?></td>
+          </tr>
+          <? } ?>
+        </tbody>
+      </table>
+    </div>
+    
+    <p><a href="<?= baseUrl ? baseUrl + '?page=admin' : '?page=admin' ?>" class="btn btn-secondary">管理者トップへ</a></p>
+  </div>
+  
+  <?!= include('Footer'); ?>
+  <style>
+    .table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+    .data-table th, .data-table td { padding: 0.5rem 0.75rem; border: 1px solid var(--border-color); text-align: left; }
+    .data-table th { background: var(--background-color); font-weight: 600; }
+  </style>
+</body>
+</html>

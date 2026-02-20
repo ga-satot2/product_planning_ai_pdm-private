@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>レポート - 法務研修LMS</title>
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <?!= include('Header'); ?>
+  
+  <div class="container">
+    <div class="page-header">
+      <h1>レポート</h1>
+      <p>集計データはスプレッドシートのダッシュボードで確認できます</p>
+    </div>
+    
+    <div class="stats-cards">
+      <div class="stat-card">
+        <div class="stat-value"><?= stats.totalParticipants ?></div>
+        <div class="stat-label">総受講者数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value"><?= stats.totalCourses ?></div>
+        <div class="stat-label">研修コース数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value"><?= stats.totalReservations ?></div>
+        <div class="stat-label">予約枠数</div>
+      </div>
+    </div>
+    
+    <p><a href="<?= sheetUrl ?>" target="_blank" class="btn btn-primary">スプレッドシート（ダッシュボード）を開く</a></p>
+    
+    <p><a href="<?= baseUrl ? baseUrl + '?page=admin' : '?page=admin' ?>" class="btn btn-secondary">管理者トップへ</a></p>
+  </div>
+  
+  <?!= include('Footer'); ?>
+  <style>
+    .stats-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .stat-card { background: var(--card-background); padding: 1.25rem; border-radius: 8px; text-align: center; box-shadow: var(--shadow); }
+    .stat-value { font-size: 1.75rem; font-weight: 700; color: var(--primary-color); }
+    .stat-label { font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.25rem; }
+  </style>
+</body>
+</html>

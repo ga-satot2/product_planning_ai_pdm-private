@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一斉メール - 法務研修LMS</title>
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <?!= include('Header'); ?>
+  
+  <div class="container">
+    <div class="page-header">
+      <h1>一斉メール</h1>
+      <p>受講者への一斉通知はGmailで送信します</p>
+    </div>
+    
+    <div class="card">
+      <p><strong>利用方法</strong></p>
+      <ul>
+        <li>参加情報シートのメールアドレス一覧をコピーし、Gmailの「BCC」で一斉送信してください。</li>
+        <li>または、Slack連携が設定されている場合はグループ別チャンネルでリマインドを利用できます。</li>
+      </ul>
+      <p><a href="#" id="sheetLink" class="btn btn-primary">スプレッドシートを開く</a></p>
+    </div>
+    
+    <p><a href="<?= baseUrl ? baseUrl + '?page=admin' : '?page=admin' ?>" class="btn btn-secondary">管理者トップへ</a></p>
+  </div>
+  
+  <?!= include('Footer'); ?>
+  <script>
+    (function() {
+      google.script.run
+        .withSuccessHandler(function(url) {
+          var a = document.getElementById('sheetLink');
+          if (a && url) { a.href = url; a.target = '_blank'; }
+        })
+        .withFailureHandler(function() {})
+        .getSpreadsheetUrl();
+    })();
+  </script>
+</body>
+</html>

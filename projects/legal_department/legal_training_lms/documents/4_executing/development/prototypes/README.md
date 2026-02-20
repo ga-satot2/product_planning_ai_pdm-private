@@ -85,10 +85,10 @@
      ```bash
      curl -L "https://script.google.com/macros/s/AKfycbxcJcmm95jKkjT0Hekh84XMB0k7YzrUb-KfMkzBmcQDeJ5LYdalQgRuAH0cIBFZ2C7yDQ/exec?function=updateEmailAddressesFromHRData"
      ```
-  3. **clasp経由で実行**（⚠️ API実行可能としてデプロイが必要）
-     - 現在は未設定のため、`clasp run`ではエラーが発生します
-     - 使用する場合は、Google Apps Scriptエディタで「デプロイ」→「API実行可能としてデプロイ」を設定する必要があります
-     - 設定後: `clasp run updateEmailAddressesFromHRData`
+  3. **clasp経由で実行**（API 実行可能デプロイが必要）
+     - `appsscript.json` に `executionApi` を追加済み。`clasp run` を通すには**初回のみ**GAS エディタで「デプロイ」→「新しいデプロイ」→ 種類の歯車から **「API 実行可能」** を選んでデプロイする。
+     - 「Script function not found」や「Unable to run script function」が出る場合は、ワークスペース共通の `scripts/google_apps_script/inquiry_similarity/CLASP_TROUBLESHOOTING.md` の「clasp run が動かないとき」を参照（creds ログインや API アクセス制御の確認）。
+     - 設定後、`clasp run getSystemStats` や `clasp run getUserEmail` で確認可能。Node 用の `scripts/run_tests_playwright.js` は `.claspignore` で除外済み（GAS に push すると `require` 未定義エラーの原因になるため）。
 
 ### デバッグ・ユーティリティ機能
 

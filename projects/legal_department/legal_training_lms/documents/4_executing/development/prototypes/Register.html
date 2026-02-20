@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>受講者登録 - 法務研修LMS</title>
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <?!= include('Header'); ?>
+  
+  <div class="container">
+    <div class="page-header">
+      <h1>受講者登録</h1>
+      <p>初回利用の方は、氏名・メールアドレス・グループを登録してください</p>
+    </div>
+    
+    <? if (participant) { ?>
+    <div class="alert alert-info">
+      <strong>既に登録済みです</strong>
+      <p>メールアドレス <?= participant.email ?> は参加情報に登録されています。</p>
+      <a href="<?= baseUrl ? baseUrl + '?page=home' : '?page=home' ?>" class="btn btn-secondary">ホームへ</a>
+    </div>
+    <? } else { ?>
+    <div class="card" style="max-width: 480px;">
+      <form id="registerForm" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label for="name">氏名 <span class="required">*</span></label>
+          <input type="text" id="name" name="name" required class="form-control" placeholder="山田 太郎">
+        </div>
+        <div class="form-group">
+          <label for="email">メールアドレス <span class="required">*</span></label>
+          <input type="email" id="email" name="email" value="<?= user ?>" required class="form-control" placeholder="you@example.com">
+          <small class="form-hint">ログイン中のアカウントが自動で入ります。変更可能です。</small>
+        </div>
+        <div class="form-group">
+          <label for="group">グループ <span class="required">*</span></label>
+          <select id="group" name="group" required class="form-control">
+            <option value="">選択してください</option>
+            <? for (var i = 0; i < (groups || []).length; i++) { ?>
+            <option value="<?= groups[i] ?>"><?= groups[i] ?></option>
+            <? } ?>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">登録する</button>
+          <a href="<?= baseUrl ? baseUrl + '?page=home' : '?page=home' ?>" class="btn btn-secondary">キャンセル</a>
+        </div>
+      </form>
+    </div>
+    <? } ?>
+  </div>
+  
+  <?!= include('Footer'); ?>
+  
+  <script>
+    function handleRegister(event) {
+      event.preventDefault();
+      var form = event.target;
+      var name = form.name.value.trim();
+      var email = form.email.value.trim();
+      var group = form.group.value.trim();
+      if (!name || !email || !group) {
+        alert('氏名・メールアドレス・グループを入力してください');
+        return;
+      }
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = '登録中...';
+      google.script.run
+        .withSuccessHandler(function(response) {
+          if (response.success) {
+            alert('登録が完了しました');
+            window.location.href = '?page=home';
+          } else {
+            alert(response.message || '登録に失敗しました');
+            btn.disabled = false;
+            btn.textContent = '登録する';
+          }
+        })
+        .withFailureHandler(function(err) {
+          alert('エラー: ' + err.message);
+          btn.disabled = false;
+          btn.textContent = '登録する';
+        })
+        .handleRegister({ action: 'register', name: name, email: email, group: group });
+    }
+  </script>
+  <style>
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+    .form-control { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; }
+    .form-hint { display: block; margin-top: 0.25rem; font-size: 0.875rem; color: var(--text-secondary); }
+    .required { color: #c00; }
+    .form-actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
+  </style>
+</body>
+</html>

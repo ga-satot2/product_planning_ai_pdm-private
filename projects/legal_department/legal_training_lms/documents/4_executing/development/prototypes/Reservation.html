@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>予約申し込み - 法務研修LMS</title>
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <?!= include('Header'); ?>
+  
+  <div class="container">
+    <div class="page-header">
+      <h1>研修予約</h1>
+      <p>参加希望のセッションを選択してください</p>
+    </div>
+    
+    <? if (course) { ?>
+      <div class="course-summary">
+        <h2><?= course.name ?></h2>
+        <p><?= course.description || '研修の説明' ?></p>
+        <div class="course-meta">
+          <span class="badge"><?= course.groupId ?></span>
+        </div>
+      </div>
+      
+      <? if (sessions && sessions.length > 0) { ?>
+        <div class="sessions-list">
+          <h3>セッション一覧</h3>
+          <form id="reservationForm" onsubmit="handleReservation(event)">
+            <? for (var i = 0; i < sessions.length; i++) { ?>
+              <? var session = sessions[i]; ?>
+              <? var isFull = (session.currentParticipants || 0) >= 50; ?>
+              
+              <div class="session-card <?= isFull ? 'session-full' : '' ?>" data-event-id="<?= session.eventId || '' ?>">
+                <div class="session-radio">
+                  <input 
+                    type="radio" 
+                    name="sessionId" 
+                    value="<?= session.id ?>" 
+                    data-event-id="<?= session.eventId || '' ?>"
+                    id="session-<?= i ?>"
+                    <?= isFull ? 'disabled' : '' ?>
+                    required
+                  >
+                </div>
+                <label for="session-<?= i ?>" class="session-label">
+                  <div class="session-info">
+                    <div class="session-name"><?= session.sessionName ?></div>
+                    <div class="session-datetime">
+                      📅 <?= formatDate(session.scheduledDate) ?>
+                      🕒 <?= session.startTime ?> 〜 <?= session.endTime ?>
+                    </div>
+                    <div class="session-location">
+                      📍 <?= session.meetingRoomId || '会議室未定' ?>
+                    </div>
+                  </div>
+                  <div class="session-capacity">
+                    <span class="capacity-text">
+                      <?= session.currentParticipants || 0 ?> / 50 名
+                    </span>
+                    <? if (isFull) { ?>
+                      <span class="badge badge-danger">満席</span>
+                    <? } else { ?>
+                      <span class="badge badge-success">空きあり</span>
+                    <? } ?>
+                  </div>
+                </label>
+              </div>
+            <? } ?>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-large">予約を確定する</button>
+              <a href="<?= baseUrl ? baseUrl + '?page=courses' : '?page=courses' ?>" class="btn btn-secondary">コース一覧に戻る</a>
+            </div>
+          </form>
+        </div>
+      <? } else { ?>
+        <div class="alert alert-warning">
+          <strong>セッションが設定されていません</strong>
+          <p>このコースのセッションはまだ設定されていません。後ほど再度確認するか、グループ一覧シートのフォームURLから予約してください。</p>
+        </div>
+      <? } ?>
+    <? } else { ?>
+      <div class="alert alert-danger">
+        <strong>コースが見つかりません</strong>
+        <p><a href="<?= baseUrl ? baseUrl + '?page=courses' : '?page=courses' ?>">コース一覧</a>から選択し直してください。</p>
+      </div>
+    <? } ?>
+  </div>
+  
+  <?!= include('Footer'); ?>
+  
+  <script>
+    function formatDate(date) {
+      if (!date) return '-';
+      var d = new Date(date);
+      return d.toLocaleDateString('ja-JP', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        weekday: 'short' 
+      });
+    }
+    
+    function handleReservation(event) {
+      event.preventDefault();
+      var formData = new FormData(event.target);
+      var sessionId = formData.get('sessionId');
+      if (!sessionId) {
+        alert('セッションを選択してください');
+        return;
+      }
+      var checked = event.target.querySelector('input[name="sessionId"]:checked');
+      var eventId = checked && checked.getAttribute('data-event-id') ? checked.getAttribute('data-event-id') : '';
+      if (!confirm('この予約を確定しますか？')) {
+        return;
+      }
+      var submitBtn = event.target.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = '送信中...';
+      google.script.run
+        .withSuccessHandler(function(response) {
+          if (response.success) {
+            alert('予約が完了しました');
+            window.location.href = '?page=mypage';
+          } else {
+            alert(response.message || '予約に失敗しました');
+            submitBtn.disabled = false;
+            submitBtn.textContent = '予約を確定する';
+          }
+        })
+        .withFailureHandler(function(error) {
+          alert('エラー: ' + error.message);
+          submitBtn.disabled = false;
+          submitBtn.textContent = '予約を確定する';
+        })
+        .handleCreateReservation({ action: 'create_reservation', sessionId: sessionId, eventId: eventId });
+    }
+  </script>
+</body>
+</html>

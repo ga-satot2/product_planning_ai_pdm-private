@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コース管理 - 法務研修LMS</title>
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <?!= include('Header'); ?>
+  
+  <div class="container">
+    <div class="page-header">
+      <h1>コース管理</h1>
+      <p>研修コースはスプレッドシートで管理しています</p>
+    </div>
+    
+    <p><a href="<?= sheetUrl ?>" target="_blank" class="btn btn-primary">スプレッドシートで編集</a></p>
+    
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>コースID</th>
+            <th>コース名</th>
+            <th>グループ</th>
+            <th>説明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <? for (var i = 0; i < (courses || []).length; i++) { ?>
+          <tr>
+            <td><?= courses[i].id ?></td>
+            <td><?= courses[i].name ?></td>
+            <td><?= courses[i].groupId ?></td>
+            <td><?= courses[i].description || '' ?></td>
+          </tr>
+          <? } ?>
+        </tbody>
+      </table>
+    </div>
+    
+    <p><a href="<?= baseUrl ? baseUrl + '?page=admin' : '?page=admin' ?>" class="btn btn-secondary">管理者トップへ</a></p>
+  </div>
+  
+  <?!= include('Footer'); ?>
+  <style>
+    .table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th, .data-table td { padding: 0.5rem 0.75rem; border: 1px solid var(--border-color); text-align: left; }
+    .data-table th { background: var(--background-color); font-weight: 600; }
+  </style>
+</body>
+</html>

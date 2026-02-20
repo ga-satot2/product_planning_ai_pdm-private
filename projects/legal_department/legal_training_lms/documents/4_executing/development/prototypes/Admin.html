@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理者ダッシュボード - 法務研修LMS</title>
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <?!= include('Header'); ?>
+  
+  <div class="container">
+    <div class="page-header">
+      <h1>管理者ダッシュボード</h1>
+      <p>研修の全体状況を確認・管理できます</p>
+    </div>
+    
+    <div class="stats-cards">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value"><?= stats.totalParticipants ?></div>
+        <div class="stat-label">総受講者数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📚</div>
+        <div class="stat-value"><?= stats.totalCourses ?></div>
+        <div class="stat-label">研修コース数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-value"><?= stats.totalReservations ?></div>
+        <div class="stat-label">総予約枠数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-value"><?= stats.activeReservations ?></div>
+        <div class="stat-label">有効予約数</div>
+      </div>
+    </div>
+    
+    <div class="admin-menu">
+      <h2>管理メニュー</h2>
+      <div class="menu-grid">
+        <a href="<?= baseUrl ? baseUrl + '?page=admin-courses' : '?page=admin-courses' ?>" class="menu-card">
+          <span class="menu-icon">📚</span>
+          <h3>コース管理</h3>
+          <p>コース一覧の確認・スプレッドシートで編集</p>
+        </a>
+        <a href="<?= baseUrl ? baseUrl + '?page=admin-sessions' : '?page=admin-sessions' ?>" class="menu-card">
+          <span class="menu-icon">📅</span>
+          <h3>セッション管理</h3>
+          <p>予約枠一覧の確認・スプレッドシートで編集</p>
+        </a>
+        <a href="<?= baseUrl ? baseUrl + '?page=admin-email' : '?page=admin-email' ?>" class="menu-card">
+          <span class="menu-icon">📧</span>
+          <h3>一斉メール</h3>
+          <p>参加情報を元にした送信方法の案内</p>
+        </a>
+        <a href="<?= baseUrl ? baseUrl + '?page=admin-reports' : '?page=admin-reports' ?>" class="menu-card">
+          <span class="menu-icon">📊</span>
+          <h3>レポート</h3>
+          <p>集計・ダッシュボードへのリンク</p>
+        </a>
+      </div>
+    </div>
+    
+    <div class="system-info">
+      <h2>システム情報</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">バージョン</span>
+          <span class="value">v2.0</span>
+        </div>
+        <div class="info-item">
+          <span class="label">管理者</span>
+          <span class="value"><?= user ?></span>
+        </div>
+        <div class="info-item">
+          <span class="label">ステータス</span>
+          <span class="value"><span class="badge badge-success">正常稼働中</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <?!= include('Footer'); ?>
+  
+  <style>
+    .stats-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .stat-card { background-color: var(--card-background); border-radius: 8px; padding: 2rem; text-align: center; box-shadow: var(--shadow); }
+    .stat-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .stat-value { font-size: 2.5rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.5rem; }
+    .stat-label { color: var(--text-secondary); font-size: 0.875rem; }
+    .admin-menu, .system-info { background-color: var(--card-background); border-radius: 8px; padding: 2rem; margin-bottom: 2rem; box-shadow: var(--shadow); }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .menu-card { background-color: var(--background-color); border-radius: 8px; padding: 1.5rem; text-decoration: none; color: var(--text-primary); display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .menu-card:hover { background-color: var(--primary-color); color: white; }
+    .menu-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .menu-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .menu-card p { font-size: 0.875rem; opacity: 0.8; }
+  </style>
+</body>
+</html>

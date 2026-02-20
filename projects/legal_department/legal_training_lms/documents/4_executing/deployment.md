@@ -152,6 +152,10 @@
    URL: https://script.google.com/macros/s/【デプロイID】/exec
    ```
 
+**clasp を利用する場合**:
+- `development/prototypes` ディレクトリに移動し、`./scripts/deploy.sh` を実行すると、`clasp push` と `clasp deploy` が実行され、Webアプリとしてデプロイされます。
+- 初回または「デプロイ」種類が未設定の場合は、Apps Script エディタで「デプロイ」→「新しいデプロイ」→「種類の選択」→「Web アプリ」を選択してデプロイを作成してください。以降は `deploy.sh` で更新デプロイが可能です。
+
 ### Step 5: 初期データの投入
 
 1. **研修コースの登録**

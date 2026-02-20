@@ -1,0 +1,10 @@
+<script>
+  function navigateTo(page) {
+    var baseUrl = window.location.origin + window.location.pathname;
+    window.location.href = baseUrl + '?page=' + page;
+  }
+  function navigateToReservation(courseId) {
+    var baseUrl = window.location.origin + window.location.pathname;
+    window.location.href = baseUrl + '?page=reservation&courseId=' + courseId;
+  }
+</script>

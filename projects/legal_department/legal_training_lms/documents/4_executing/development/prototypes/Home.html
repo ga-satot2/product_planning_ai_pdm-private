@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>法務研修LMS</title>
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <?!= include('Header'); ?>
+  
+  <div class="container">
+    <div class="hero">
+      <h1>法務研修LMSへようこそ</h1>
+      <p class="lead">500名規模の法務研修を効率的に管理する自動化システム</p>
+    </div>
+    
+    <div class="info-cards">
+      <div class="card">
+        <div class="card-icon">📚</div>
+        <h3>研修コース</h3>
+        <p>最新の法務研修コースから選択して予約できます</p>
+        <a href="<?= baseUrl ? baseUrl + '?page=courses' : '?page=courses' ?>" class="btn btn-primary">コース一覧を見る</a>
+      </div>
+      
+      <div class="card">
+        <div class="card-icon">📅</div>
+        <h3>予約管理</h3>
+        <p>研修の予約・変更・キャンセルが簡単にできます</p>
+        <a href="<?= baseUrl ? baseUrl + '?page=mypage' : '?page=mypage' ?>" class="btn btn-secondary">マイページ</a>
+      </div>
+      
+      <div class="card">
+        <div class="card-icon">✅</div>
+        <h3>テスト・成績</h3>
+        <p>オンラインテストで理解度を確認できます</p>
+        <a href="<?= baseUrl ? baseUrl + '?page=mypage' : '?page=mypage' ?>" class="btn btn-secondary">成績を見る</a>
+      </div>
+    </div>
+    
+    <?  if (participant) { ?>
+    <div class="user-info">
+      <h2>あなたの情報</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="label">氏名</span>
+          <span class="value"><?= participant.name ?></span>
+        </div>
+        <div class="info-item">
+          <span class="label">社員番号</span>
+          <span class="value"><?= participant.employeeId ?></span>
+        </div>
+        <div class="info-item">
+          <span class="label">部署</span>
+          <span class="value"><?= participant.department || '未設定' ?></span>
+        </div>
+        <div class="info-item">
+          <span class="label">グループ</span>
+          <span class="value"><?= participant.groupId ?></span>
+        </div>
+      </div>
+    </div>
+    <? } else { ?>
+    <div class="alert alert-warning">
+      <strong>受講者登録が必要です</strong>
+      <p>初回利用の方は、受講者情報を登録してください。</p>
+      <a href="<?= baseUrl ? baseUrl + '?page=register' : '?page=register' ?>" class="btn btn-primary">受講者登録</a>
+    </div>
+    <? } ?>
+    
+    <div class="features">
+      <h2>システムの特徴</h2>
+      <ul>
+        <li>✨ <strong>簡単予約</strong>: Webから簡単に研修の予約ができます</li>
+        <li>🔄 <strong>予約変更可能</strong>: 3日前まで1回まで予約変更が可能です</li>
+        <li>📧 <strong>自動通知</strong>: 予約確認やリマインドを自動でお知らせします</li>
+        <li>📊 <strong>進捗確認</strong>: 出席状況や成績をリアルタイムで確認できます</li>
+        <li>🔒 <strong>セキュア</strong>: Google認証で安全にアクセスできます</li>
+      </ul>
+    </div>
+  </div>
+  
+  <?!= include('Footer'); ?>
+</body>
+</html>

@@ -11,9 +11,9 @@
  */
 
 /**
- * POSTリクエストで関数を実行するエンドポイント
+ * POSTリクエストで関数を実行するエンドポイント（Web App UIのdoPostから呼び出される）
  */
-function doPost(e) {
+function runApiEndpointPost(e) {
   try {
     var functionName = e.parameter.function || e.postData.contents ? JSON.parse(e.postData.contents).function : 'syncParticipantsFromAttendance';
     
@@ -72,9 +72,9 @@ function doPost(e) {
 }
 
 /**
- * GETリクエストで関数を実行するエンドポイント（テスト用）
+ * GETリクエストで関数を実行するエンドポイント（テスト用。Web App UIのdoGetから呼び出される）
  */
-function doGet(e) {
+function runApiEndpointGet(e) {
   var functionName = e.parameter.function || 'syncParticipantsFromAttendance';
   
   if (functionName === 'syncParticipantsFromAttendance') {

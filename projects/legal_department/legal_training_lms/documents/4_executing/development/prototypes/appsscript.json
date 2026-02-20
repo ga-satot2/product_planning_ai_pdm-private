@@ -1,15 +1,1 @@
-{
-  "timeZone": "Asia/Tokyo",
-  "exceptionLogging": "STACKDRIVER",
-  "runtimeVersion": "V8",
-  "dependencies": {
-    "libraries": [
-      {
-        "userSymbol": "LMSUtils",
-        "version": "0",
-        "libraryId": "1tjRFSbY1AuGmhEsKEgcBSLMJzaMYORdnIRApv6VhYkKOIswtD_EN9DtQ",
-        "developmentMode": true
-      }
-    ]
-  }
-}
+{"timeZone":"Asia/Tokyo","exceptionLogging":"STACKDRIVER","runtimeVersion":"V8","oauthScopes":["https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/forms","https://www.googleapis.com/auth/calendar","https://www.googleapis.com/auth/drive","https://www.googleapis.com/auth/gmail.send","https://www.googleapis.com/auth/userinfo.email","https://www.googleapis.com/auth/script.container.ui"],"executionApi":{"access":"MYSELF"},"webapp":{"executeAs":"USER_DEPLOYING","access":"DOMAIN"},"dependencies":{"libraries":[{"userSymbol":"LMSUtils","version":"0","libraryId":"1tjRFSbY1AuGmhEsKEgcBSLMJzaMYORdnIRApv6VhYkKOIswtD_EN9DtQ","developmentMode":true}]}}

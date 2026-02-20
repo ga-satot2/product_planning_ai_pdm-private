@@ -1,0 +1,31 @@
+<header class="header">
+  <div class="header-container">
+    <div class="header-left">
+      <a href="<?= baseUrl ? baseUrl + '?page=home' : '?page=home' ?>" class="logo">
+        <span class="logo-icon">📚</span>
+        <span class="logo-text">法務研修LMS</span>
+      </a>
+    </div>
+    
+    <nav class="header-nav">
+      <a href="<?= baseUrl ? baseUrl + '?page=home' : '?page=home' ?>" class="nav-link">ホーム</a>
+      <a href="<?= baseUrl ? baseUrl + '?page=courses' : '?page=courses' ?>" class="nav-link">研修コース</a>
+      <a href="<?= baseUrl ? baseUrl + '?page=mypage' : '?page=mypage' ?>" class="nav-link">マイページ</a>
+    </nav>
+    
+    <div class="header-right">
+      <span class="user-email" id="userEmailDisplay">読み込み中...</span>
+    </div>
+    
+    <script>
+      google.script.run
+        .withSuccessHandler(function(email) {
+          document.getElementById('userEmailDisplay').textContent = email;
+        })
+        .withFailureHandler(function(error) {
+          document.getElementById('userEmailDisplay').textContent = 'ゲスト';
+        })
+        .getUserEmail();
+    </script>
+  </div>
+</header>

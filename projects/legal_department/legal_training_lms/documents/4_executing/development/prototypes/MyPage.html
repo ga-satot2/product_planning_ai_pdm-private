@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マイページ - 法務研修LMS</title>
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <?!= include('Header'); ?>
+  
+  <div class="container">
+    <div class="page-header">
+      <h1>マイページ</h1>
+      <p>予約状況と研修履歴を確認できます</p>
+    </div>
+    
+    <? if (participant) { ?>
+      <div class="user-info">
+        <h2>受講者情報</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="label">氏名</span>
+            <span class="value" id="displayName"><?= participant.name ?></span>
+          </div>
+          <div class="info-item">
+            <span class="label">メールアドレス</span>
+            <span class="value"><?= participant.email ?></span>
+          </div>
+          <div class="info-item">
+            <span class="label">グループ</span>
+            <span class="value"><?= participant.groupId ?></span>
+          </div>
+          <div class="info-item">
+            <span class="label">ステータス</span>
+            <span class="value">
+              <span class="badge badge-success">有効</span>
+            </span>
+          </div>
+        </div>
+        <div class="profile-edit">
+          <button type="button" class="btn btn-secondary btn-sm" id="btnEditProfile">氏名を変更</button>
+          <div id="profileForm" style="display: none; margin-top: 1rem;">
+            <input type="text" id="profileName" value="<?= participant.name ?>" class="form-control" style="max-width: 240px; display: inline-block; margin-right: 0.5rem;">
+            <button type="button" class="btn btn-primary btn-sm" id="btnSaveProfile">保存</button>
+            <button type="button" class="btn btn-secondary btn-sm" id="btnCancelProfile">キャンセル</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="reservations-section">
+        <h2>予約一覧</h2>
+        
+        <? if (reservations && reservations.length > 0) { ?>
+          <div class="reservations-list">
+            <? for (var i = 0; i < reservations.length; i++) { ?>
+              <? var reservation = reservations[i]; ?>
+              <? var session = reservation.session; ?>
+              <? var course = reservation.course; ?>
+              <? var isReserved = reservation.status === '予約済み' || reservation.status === '参加済み' || reservation.status === 'confirmed'; ?>
+              
+              <div class="reservation-card <?= reservation.status === 'cancelled' ? 'cancelled' : '' ?>">
+                <div class="reservation-header">
+                  <h3><?= course ? course.name : '研修コース' ?></h3>
+                  <? if (isReserved) { ?>
+                    <span class="badge badge-success"><?= reservation.status ?></span>
+                  <? } else if (reservation.status === 'cancelled') { ?>
+                    <span class="badge badge-danger">キャンセル済み</span>
+                  <? } else { ?>
+                    <span class="badge"><?= reservation.status ?></span>
+                  <? } ?>
+                </div>
+                
+                <? if (session) { ?>
+                  <div class="reservation-body">
+                    <div class="info-row">
+                      <span class="icon">📅</span>
+                      <span><?= formatDate(session.scheduledDate) ?></span>
+                    </div>
+                    <div class="info-row">
+                      <span class="icon">🕒</span>
+                      <span><?= session.startTime ?> 〜 <?= session.endTime ?></span>
+                    </div>
+                    <div class="info-row">
+                      <span class="icon">📍</span>
+                      <span><?= session.meetingRoomId || '会議室未定' ?></span>
+                    </div>
+                  </div>
+                  
+                  <? if (isReserved && reservation.eventId) { ?>
+                    <div class="reservation-actions">
+                      <button 
+                        class="btn btn-secondary btn-sm" 
+                        onclick="handleCancelReservation('<?= reservation.eventId ?>')"
+                      >
+                        予約をキャンセル
+                      </button>
+                    </div>
+                  <? } ?>
+                <? } ?>
+              </div>
+            <? } ?>
+          </div>
+        <? } else { ?>
+          <div class="alert alert-info">
+            <strong>予約がありません</strong>
+            <p><a href="<?= baseUrl ? baseUrl + '?page=courses' : '?page=courses' ?>">研修コース一覧</a>から予約するか、グループ一覧シートのフォームURLをご利用ください。</p>
+          </div>
+        <? } ?>
+      </div>
+      
+      <div class="quick-actions">
+        <h2>クイックアクション</h2>
+        <div class="actions-grid">
+          <a href="<?= baseUrl ? baseUrl + '?page=courses' : '?page=courses' ?>" class="action-card">
+            <span class="action-icon">📚</span>
+            <span class="action-text">新しい研修を予約</span>
+          </a>
+        </div>
+      </div>
+      
+    <? } else { ?>
+      <div class="alert alert-warning">
+        <strong>受講者登録が必要です</strong>
+        <p>マイページを利用するには参加情報シートにメールアドレスが登録されている必要があります。</p>
+        <a href="<?= baseUrl ? baseUrl + '?page=home' : '?page=home' ?>" class="btn btn-primary">ホームへ</a>
+      </div>
+    <? } ?>
+  </div>
+  
+  <?!= include('Footer'); ?>
+  
+  <script>
+    function formatDate(date) {
+      if (!date) return '-';
+      var d = new Date(date);
+      return d.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+    
+    (function() {
+      var btnEdit = document.getElementById('btnEditProfile');
+      var btnSave = document.getElementById('btnSaveProfile');
+      var btnCancel = document.getElementById('btnCancelProfile');
+      var form = document.getElementById('profileForm');
+      var input = document.getElementById('profileName');
+      var display = document.getElementById('displayName');
+      if (btnEdit && form) {
+        btnEdit.addEventListener('click', function() {
+          form.style.display = 'block';
+          btnEdit.style.display = 'none';
+          if (input) input.value = display ? display.textContent : '';
+        });
+      }
+      if (btnCancel && form && btnEdit) {
+        btnCancel.addEventListener('click', function() {
+          form.style.display = 'none';
+          btnEdit.style.display = 'inline-block';
+        });
+      }
+      if (btnSave && input && display) {
+        btnSave.addEventListener('click', function() {
+          var name = input.value.trim();
+          if (!name) { alert('氏名を入力してください'); return; }
+          btnSave.disabled = true;
+          google.script.run
+            .withSuccessHandler(function(res) {
+              if (res.success) {
+                display.textContent = name;
+                document.getElementById('profileForm').style.display = 'none';
+                document.getElementById('btnEditProfile').style.display = 'inline-block';
+                alert(res.message);
+              } else {
+                alert(res.message || '更新に失敗しました');
+              }
+              btnSave.disabled = false;
+            })
+            .withFailureHandler(function(err) {
+              alert('エラー: ' + err.message);
+              btnSave.disabled = false;
+            })
+            .handleUpdateProfile({ action: 'update_profile', name: name });
+        });
+      }
+    })();
+    
+    function handleCancelReservation(eventId) {
+      if (!confirm('この予約をキャンセルしますか？')) {
+        return;
+      }
+      google.script.run
+        .withSuccessHandler(function(response) {
+          if (response.success) {
+            alert('予約をキャンセルしました');
+            location.reload();
+          } else {
+            alert(response.message || 'キャンセルに失敗しました');
+            location.reload();
+          }
+        })
+        .withFailureHandler(function(error) {
+          alert('エラー: ' + error.message);
+        })
+        .handleCancelReservation({ action: 'cancel_reservation', eventId: eventId });
+    }
+  </script>
+  
+  <style>
+    .reservations-section, .quick-actions {
+      background-color: var(--card-background);
+      border-radius: 8px;
+      padding: 2rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .reservations-list { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1.5rem; }
+    .reservation-card {
+      background-color: var(--card-background);
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+    .reservation-card.cancelled { opacity: 0.5; background-color: #fafafa; }
+    .reservation-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+    .reservation-header h3 { margin: 0; font-size: 1.25rem; }
+    .reservation-body { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1rem; }
+    .reservation-actions { display: flex; gap: 1rem; margin-top: 1rem; }
+    .btn-sm { padding: 0.5rem 1rem; font-size: 0.875rem; }
+    .actions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .action-card { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 2rem; background-color: var(--background-color); border-radius: 8px; text-decoration: none; color: var(--text-primary); }
+    .action-card:hover { background-color: var(--primary-color); color: white; }
+    .action-icon { font-size: 2.5rem; }
+    .action-text { font-weight: 600; text-align: center; }
+    .profile-edit { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
+    .profile-edit .form-control { padding: 0.4rem 0.6rem; border: 1px solid var(--border-color); border-radius: 4px; }
+  </style>
+</body>
+</html>

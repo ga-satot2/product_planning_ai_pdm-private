@@ -78,7 +78,7 @@
 - ✅ `update_email_addresses.gs` - 人事データからのメール更新
 - ✅ `analyze_sheet_structure.gs` - デバッグ機能
 
-**注意**: Webアプリ（src/）との統合は予定していません。既存のGASスクリプトを直接改善していく方針です。
+**注意**: Webアプリ（src/）を prototypes に統合し、`webapp.gs` および HTML テンプレート（Home.html 等）で Web アプリとしてデプロイする方針に変更しました。同一 GAS プロジェクト内で doGet/doPost が UI を提供し、既存の api_endpoint は `?function=...` で引き続き利用可能です。
 
 ### 3. 既存システム（Google Drive）との連携
 

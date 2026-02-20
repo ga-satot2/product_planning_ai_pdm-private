@@ -1,7 +1,9 @@
 # 統合プロジェクトで不要なファイルを除外
 
-# JavaScriptファイル（コンパイル済み）
+# Node 用 .js（GAS で require は未定義のため必ず除外）
 *.js
+scripts/run_tests_playwright.js
+**/run_tests_playwright.js
 
 # ドキュメント
 docs/
@@ -10,6 +12,7 @@ README.md
 
 # スクリプト
 scripts/
+**/scripts/**
 node_modules/**
 **/node_modules/**
 package.json
