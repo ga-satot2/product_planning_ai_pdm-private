@@ -6,13 +6,14 @@ alwaysApply: true
 
 # Core Rules (Always Apply)
 
-## 1. Team and roles (PdM and developers)
+## 1. Team and roles (PdM, designer, developers)
 
-このリポジトリは **PdM と開発者のチーム** で共有する。
+このリポジトリは **PdM・デザイナー・開発者のチーム** で共有する。
 
 - **PdM**: 要件・プロジェクト文書（documents/）、デプロイ手順・マニュアル、CHANGELOG。仕様は事実ベースで、開発が実装しやすいように書く。
-- **開発者**: 実装（development/src、prototypes、spreadsheet_bound_script）、clasp push・テスト、環境構築。要件・deployment.md を参照し、変更後は push とテストを実行する。
-- **共通**: 実行結果の確認、ドキュメント品質、Git 機密、引き継ぎは全員が守る。Agent は依頼の文脈（PdM のドキュメントか、開発の実装・テストか）に合わせて成果物と手順を選ぶ。
+- **デザイナー**: UI/UX、デザインシステム・カラースキーム（design/）、Figma 連携。RENOSY カラースキームは design/renosy_color_scheme.json に保持。Figma MCP で取得した場合は取得元 URL を記録する。
+- **開発者**: 実装（development/src、prototypes、spreadsheet_bound_script）、clasp push・テスト、環境構築。要件・deployment.md・デザインのカラー/トークンを参照し、変更後は push とテストを実行する。
+- **共通**: 実行結果の確認、ドキュメント品質、Git 機密、引き継ぎは全員が守る。Agent は依頼の文脈（PdM / デザイン / 開発）に合わせて成果物と手順を選ぶ。
 
 ## 2. Workspace identity and paths
 
@@ -25,6 +26,7 @@ alwaysApply: true
   - `documents/4_executing/development/spreadsheet_bound_script/` - スプレッドシート紐付けスクリプト
 - **Deploy doc**: `documents/4_executing/deployment.md`
 - **Dev quick start**: `documents/4_executing/development/README.md`
+- **Design data**: `design/`（RENOSY カラースキーム等）
 - 詳細なパス一覧は `00_reference_paths.mdc` を参照。
 
 ## 3. Verify execution before presenting to user
@@ -61,7 +63,7 @@ Git にコミット・push してはいけないもの。`.gitignore` で除外�
 
 報告する前に push とテストの結果（成功またはエラー内容）を確認し、失敗時は修正してから報告する。
 
-## 7. Multi-agent collaboration (PdM・開発者・複数 Agent)
+## 7. Multi-agent collaboration (PdM・デザイナー・開発者・複数 Agent)
 
 複数 Agent が協業するときのルール。常に適用する。
 

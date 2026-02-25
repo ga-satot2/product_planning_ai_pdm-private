@@ -1,0 +1,7 @@
+{
+  "source": "Figma MCP で取得。RENOSY のカラーが定義された Figma ファイルの URL を指定して get_design_context を実行し、返却のデザイントークン（色）をここに反映する。",
+  "source_figma_url": null,
+  "updated_at": null,
+  "colors": {},
+  "css_variables": []
+}
