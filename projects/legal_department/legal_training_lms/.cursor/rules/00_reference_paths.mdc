@@ -24,6 +24,8 @@ dirs:
 ## Key files
 
 paths:
+  agents: "AGENTS.md"
+  changelog: "CHANGELOG.md"
   deployment: "documents/4_executing/deployment.md"
   development_readme: "documents/4_executing/development/README.md"
   clasp_logs_setup: "documents/4_executing/development/spreadsheet_bound_script/CLASP_LOGS_SETUP.md"

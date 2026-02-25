@@ -52,3 +52,13 @@ Git にコミット・push してはいけないもの。`.gitignore` で除外�
 2. **テスト**: そのプロジェクトに `runUnitTests` があれば `clasp run runUnitTests` を実行する。なければ変更した関数を `clasp run 関数名` で実行し、結果を確認する
 
 報告する前に push とテストの結果（成功またはエラー内容）を確認し、失敗時は修正してから報告する。
+
+## 6. Multi-agent collaboration (Claude Code)
+
+複数 Agent が協業するときのルール。常に適用する。
+
+- **Handoff on start**: 作業開始時に、直近のコミット（`git log -3 --oneline`）を確認する。`CHANGELOG.md` があれば参照し、前の担当の変更を把握してから編集を始める。
+- **Explicit changes**: 変更したファイル・ディレクトリをコミットメッセージに書く。理由や影響範囲が分かるようにする。
+- **Avoid conflicts**: 同じファイルを編集する前に、必ず現状の内容を読む。担当範囲が分かれる場合は、コミットメッセージや PR 説明に範囲を明記する。
+- **Context boundary**: 依頼が別プロジェクト・別リポジトリ・無関係な新規タスクになったら、New Agent（新規チャット）を案内する。ユーザーが続行を選んだ場合のみ当チャットで作業する。
+- **Single source of truth**: 仕様・パス・手順は AGENTS.md、.cursor/rules、deployment.md、development/README.md などリポジトリ内のファイルを参照する。会話の記憶のみに依存しない。
