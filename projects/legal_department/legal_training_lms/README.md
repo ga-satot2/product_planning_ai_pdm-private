@@ -1,4 +1,13 @@
-# 法務研修LMSシステム
+# Legal Workshop Management System（法務研修LMSシステム）
+
+このリポジトリは、法務研修の参加状態管理システム（LMS）のプロジェクト文書と開発成果物を格納しています。  
+**リポジトリ**: [ga-tech/leagal-workshop_management_system](https://github.com/ga-tech/leagal-workshop_management_system)
+
+```bash
+git clone git@github.com:ga-tech/leagal-workshop_management_system.git
+```
+
+---
 
 ## プロジェクト概要
 
@@ -147,7 +156,7 @@ legal_training_lms/
 - Google Calendar API
 - Slack API
 
-## 🔧 設定情報
+## 設定情報
 
 ### Slack設定
 - **テスト環境**:
