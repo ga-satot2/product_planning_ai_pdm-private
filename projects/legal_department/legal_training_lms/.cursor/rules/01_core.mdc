@@ -1,0 +1,54 @@
+---
+description: Core rules for Legal Workshop Management System - identity, paths, execution verification, doc quality, Git safety, GAS push and test.
+globs: "*"
+alwaysApply: true
+---
+
+# Core Rules (Always Apply)
+
+## 1. Workspace identity and paths
+
+- **Name**: Legal Workshop Management System（法務研修LMS）
+- **Root**: リポジトリルート
+- **Key dirs**:
+  - `documents/` - プロジェクト文書（1_initiating ～ 6_closing）
+  - `documents/4_executing/development/src/` - 本番用 GAS
+  - `documents/4_executing/development/prototypes/` - プロトタイプ GAS
+  - `documents/4_executing/development/spreadsheet_bound_script/` - スプレッドシート紐付けスクリプト
+- **Deploy doc**: `documents/4_executing/deployment.md`
+- **Dev quick start**: `documents/4_executing/development/README.md`
+- 詳細なパス一覧は `00_reference_paths.mdc` を参照。
+
+## 2. Verify execution before presenting to user
+
+スクリプト・clasp・ツールを実行したあと:
+
+- **終了コード**と **stdout/stderr** を確認し、成功またはエラー内容を把握する
+- ファイル作成・更新時は、想定パスが存在するか確認する
+- そのうえでユーザーに結果を報告する。失敗時はエラーと対処を報告し、成功と誤認しない
+
+## 3. Document quality (AI Slop 防止)
+
+ドキュメント・成果物の品質基準。常に適用する。
+
+- **絵文字禁止**: 業務・技術ドキュメント・コミットメッセージ
+- **指示語を避ける**: 「これ」「この」「その」を避け、主語を明確に
+- **事実ベース**: 存在しない仕様を「ある」と書かない。新規は「（新規機能）」と明示
+- **生成後のレビュー**: 構成・事実・冗長・曖昧表現を簡潔に確認する
+
+## 4. Git commit safety (do not push secrets)
+
+Git にコミット・push してはいけないもの。`.gitignore` で除外されているか確認し、新規ファイル追加時も守る。
+
+- **含めない**: `.env`、認証ファイル（credentials.json、*.pem、*.key、id_rsa 等）、シークレット・トークン
+- **含めてよい**: `.clasp.json` の scriptId など、リポジトリ公開範囲で許容される識別子のみ
+- `node_modules/`、`__pycache__/`、`.DS_Store` 等は `.gitignore` で除外する
+
+## 5. GAS 編集時は push とテストを忘れずに
+
+`documents/4_executing/development/` 配下の GAS（.gs、.html 等）を編集したら、次を行う。
+
+1. **clasp push**: 対象プロジェクトのディレクトリで `clasp push` を実行し、GAS に反映する
+2. **テスト**: そのプロジェクトに `runUnitTests` があれば `clasp run runUnitTests` を実行する。なければ変更した関数を `clasp run 関数名` で実行し、結果を確認する
+
+報告する前に push とテストの結果（成功またはエラー内容）を確認し、失敗時は修正してから報告する。

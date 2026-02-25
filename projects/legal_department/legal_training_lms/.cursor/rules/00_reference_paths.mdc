@@ -1,0 +1,40 @@
+---
+description: Path reference for Legal Workshop Management System repository.
+globs: "*"
+alwaysApply: false
+---
+
+# Reference Paths
+
+リポジトリルートを基準とした主要パス一覧。
+
+## Root
+
+root: リポジトリルート
+
+## Directories
+
+dirs:
+  documents: "documents"
+  development: "documents/4_executing/development"
+  src: "documents/4_executing/development/src"
+  prototypes: "documents/4_executing/development/prototypes"
+  spreadsheet_bound_script: "documents/4_executing/development/spreadsheet_bound_script"
+
+## Key files
+
+paths:
+  deployment: "documents/4_executing/deployment.md"
+  development_readme: "documents/4_executing/development/README.md"
+  clasp_logs_setup: "documents/4_executing/development/spreadsheet_bound_script/CLASP_LOGS_SETUP.md"
+
+## PMBOK phases (under documents)
+
+phases:
+  initiating: "documents/1_initiating"
+  discovery: "documents/2_discovery"
+  research: "documents/2_research"
+  planning: "documents/3_planning"
+  executing: "documents/4_executing"
+  monitoring: "documents/5_monitoring"
+  closing: "documents/6_closing"
