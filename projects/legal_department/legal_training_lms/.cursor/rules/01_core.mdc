@@ -1,12 +1,20 @@
 ---
-description: Core rules for Legal Workshop Management System - identity, paths, execution verification, doc quality, Git safety, GAS push and test.
+description: Core rules for Legal Workshop Management System - PdM and developer team, identity, paths, execution verification, doc quality, Git safety, GAS push and test.
 globs: "*"
 alwaysApply: true
 ---
 
 # Core Rules (Always Apply)
 
-## 1. Workspace identity and paths
+## 1. Team and roles (PdM and developers)
+
+このリポジトリは **PdM と開発者のチーム** で共有する。
+
+- **PdM**: 要件・プロジェクト文書（documents/）、デプロイ手順・マニュアル、CHANGELOG。仕様は事実ベースで、開発が実装しやすいように書く。
+- **開発者**: 実装（development/src、prototypes、spreadsheet_bound_script）、clasp push・テスト、環境構築。要件・deployment.md を参照し、変更後は push とテストを実行する。
+- **共通**: 実行結果の確認、ドキュメント品質、Git 機密、引き継ぎは全員が守る。Agent は依頼の文脈（PdM のドキュメントか、開発の実装・テストか）に合わせて成果物と手順を選ぶ。
+
+## 2. Workspace identity and paths
 
 - **Name**: Legal Workshop Management System（法務研修LMS）
 - **Root**: リポジトリルート
@@ -19,7 +27,7 @@ alwaysApply: true
 - **Dev quick start**: `documents/4_executing/development/README.md`
 - 詳細なパス一覧は `00_reference_paths.mdc` を参照。
 
-## 2. Verify execution before presenting to user
+## 3. Verify execution before presenting to user
 
 スクリプト・clasp・ツールを実行したあと:
 
@@ -27,7 +35,7 @@ alwaysApply: true
 - ファイル作成・更新時は、想定パスが存在するか確認する
 - そのうえでユーザーに結果を報告する。失敗時はエラーと対処を報告し、成功と誤認しない
 
-## 3. Document quality (AI Slop 防止)
+## 4. Document quality (AI Slop 防止)
 
 ドキュメント・成果物の品質基準。常に適用する。
 
@@ -36,7 +44,7 @@ alwaysApply: true
 - **事実ベース**: 存在しない仕様を「ある」と書かない。新規は「（新規機能）」と明示
 - **生成後のレビュー**: 構成・事実・冗長・曖昧表現を簡潔に確認する
 
-## 4. Git commit safety (do not push secrets)
+## 5. Git commit safety (do not push secrets)
 
 Git にコミット・push してはいけないもの。`.gitignore` で除外されているか確認し、新規ファイル追加時も守る。
 
@@ -44,16 +52,16 @@ Git にコミット・push してはいけないもの。`.gitignore` で除外�
 - **含めてよい**: `.clasp.json` の scriptId など、リポジトリ公開範囲で許容される識別子のみ
 - `node_modules/`、`__pycache__/`、`.DS_Store` 等は `.gitignore` で除外する
 
-## 5. GAS 編集時は push とテストを忘れずに
+## 6. GAS 編集時は push とテストを忘れずに（開発者向け・GAS を触った場合）
 
-`documents/4_executing/development/` 配下の GAS（.gs、.html 等）を編集したら、次を行う。
+`documents/4_executing/development/` 配下の GAS（.gs、.html 等）を編集したら、次を行う。開発者が主に実施。PdM や Agent が GAS を直接編集した場合も同様。
 
 1. **clasp push**: 対象プロジェクトのディレクトリで `clasp push` を実行し、GAS に反映する
 2. **テスト**: そのプロジェクトに `runUnitTests` があれば `clasp run runUnitTests` を実行する。なければ変更した関数を `clasp run 関数名` で実行し、結果を確認する
 
 報告する前に push とテストの結果（成功またはエラー内容）を確認し、失敗時は修正してから報告する。
 
-## 6. Multi-agent collaboration (Claude Code)
+## 7. Multi-agent collaboration (PdM・開発者・複数 Agent)
 
 複数 Agent が協業するときのルール。常に適用する。
 

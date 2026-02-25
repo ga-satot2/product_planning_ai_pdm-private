@@ -1,6 +1,12 @@
 # Legal Workshop Management System（法務研修LMS）
 
-このリポジトリで Agent が従う基本方針です。
+このリポジトリで Agent が従う基本方針です。**PdM と開発者のチーム**で共有するリポジトリであり、役割に応じた成果物と共通ルールの両方を守る。
+
+## チームと役割
+
+- **PdM（プロダクト開発マネージャー）**: 要件・プロジェクト文書（documents/ の各フェーズ）、デプロイ手順・利用開始マニュアル、CHANGELOG の更新などを主に扱う。仕様やスコープを書くときは事実ベースで、開発者が実装に落とし込みやすいようにする。
+- **開発者**: 実装（development/src、prototypes、spreadsheet_bound_script）、clasp push・テスト、デプロイ手順に沿った環境構築を主に扱う。要件や deployment.md を参照し、変更後は push とテストを実行する。
+- **共通**: 実行結果の確認、ドキュメント品質、Git 機密、引き継ぎ（CHANGELOG・コミットメッセージ）は役割を問わず守る。Agent は依頼の文脈（PdM のドキュメント作業か、開発の実装・テストか）に合わせて、適切な成果物と手順を選ぶ。
 
 ## 基本方針
 
@@ -21,18 +27,18 @@
 - `.clasp.json` の scriptId は可。シークレットやトークンは含めない
 - 新規ファイル追加時は `.gitignore` を確認する
 
-### 4. GAS 編集後は push とテストを忘れずに
+### 4. GAS 編集後は push とテストを忘れずに（開発者向け・GAS を触った場合）
 
-`documents/4_executing/development/` 配下の GAS（.gs、.html 等）を編集したら、次を行う。
+`documents/4_executing/development/` 配下の GAS（.gs、.html 等）を編集したら、次を行う。主に開発者が実施するが、PdM や Agent が GAS を直接編集した場合も同様に従う。
 
 1. **clasp push**: 対象プロジェクトのディレクトリで `clasp push` を実行する
 2. **テスト**: `runUnitTests` や主要関数があれば `clasp run 関数名` で実行し、結果を確認する
 
 報告する前に push とテストの結果を確認し、失敗時は修正してから報告する。
 
-### 5. マルチエージェント協業（Claude Code / 複数 Agent 前提）
+### 5. マルチエージェント協業（PdM・開発者・複数 Agent 前提）
 
-複数 Agent が同じリポジトリで作業するときの約束。
+PdM と開発者が同じリポジトリで作業するときの約束。複数 Agent が協業する場合も同じ。
 
 - **引き継ぎ**: 作業開始時は、直近のコミット（`git log -3 --oneline`）と必要なら `CHANGELOG.md` を確認し、前の担当の変更内容を把握してから手を付ける。
 - **変更の明示**: 自分が変更したファイル・ディレクトリは、コミットメッセージに簡潔に書く。理由や影響範囲が分かるようにする。`CHANGELOG.md` に追記すると、次の Agent の引き継ぎがしやすい。
@@ -45,11 +51,11 @@
 ## リポジトリ構成
 
 - **ルート**: このリポジトリのルート
-- **プロジェクト文書**: `documents/`（1_initiating ～ 6_closing、PMBOK フェーズ）
-- **本番用 GAS**: `documents/4_executing/development/src/`
-- **プロトタイプ**: `documents/4_executing/development/prototypes/`
-- **スプレッドシート紐付けスクリプト**: `documents/4_executing/development/spreadsheet_bound_script/`
-- **デプロイ手順**: `documents/4_executing/deployment.md`
-- **開発クイックスタート**: `documents/4_executing/development/README.md`
+- **プロジェクト文書**: `documents/`（1_initiating ～ 6_closing、PMBOK フェーズ）— PdM が主に更新
+- **本番用 GAS**: `documents/4_executing/development/src/` — 開発者が主に更新
+- **プロトタイプ**: `documents/4_executing/development/prototypes/` — 開発者が主に更新
+- **スプレッドシート紐付けスクリプト**: `documents/4_executing/development/spreadsheet_bound_script/` — 開発者が主に更新
+- **デプロイ手順**: `documents/4_executing/deployment.md` — PdM・開発者とも参照
+- **開発クイックスタート**: `documents/4_executing/development/README.md` — 開発者が主に参照
 
 パス一覧は `.cursor/rules/00_reference_paths.mdc` を参照。
