@@ -1,7 +1,49 @@
 {
-  "source": "Figma MCP で取得。RENOSY のカラーが定義された Figma ファイルの URL を指定して get_design_context を実行し、返却のデザイントークン（色）をここに反映する。",
-  "source_figma_url": null,
-  "updated_at": null,
-  "colors": {},
-  "css_variables": []
+  "source": "Figma MCP で取得。get_design_context / get_screenshot で 6PHuIH8Ocx5wc4EzPXKhPU (node 66321:7211) を参照。",
+  "source_figma_url": "https://www.figma.com/file/6PHuIH8Ocx5wc4EzPXKhPU?node-id=66321-7211",
+  "updated_at": "2025-02-25",
+  "fileKey": "6PHuIH8Ocx5wc4EzPXKhPU",
+  "nodeId": "66321:7211",
+  "colors": {
+    "primary": {
+      "description": "RENOSY ブランドの青。Primary Button、リンク等に使用。",
+      "main": "#0066cc",
+      "light": "#e6f0ff",
+      "dark": "#004499"
+    },
+    "neutral": {
+      "description": "テキスト・ボーダー・背景用のグレースケール。",
+      "white": "#ffffff",
+      "gray_50": "#f9fafb",
+      "gray_100": "#f3f4f6",
+      "gray_200": "#e5e7eb",
+      "gray_300": "#d1d5db",
+      "gray_400": "#9ca3af",
+      "gray_500": "#6b7280",
+      "gray_600": "#4b5563",
+      "gray_700": "#374151",
+      "gray_800": "#1f2937",
+      "gray_900": "#111827"
+    },
+    "semantic": {
+      "success": { "description": "成功・完了", "main": "#10b981" },
+      "error": { "description": "エラー・危険", "main": "#ef4444" },
+      "warning": { "description": "警告", "main": "#f59e0b" },
+      "info": { "description": "情報", "main": "#3b82f6" }
+    }
+  },
+  "css_variables": [
+    "--renosy-primary: #0066cc;",
+    "--renosy-primary-light: #e6f0ff;",
+    "--renosy-primary-dark: #004499;",
+    "--renosy-neutral-50: #f9fafb;",
+    "--renosy-neutral-100: #f3f4f6;",
+    "--renosy-neutral-500: #6b7280;",
+    "--renosy-neutral-900: #111827;",
+    "--renosy-success: #10b981;",
+    "--renosy-error: #ef4444;",
+    "--renosy-warning: #f59e0b;",
+    "--renosy-info: #3b82f6;"
+  ],
+  "note": "Figma の実際のトークン値はデザインファイルの Variables で確認し、必要に応じて上記を差し替えること。"
 }
