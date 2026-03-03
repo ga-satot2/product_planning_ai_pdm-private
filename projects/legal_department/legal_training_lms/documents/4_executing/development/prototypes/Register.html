@@ -20,7 +20,7 @@
     <div class="alert alert-info">
       <strong>既に登録済みです</strong>
       <p>メールアドレス <?= participant.email ?> は参加情報に登録されています。</p>
-      <a href="<?= baseUrl ? baseUrl + '?page=home' : '?page=home' ?>" class="btn btn-secondary">ホームへ</a>
+      <a href="?page=home" class="btn btn-secondary">ホームへ</a>
     </div>
     <? } else { ?>
     <div class="card" style="max-width: 480px;">
@@ -45,7 +45,7 @@
         </div>
         <div class="form-actions">
           <button type="submit" class="btn btn-primary">登録する</button>
-          <a href="<?= baseUrl ? baseUrl + '?page=home' : '?page=home' ?>" class="btn btn-secondary">キャンセル</a>
+          <a href="?page=home" class="btn btn-secondary">キャンセル</a>
         </div>
       </form>
     </div>

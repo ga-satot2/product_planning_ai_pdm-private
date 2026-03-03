@@ -72,7 +72,7 @@
             
             <div class="form-actions">
               <button type="submit" class="btn btn-primary btn-large">予約を確定する</button>
-              <a href="<?= baseUrl ? baseUrl + '?page=courses' : '?page=courses' ?>" class="btn btn-secondary">コース一覧に戻る</a>
+              <a href="?page=courses" class="btn btn-secondary">コース一覧に戻る</a>
             </div>
           </form>
         </div>
@@ -85,7 +85,7 @@
     <? } else { ?>
       <div class="alert alert-danger">
         <strong>コースが見つかりません</strong>
-        <p><a href="<?= baseUrl ? baseUrl + '?page=courses' : '?page=courses' ?>">コース一覧</a>から選択し直してください。</p>
+        <p><a href="?page=courses">コース一覧</a>から選択し直してください。</p>
       </div>
     <? } ?>
   </div>

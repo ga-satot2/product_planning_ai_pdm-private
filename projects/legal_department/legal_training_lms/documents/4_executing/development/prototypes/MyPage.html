@@ -105,7 +105,7 @@
         <? } else { ?>
           <div class="alert alert-info">
             <strong>予約がありません</strong>
-            <p><a href="<?= baseUrl ? baseUrl + '?page=courses' : '?page=courses' ?>">研修コース一覧</a>から予約するか、グループ一覧シートのフォームURLをご利用ください。</p>
+            <p><a href="?page=courses">研修コース一覧</a>から予約するか、グループ一覧シートのフォームURLをご利用ください。</p>
           </div>
         <? } ?>
       </div>
@@ -113,7 +113,7 @@
       <div class="quick-actions">
         <h2>クイックアクション</h2>
         <div class="actions-grid">
-          <a href="<?= baseUrl ? baseUrl + '?page=courses' : '?page=courses' ?>" class="action-card">
+          <a href="?page=courses" class="action-card">
             <span class="action-icon">📚</span>
             <span class="action-text">新しい研修を予約</span>
           </a>
@@ -124,7 +124,7 @@
       <div class="alert alert-warning">
         <strong>受講者登録が必要です</strong>
         <p>マイページを利用するには参加情報シートにメールアドレスが登録されている必要があります。</p>
-        <a href="<?= baseUrl ? baseUrl + '?page=home' : '?page=home' ?>" class="btn btn-primary">ホームへ</a>
+        <a href="?page=home" class="btn btn-primary">ホームへ</a>
       </div>
     <? } ?>
   </div>

@@ -32,6 +32,21 @@ URL の形式: `https://script.google.com/macros/s/【デプロイID】/exec`
 
 ### 2.3 画面ごとの確認
 
+#### 2.3.1 Playwright による自動確認（推奨）
+
+`development/prototypes` で以下を実行すると、home / courses / mypage / register の各ページが表示されることを自動検証する。認証は `~/.playwright_chrome_profile` を使用（未ログインの場合は先に 1 回ブラウザ表示で実行して Google にログインする）。
+
+```bash
+cd development/prototypes
+node scripts/run_webapp_verify_playwright.js
+```
+
+URL を引数で渡す場合: `node scripts/run_webapp_verify_playwright.js "https://script.google.com/macros/s/【デプロイID】/exec"`
+
+**拡張検証（要手動確認項目の自動化）**: `run_webapp_verify_extended_playwright.js` で管理者ページ（?page=admin）の表示と、予約フロー E2E（コース一覧→予約する→セッション選択→確定→マイページ）を検証する。コース・セッションが無い環境では予約フローはスキップされる。実行例: `node scripts/run_webapp_verify_extended_playwright.js [URL]`
+
+#### 2.3.2 手動確認
+
 ブラウザでログインした状態で、次の URL にアクセスする。
 
 | 確認項目 | URL | 期待する結果 |

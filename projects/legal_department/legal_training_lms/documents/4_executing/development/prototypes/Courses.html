@@ -44,7 +44,7 @@
             
             <div class="course-footer">
               <? if (participant && participant.groupId === course.groupId) { ?>
-                <a href="<?= baseUrl ? baseUrl + '?page=reservation&courseId=' + course.id : '?page=reservation&courseId=' + course.id ?>" class="btn btn-primary btn-block">
+                <a href="?page=reservation&courseId=<?= course.id ?>" class="btn btn-primary btn-block">
                   予約する
                 </a>
               <? } else if (participant) { ?>
@@ -52,7 +52,7 @@
                   他のグループ専用
                 </button>
               <? } else { ?>
-                <a href="<?= baseUrl ? baseUrl + '?page=register' : '?page=register' ?>" class="btn btn-secondary btn-block">
+                <a href="?page=register" class="btn btn-secondary btn-block">
                   受講者登録が必要
                 </a>
               <? } ?>
