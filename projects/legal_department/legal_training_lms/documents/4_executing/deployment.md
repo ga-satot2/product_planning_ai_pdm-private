@@ -148,13 +148,20 @@
    - 承認プロセスを完了
 
 4. **WebアプリのURLを記録**
-   ```
-   URL: https://script.google.com/macros/s/【デプロイID】/exec
-   ```
+   - 一般: `https://script.google.com/macros/s/【デプロイID】/exec`
+   - 組織ドメインでデプロイした場合: `https://script.google.com/a/macros/【ドメイン】/s/【デプロイID】/exec`（例: ga-tech.co.jp）
+   - 本番 URL（組織デプロイ・再デプロイ後）は 検証結果記録.md および 法務部門向け利用開始マニュアル.md に記載
 
 **clasp を利用する場合**:
 - `development/prototypes` ディレクトリに移動し、`./scripts/deploy.sh` を実行すると、`clasp push` と `clasp deploy` が実行され、Webアプリとしてデプロイされます。
 - 初回または「デプロイ」種類が未設定の場合は、Apps Script エディタで「デプロイ」→「新しいデプロイ」→「種類の選択」→「Web アプリ」を選択してデプロイを作成してください。以降は `deploy.sh` で更新デプロイが可能です。
+
+**デプロイ元アカウントの確認**:
+- このプロジェクトで `clasp push` / `clasp deploy` を実行しているアカウントが、Web アプリの「デプロイ元」＝スクリプトのオーナーです。clasp はログイン中の Google アカウントでプロジェクトに紐づきます。
+- 確認方法（いずれか）:
+  1. **GAS エディタ**: ブラウザで [Apps Script](https://script.google.com/) を開き、該当プロジェクト（scriptId: `1DiZUSkJU_Z4Yc0bBcNgOUH3iqHux8xnSS7qILL5YZMfKgw86QeMvx0S-`）を開く。右上に表示されている Google アカウントがデプロイ元です。
+  2. **clasp open**: `development/prototypes` で `clasp open` を実行すると、そのプロジェクトがブラウザで開く。開いたときのログインアカウントがデプロイ元です。
+- 「ファイルを開くことができません」になる場合: ブラウザで Web アプリ URL を開くとき、**上記と同じアカウント**でログインしているか確認してください。デプロイの「アクセスできるユーザー」が「自分」のときは、別アカウントでは開けません。
 
 ### Step 5: 初期データの投入
 
