@@ -1,16 +1,16 @@
 <header class="header">
   <div class="header-container">
     <div class="header-left">
-      <a href="?page=home" class="logo">
+      <a href="<?= baseUrl ? baseUrl + '?page=home' : '?page=home' ?>" class="logo">
         <span class="logo-icon">📚</span>
         <span class="logo-text">法務研修LMS</span>
       </a>
     </div>
     
     <nav class="header-nav">
-      <a href="?page=home" class="nav-link">ホーム</a>
-      <a href="?page=courses" class="nav-link">研修コース</a>
-      <a href="?page=mypage" class="nav-link">マイページ</a>
+      <a href="<?= baseUrl ? baseUrl + '?page=home' : '?page=home' ?>" class="nav-link">ホーム</a>
+      <a href="<?= baseUrl ? baseUrl + '?page=courses' : '?page=courses' ?>" class="nav-link">研修コース</a>
+      <a href="<?= baseUrl ? baseUrl + '?page=mypage' : '?page=mypage' ?>" class="nav-link">マイページ</a>
     </nav>
     
     <div class="header-right">

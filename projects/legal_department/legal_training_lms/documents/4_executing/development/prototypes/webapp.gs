@@ -799,7 +799,15 @@ function webapp_registerParticipant(name, email, group) {
 // ユーティリティ
 // ===============================================
 
-function include(filename) {
+/**
+ * ファイルをインクルードする。baseUrl を渡すと Header 等で絶対 URL を出力できる（組織デプロイでリンク切れを防ぐ）。
+ */
+function include(filename, baseUrl) {
+  if (baseUrl !== undefined && baseUrl !== null && baseUrl !== '') {
+    var t = HtmlService.createTemplateFromFile(filename);
+    t.baseUrl = baseUrl;
+    return t.evaluate().getContent();
+  }
   return HtmlService.createHtmlOutputFromFile(filename).getContent();
 }
 
