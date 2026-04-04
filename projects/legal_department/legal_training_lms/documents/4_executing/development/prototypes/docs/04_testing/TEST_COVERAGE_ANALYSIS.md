@@ -1,6 +1,6 @@
 # テストカバレッジ分析レポート
 
-**分析日**: 2026-03-30
+**分析日**: 2026-04-04（全ファイル精読に基づく改訂版）
 **分析対象**: Legal Training LMS + Slack通知システム
 
 ---
@@ -261,12 +261,159 @@ function printTestSummary() {
 
 ---
 
-## 6. 推奨実装順序
+## 6. 全ファイル詳細分析（2026-04-04 追加）
 
-1. **テストヘルパー導入** (`assertEqual`等) — 全テスト品質の底上げ
-2. **`LMSUtils.gs`テスト** — 全モジュールが依存する基盤
-3. **`webapp.gs`テスト** — ユーザー向け機能のカバレッジ確保
-4. **`sync_existing_events.gs`テスト** — データ破損リスクの高い照合ロジック
-5. **`form_submit.gs`テスト** — 主要ユーザーフローの保護
-6. **`api_endpoint.gs`テスト** — 外部入力の検証
-7. **既存テストのアサーション強化** — 偽陽性の排除
+### 6.1 フォーム関連モジュール群（テスト0件）
+
+フォーム関連は8ファイルに分割されていますが、**いずれもテスト関数がありません**。
+
+#### `form_data.gs` (313行) — **テスト優先度: 高**
+
+純粋関数が多く、テスト容易性が高いファイルです。
+
+| 関数 | テスト観点 | 難易度 |
+|------|----------|--------|
+| `form_mergeDateAndTime(datePart, timePart)` | **最優先**: Date型、文字列`"15:00"`、Excelシリアル値、null、無効値。GAS外でもテスト可能な純粋関数 | 低 |
+| `form_formatDate(date)` / `form_formatTime(date)` | 正常Date、NaN Date、null | 低 |
+| `form_mapEventRow(row, utils, period, index)` | 必須フィールド不足時のnull返却、無効値(#REF!等)のフィルタ、eventId空時の`isValid=false` | 中 |
+| `form_isSessionAvailableForGroup(session, groupName)` | targetGroup完全一致、コースID`FY26-01`→`1期生`マッピング、targetGroup空時の全グループ表示 | 低 |
+| `form_buildSessionChoiceLabel(session, utils)` | eventId空時のnull返却、日時フォーマット、`(id: xxx)`形式の生成 | 低 |
+
+#### `form_build.gs` (446行) — **テスト優先度: 中**
+
+Google Forms APIに強く依存するため直接のユニットテストは難しいですが、以下のロジック検証は可能：
+
+| 関数 | テスト観点 |
+|------|----------|
+| `form_buildTwoStepForm(form)` | グループ0件時の動作、重複タイトル処理 |
+| `form_buildSingleGroupForm(form, groupName)` | GROUP_SELECTスキップの確認、研修枠0件時の選択肢 |
+| `form_updateGroupFormUrl(groupName, formId)` | `formSheets.groups`がundefined時のフォールバック処理 |
+
+#### `form_submit.gs` (314行) — **テスト優先度: 高**
+
+ユーザーのフォーム送信を処理する重要モジュール。
+
+| 関数 | テスト観点 |
+|------|----------|
+| `form_onFormSubmit(e)` | 正常フロー全体(定員チェック→重複チェック→カレンダー追加→メール送信)、e.response無し時のエラー |
+| `form_updateAttendeeStatus(email, eventId)` | コースID→番号→丸数字(`①`~`⑫`)変換、コース番号取得失敗時のフォールバック（コース名検索） |
+| `form_getCourseNumberFromCourseList(courseId)` | 正常取得、存在しないコースID、ヘッダーに必須列が無い場合 |
+
+#### `form_rebuild.gs` (194行) — **テスト優先度: 低〜中**
+
+| 関数 | テスト観点 |
+|------|----------|
+| `form_rebuildTrainingFormForGroup(groupName)` | 既存フォームID有/無、フォーム取得失敗時の再作成 |
+| `form_rebuildTrainingForm(formId)` | アイテム削除リトライ(最大3回)の動作確認 |
+
+#### その他フォーム関連
+
+| ファイル | 行数 | 内容 | テスト優先度 |
+|---------|------|------|-----------|
+| `form_utils.gs` | 110行 | 遅延初期化、スプレッドシートopen(ID/URL/Active) | 低 |
+| `form_config.gs` | 35行 | 設定アクセス関数のエイリアス | 低 |
+| `form_helpers.gs` | 28行 | 後方互換エイリアスのみ | 不要 |
+| `form_triggers.gs` | 123行 | トリガー管理（設定/削除/一覧） | 低 |
+| `form_cleanup.gs` | 105行 | Form Responsesシート削除(正規表現`/^Form\s+responses?\s+\d+$/i`) | 低 |
+
+### 6.2 `utils.gs` (98行) — グローバル初期化
+
+テスト不要ですが、**テスト時の注意点**があります：
+
+```javascript
+// グローバルスコープで実行される（テスト時も含む）
+const preset_values = getPresetValues();
+const sheets = getSheets();
+const COURSE_HEADERS = getCourseHeaders();
+const calendarId = getCalendarId();
+const site_url = getSiteUrl();
+const invalid_values = getInvalidValueSet();
+```
+
+これらのグローバル定数は、テスト環境でPropertiesServiceが使えない場合にエラーを起こします。テスト実行時の環境分離が必要。
+
+### 6.3 `calendar.gs` (124行) — **テスト優先度: 中**
+
+| 関数 | テスト観点 |
+|------|----------|
+| `extractEmailFromEvent(e)` | `e.response.getRespondentEmail()`経由、`e.namedValues`経由、e無し、メール無し |
+| `extractEventIdFromEvent(e, utils)` | `(id: xxx)`形式からの抽出、配列回答、回答無し |
+| `extractEventIdFromAnswer(answer, utils)` | 文字列に`(id: xxx)`含む、配列の再帰処理、null |
+| `addGuestToCalendarEvent(calendarId, eventId, email)` | 既存ゲスト重複時の`true`返却、`@google.com`サフィックス追加 |
+
+**特記**: `extractEmailFromEvent()`と`extractEventIdFromAnswer()`は純粋関数に近く、モック無しでテスト可能。
+
+### 6.4 `personnel_eval_aggregate.gs` (131行) — **テスト優先度: 中**
+
+| 関数 | テスト観点 |
+|------|----------|
+| `buildCourseNameToTrainingType(sheet, col)` | コース名→研修種別マッピング、未設定時のデフォルト「継続研修」 |
+| `aggregateFromAttendees(sheet, col, map)` | 「参加済み」ステータスのカウント、アベンジャーズ/継続の分類 |
+| `writeSummary(sheet, stats, col)` | 空配列時の早期リターン |
+
+### 6.5 `update_email_addresses.gs` (350行) — **テスト優先度: 低〜中**
+
+| 関数 | テスト観点 |
+|------|----------|
+| `updateEmailAddressesFromHRData()` | ヘッダー自動検出ロジック（「名前」「氏名」「name」等）、スペースあり/なし名前の正規化マッチング、既存メール時のスキップ |
+
+### 6.6 `webapp.gs` (828行) — 全関数詳細
+
+前回レポートに追加して、以下の関数が特にテスト重要：
+
+| 関数 | 行 | テスト観点 | 重要度 |
+|------|-----|----------|--------|
+| `handleCreateReservation()` | 586-641 | 未登録ユーザー拒否、カレンダー未設定時のフォールバック、重複予約チェック(`RESERVED_STATUS_VALUES`)、正常予約後のシート更新 | **最高** |
+| `webapp_registerParticipant()` | 763-796 | 必須項目検証、重複メール拒否、存在しないグループ拒否、`setValues`の列数計算（`AT.COURSE_START + 12`） | **高** |
+| `isAdmin()` | 693-696 | ハードコードされた管理者リスト`['admin@example.com', 't_sato2@ga-tech.co.jp']` — **セキュリティ上の問題**: 本番環境で`admin@example.com`が残っている | **高** |
+| `getReservationsByEmail()` | 453-483 | コース列offset計算、`RESERVED_STATUS_VALUES`(`['予約済み', '参加済み']`)との突合 | 中 |
+| `getCourseIdByNumberAndGroup()` | 485-495 | 番号+グループ名の複合マッチング | 中 |
+
+### 6.7 `notify_sublease_application.gs` (827行, 別プロジェクト) — テスト関数の問題
+
+テスト関数は存在しますが、全て**手動実行テスト**（`testManualExecution`, `testFrom43000`等）で、フィルタリングロジック自体のユニットテストはありません。
+
+**テストすべき純粋ロジック**:
+- `getColumnValue(row, headerRow, columnName)` — 列名→値の取得、列不存在時
+- CONTRACT_IDによる新規判定ロジック（`lastContractId`との比較）
+- ORDERED_DATEの90日以内フィルタ
+- STATUS=`申込` かつ CURRENT_SITUATION=`サブリース中` の複合条件
+- `createSlackMessage()` — Block Kit形式の出力検証
+
+---
+
+## 7. 既存テストの具体的問題点（コード精読結果）
+
+### 7.1 偽陽性テスト
+
+`testEventCapacityBoundary()`（1499-1609行）は定員0人・null・最大値をテストしますが、**実際の`checkEventCapacity()`は常にmaxAttendees=999を返す設計**（reservation_enhanced.gs:46-47行）のため、定員0テストのsetValue操作は無意味です：
+
+```javascript
+// reservation_enhanced.gs:46-47
+const maxAttendees = 999; // デフォルトは無制限（スプレッドシートにMAX_ATTENDEES列は存在しない）
+```
+
+テストコードは`sheets.events.columns.MAX_ATTENDEES`を参照しますが、**この列は存在しません**。
+
+### 7.2 モック不完全テスト
+
+`testOnCreatingSchedule()`のモックは`getRange().getValue()`を返しますが、`getRange().setValue()`を呼ぶ実装パスを`Logger.log`で消化するだけで、**値が正しく設定されたかを検証していません**。
+
+### 7.3 テスト間依存
+
+`testAll()`→`createTestEventsForChangeAndTest()`→`testAllSheetFunctions()`→`testAllUntestedFunctions()`の順序で実行され、最初のテスト用イベント作成が失敗すると後続の全テストが`⚠️ テストデータが取得できませんでした`でスキップされます。
+
+---
+
+## 8. 推奨実装順序（改訂版）
+
+1. **テストヘルパー導入** (`assertEqual`, `assertNotNull`, `assertThrows`, `printTestSummary`) — 全テスト品質の底上げ
+2. **`form_data.gs`の純粋関数テスト** — `form_mergeDateAndTime`, `form_isSessionAvailableForGroup`等。テスト容易、即効性高
+3. **`LMSUtils.gs`テスト** — `extractIdFromQuestionString`, `getErrorMessage`, `handleError`。全モジュールが依存する基盤
+4. **`calendar.gs`テスト** — `extractEmailFromEvent`, `extractEventIdFromAnswer`。純粋関数でテスト容易
+5. **`webapp.gs`テスト** — `handleCreateReservation`, `isAdmin`, `webapp_registerParticipant`。ユーザー向け機能
+6. **`sync_existing_events.gs`テスト** — タイトル/日時/場所マッチングロジック。データ破損リスク高
+7. **`form_submit.gs`テスト** — `form_onFormSubmit`フロー、コース番号→丸数字変換
+8. **`api_endpoint.gs`テスト** — 入力バリデーション
+9. **`isAdmin()`のセキュリティ修正** — `admin@example.com`の除去、設定ベースの管理者リストへの移行
+10. **既存テストのアサーション強化** — 偽陽性(`testEventCapacityBoundary`等)の修正
